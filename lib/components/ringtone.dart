@@ -16,8 +16,8 @@ class _RingtoneState extends State<Ringtone> {
             child: ElevatedButton(
                 onPressed: () {
                   final player = AudioPlayer();
-                  player.play(AssetSource('2.wav'));
+                  player.play(AssetSource('song.mp3'));
                 },
-                child: Text('Play'))));
+                child: const Text('Play'))));
   }
 }
