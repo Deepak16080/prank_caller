@@ -1,8 +1,8 @@
 import 'dart:convert';
-
-
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+
+
 
 class Ringtone extends StatefulWidget {
   const Ringtone({super.key});
@@ -12,10 +12,45 @@ class Ringtone extends StatefulWidget {
 }
 
 class _RingtoneState extends State<Ringtone> {
-  final AudioPlayer _player = AudioPlayer();
+  AudioPlayer audioPlayer = AudioPlayer();
+  PlayerState audioPlayerState = PlayerState.paused;
+  late AudioCache audioCache;
+  // final path = 'assets/songs/1.mp3';
+ 
+
+  @override
+  void initState() {
+    super.initState();
+    audioCache = AudioCache();
+    audioPlayer.onPlayerStateChanged.listen((PlayerState s) {
+      setState(() {
+        audioPlayerState = s;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    audioPlayer.release();
+    audioPlayer.dispose();
+    // audioCache.load(path);
+  }
+
+  playMusic() async {
+    await audioPlayer.play(AssetSource('$Path()'));
+  }
+
+  pauseMusic() async {
+    await audioPlayer.pause();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        
+      ),
         body: FutureBuilder<String>(
       future: DefaultAssetBundle.of(context).loadString("AssetManifest.json"),
       builder: (context, item) {
@@ -49,15 +84,18 @@ class _RingtoneState extends State<Ringtone> {
                     "path: $path",
                     style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
-                  leading: const Icon(
-                    Icons.audiotrack,
+                  leading: Icon(
+                    audioPlayerState == PlayerState.playing
+                        ? Icons.pause_circle_rounded
+                        : Icons.play_arrow_rounded,
                     size: 20,
                     color: Colors.white,
                   ),
                   onTap: () async {
-                    toast(context,'you selected : $title');
-                    await _player.setAsset(path);
-                    await _player.play();
+                    toast(context, ' $title');
+                    audioPlayerState == PlayerState.playing
+                        ? pauseMusic()
+                        : playMusic();
                   },
                 ),
               );
@@ -72,7 +110,7 @@ class _RingtoneState extends State<Ringtone> {
     ));
   }
 
-  void toast(BuildContext context,String text) {
+  void toast(BuildContext context, String text) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(text, textAlign: TextAlign.center),
       behavior: SnackBarBehavior.floating,
