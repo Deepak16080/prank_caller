@@ -1,11 +1,11 @@
-class RingtoneList {
-  // final String name;
-  final String path;
+// class RingtoneList {
+//   // final String name;
+//   final String path;
 
-  RingtoneList({required this.path});
-}
+//   RingtoneList({required this.path});
+// }
 
-List<RingtoneList> lists = [
+// List<RingtoneList> lists = [
   // RingtoneList(imageUrl: 'https://mp3ringtonesdownload.net/ringtone/dil-bechara-neha-kakkar/#!',name: 'neha kakkar'),
   // RingtoneList(imageUrl: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60526',name: '1'),
   // RingtoneList(imageUrl: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60426',name: '2'),
@@ -18,20 +18,20 @@ List<RingtoneList> lists = [
   // RingtoneList(imageUrl: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60423',name: '9'),
   // RingtoneList(imageUrl: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60412',name: '10'),
 
-  RingtoneList(path: 'assets/songs/1.mp3'),
-  RingtoneList(path: 'assets/songs/2.mp3'),
-  RingtoneList(path: 'assets/songs/3.mp3'),
-  RingtoneList(path: 'assets/songs/4.mp3'),
-  RingtoneList(path: 'assets/songs/5.mp3'),
-  RingtoneList(path: 'assets/songs/6.mp3'),
-  RingtoneList(path: 'assets/songs/7.mp3'),
-  RingtoneList(path: 'assets/songs/8.mp3'),
-  RingtoneList(path: 'assets/songs/9.mp3'),
-  RingtoneList(path: 'assets/songs/10.mp3'),
-  RingtoneList(path: 'assets/songs/11.mp3'),
-  RingtoneList(path: 'assets/songs/12.mp3'),
-  RingtoneList(path: 'assets/songs/13.mp3'),
-  RingtoneList(path: 'assets/songs/14.mp3'),
-  RingtoneList(path: 'assets/songs/15.mp3'),
-  RingtoneList(path: 'assets/songs/16.mp3'),
-];
+//   RingtoneList(path: 'assets/songs/1.mp3'),
+//   RingtoneList(path: 'assets/songs/2.mp3'),
+//   RingtoneList(path: 'assets/songs/3.mp3'),
+//   RingtoneList(path: 'assets/songs/4.mp3'),
+//   RingtoneList(path: 'assets/songs/5.mp3'),
+//   RingtoneList(path: 'assets/songs/6.mp3'),
+//   RingtoneList(path: 'assets/songs/7.mp3'),
+//   RingtoneList(path: 'assets/songs/8.mp3'),
+//   RingtoneList(path: 'assets/songs/9.mp3'),
+//   RingtoneList(path: 'assets/songs/10.mp3'),
+//   RingtoneList(path: 'assets/songs/11.mp3'),
+//   RingtoneList(path: 'assets/songs/12.mp3'),
+//   RingtoneList(path: 'assets/songs/13.mp3'),
+//   RingtoneList(path: 'assets/songs/14.mp3'),
+//   RingtoneList(path: 'assets/songs/15.mp3'),
+//   RingtoneList(path: 'assets/songs/16.mp3'),
+// ];
