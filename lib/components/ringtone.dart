@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:audioplayers/audioplayers.dart';
+
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 
 class Ringtone extends StatefulWidget {
   const Ringtone({super.key});
@@ -11,12 +12,12 @@ class Ringtone extends StatefulWidget {
 }
 
 class _RingtoneState extends State<Ringtone> {
-  final player = AudioPlayer();
+  final AudioPlayer _player = AudioPlayer();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<String>(
-      future: DefaultAssetBundle.of(context).loadString('AssetManiFest.json'),
+      future: DefaultAssetBundle.of(context).loadString("AssetManifest.json"),
       builder: (context, item) {
         if (item.hasData) {
           Map? jsonMap = jsonDecode(item.data!);
@@ -54,8 +55,9 @@ class _RingtoneState extends State<Ringtone> {
                     color: Colors.white,
                   ),
                   onTap: () async {
-                   await player.setSourceAsset(path);
-                  await  player.play(AssetSource(path));
+                    toast(context,'you selected : $title');
+                    await _player.setAsset(path);
+                    await _player.play();
                   },
                 ),
               );
@@ -67,6 +69,14 @@ class _RingtoneState extends State<Ringtone> {
           );
         }
       },
+    ));
+  }
+
+  void toast(BuildContext context,String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(text, textAlign: TextAlign.center),
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     ));
   }
 }
