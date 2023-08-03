@@ -40,18 +40,20 @@ class _RingtoneState extends State<Ringtone> {
         builder: (context, item) {
           if (item.hasData) {
             Map? jsonMap = jsonDecode(item.data!);
-            List? songs = jsonMap?.keys.toList();
+            List songs = jsonMap?.keys.toList() ?? [];
 
             return ListView.builder(
-              itemCount: songs?.length,
+              itemCount: songs.length,
               itemBuilder: (context, index) {
-                // var selectindex = songs.toString();
-                String path = songs![index].toString();
-                var title = path.split("/").last.toString();
-                title = title.replaceAll("%20", '');
-                title = title.split('.').first;
+                String path = songs[index].toString();
+                bool isMp3 = path.contains(".mp3");
+
+                String title =
+                    path.replaceAll("assets/songs/", "").replaceAll(".mp3", "");
 
                 bool isSelected = selectedItem == path;
+
+                if (!isMp3) return const SizedBox.shrink();
 
                 return InkWell(
                   onTap: () {
