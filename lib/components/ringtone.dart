@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
@@ -14,36 +15,8 @@ class _RingtoneState extends State<Ringtone> {
   final AudioPlayer audioPlayer = AudioPlayer();
   List<String> selecteditem = [];
   int selectindex = -1;
-  // PlayerState audioPlayerState = PlayerState.paused;
-  // late AudioCache audioCache;
-  // final path = 'assets/songs/1.mp3';
+ 
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   audioCache = AudioCache();
-  //   audioPlayer.onPlayerStateChanged.listen((PlayerState s) {
-  //     setState(() {
-  //       audioPlayerState = s;
-  //     });
-  //   });
-  // }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   audioPlayer.release();
-  //   audioPlayer.dispose();
-  //   // audioCache.load(path);
-  // }
-
-  // playMusic() async {
-  //   await audioPlayer.play(AssetSource('$Path()'));
-  // }
-
-  // pauseMusic() async {
-  //   await audioPlayer.pause();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +62,7 @@ class _RingtoneState extends State<Ringtone> {
                       setState(() {
                         selectindex = index;
                       });
+                      toast(context, ' selected');
                     },
                     child: Card(
                       shadowColor: Colors.green,
@@ -104,6 +78,7 @@ class _RingtoneState extends State<Ringtone> {
                         //       const TextStyle(color: Colors.white, fontSize: 12),
                         // ),
                         leading: IconButton(onPressed: () async{
+                          
                           await audioPlayer.setAsset(path);
                           await audioPlayer.play();
                         }, icon: const Icon(Icons.play_arrow),color: Colors.blue,),
@@ -131,16 +106,18 @@ class _RingtoneState extends State<Ringtone> {
             }
           },
         ),
-        floatingActionButton: FloatingActionButton.extended(onPressed: (){}, label: Text('Select from files'),
-        icon: Icon(Icons.drive_file_move),),
+        floatingActionButton: FloatingActionButton.extended(onPressed: (){}, label: const Text('Select from files'),
+        icon: const Icon(Icons.drive_file_move),),
         );
   }
 
-  // void toast(BuildContext context, String text) {
-  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //     content: Text(text, textAlign: TextAlign.center),
-  //     behavior: SnackBarBehavior.floating,
-  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-  //   ));
-  // }
+
+
+  void toast(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(text, textAlign: TextAlign.center),
+      behavior: SnackBarBehavior.fixed,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+    ));
+  }
 }
