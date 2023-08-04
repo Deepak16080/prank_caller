@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
               left: 20,
             ),
             child: Text(
-              "Selected ringtone: ${selectedRingtone?.replaceAll("assets/songs/", "").replaceAll(".mp3", "")}",
+              "Selected ringtone: ${selectedRingtone?.replaceAll("assets/song/", "").replaceAll(".mp3", "")}",
               style: TextStyle(color: Colors.green),
             ),
           ),

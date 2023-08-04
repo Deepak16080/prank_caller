@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 
 class Ringtone extends StatefulWidget {
@@ -119,9 +122,7 @@ class _RingtoneState extends State<Ringtone> {
           ),
           FloatingActionButton(
             onPressed: () {
-              setState(() {
-                // restoreSettings();
-              });
+              pickfile();
             },
             child: const Icon(Icons.add_to_drive),
           ),
@@ -137,28 +138,18 @@ class _RingtoneState extends State<Ringtone> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
     ));
   }
-}
-  // Future<void> restoreSettings() async {
-  //   FilePickerResult? pickerResult =
-  //       await FilePicker.platform.pickFiles(type: FileType.audio);
-  //   if (pickerResult?.files.first != null) {
-  //     String fileName = pickerResult!.files.first.name;
-  //     print('picker fileName $fileName');
-  //     Uint8List? fileBytes = pickerResult.files.first.bytes;
-  //     print('picker fileBytes $fileBytes');
-  //   } else {
-     
-  //   }
-  // }
 
+  void pickfile() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.audio);
+        
   
-  // void savefile(path) async {
-  //   SharedPreferences savefile = await SharedPreferences.getInstance();
-  //   savefile.setString('filepath', path);
-  // }
-
-  // void loadfile() async {
-  //   SharedPreferences savefile = await SharedPreferences.getInstance();
-  //   savefile.getString('');
-  // }
-
+if (result != null && result.files.single.path != null) {
+      PlatformFile file = result.files.first;
+      print(file.name);
+      print(file.path);
+      print(file.identifier);
+      print(file.extension);
+    } else {}
+  }
+}
