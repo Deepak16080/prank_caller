@@ -28,7 +28,13 @@ class _RingtoneState extends State<Ringtone> {
         ),
         actions: [
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                if (selectedItem == null) {
+                  toast(context, "Please select a ringtone");
+                  return;
+                }
+                Navigator.pop(context, selectedItem);
+              },
               child: const Text(
                 'Select',
                 style: TextStyle(color: Colors.white),
