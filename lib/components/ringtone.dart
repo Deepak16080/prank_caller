@@ -101,10 +101,31 @@ class _RingtoneState extends State<Ringtone> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: const Text('Select from files'),
-        icon: const Icon(Icons.drive_file_move),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FloatingActionButton.small(
+              heroTag: 'list 1',
+              onPressed: () {
+                setState(() {
+                  // file.delete();
+                });
+              },
+              backgroundColor: Colors.red,
+              child: const Icon(Icons.delete),
+            ),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                // restoreSettings();
+              });
+            },
+            child: const Icon(Icons.add_to_drive),
+          ),
+        ],
       ),
     );
   }
@@ -117,3 +138,27 @@ class _RingtoneState extends State<Ringtone> {
     ));
   }
 }
+  // Future<void> restoreSettings() async {
+  //   FilePickerResult? pickerResult =
+  //       await FilePicker.platform.pickFiles(type: FileType.audio);
+  //   if (pickerResult?.files.first != null) {
+  //     String fileName = pickerResult!.files.first.name;
+  //     print('picker fileName $fileName');
+  //     Uint8List? fileBytes = pickerResult.files.first.bytes;
+  //     print('picker fileBytes $fileBytes');
+  //   } else {
+     
+  //   }
+  // }
+
+  
+  // void savefile(path) async {
+  //   SharedPreferences savefile = await SharedPreferences.getInstance();
+  //   savefile.setString('filepath', path);
+  // }
+
+  // void loadfile() async {
+  //   SharedPreferences savefile = await SharedPreferences.getInstance();
+  //   savefile.getString('');
+  // }
+
