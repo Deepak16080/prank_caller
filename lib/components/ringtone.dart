@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:js_util';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -76,23 +78,43 @@ class _RingtoneState extends State<Ringtone> {
                     }
                     setState(() {});
                   },
-                  child: Card(
-                    shadowColor: Colors.green,
-                    shape: RoundedRectangleBorder(
-                      side: isSelected
-                          ? const BorderSide(color: Colors.green, width: 2)
-                          : const BorderSide(
-                              color: Colors.transparent, width: 2),
-                      borderRadius: BorderRadius.circular(10),
+                  child: Slidable(
+                    key: Key('$item'),
+                    endActionPane:
+                        ActionPane(motion: const ScrollMotion(), children: [
+                      SlidableAction(
+                        onPressed: (context) {
+                          setState(() {
+                            songs.removeAt(index);
+                          });
+                        },
+                        backgroundColor: Colors.red,
+                        icon: Icons.delete,
+                        label: 'Delete',
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(10),
+                            bottom: Radius.circular(10)),
+                      )
+                    ]),
+                    child: Card(
+                      shadowColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                        side: isSelected
+                            ? const BorderSide(color: Colors.green, width: 2)
+                            : const BorderSide(
+                                color: Colors.transparent, width: 2),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      margin: const EdgeInsets.only(
+                          top: 10.0, left: 15.0, right: 15.0),
+                      child: ListTile(
+                          textColor: Colors.blue,
+                          title: Text(title),
+                          leading: audioPlayer.playing && isSelected
+                              ? const Icon(Icons.pause, color: Colors.blue)
+                              : const Icon(Icons.play_arrow,
+                                  color: Colors.blue)),
                     ),
-                    margin: const EdgeInsets.only(
-                        top: 10.0, left: 15.0, right: 15.0),
-                    child: ListTile(
-                        textColor: Colors.blue,
-                        title: Text(title),
-                        leading: audioPlayer.playing && isSelected
-                            ? const Icon(Icons.pause, color: Colors.blue)
-                            : const Icon(Icons.play_arrow, color: Colors.blue)),
                   ),
                 );
               },
@@ -104,29 +126,11 @@ class _RingtoneState extends State<Ringtone> {
           }
         },
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FloatingActionButton.small(
-              heroTag: 'list 1',
-              onPressed: () {
-                setState(() {
-                  // file.delete();
-                });
-              },
-              backgroundColor: Colors.red,
-              child: const Icon(Icons.delete),
-            ),
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              pickfile();
-            },
-            child: const Icon(Icons.add_to_drive),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          pickfile();
+        },
+        child: const Icon(Icons.add_to_drive),
       ),
     );
   }
@@ -142,9 +146,8 @@ class _RingtoneState extends State<Ringtone> {
   void pickfile() async {
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(type: FileType.audio);
-        
-  
-if (result != null && result.files.single.path != null) {
+
+    if (result != null && result.files.single.path != null) {
       PlatformFile file = result.files.first;
       print(file.name);
       print(file.path);

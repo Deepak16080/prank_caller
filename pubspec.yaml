@@ -38,6 +38,7 @@ dependencies:
   google_fonts: ^5.1.0
   audioplayers: ^5.0.0
   just_audio: ^0.9.34
+  flutter_slidable: ^3.0.0
   
   shared_preferences: ^2.2.0
   get: ^4.6.5
