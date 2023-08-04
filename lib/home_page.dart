@@ -79,6 +79,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () async {
                 selectedRingtone = await Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const Ringtone()));
+                setState(() {});
               },
               child: Text("Ringtone"),
             )),
