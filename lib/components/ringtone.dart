@@ -1,6 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+
 import 'package:just_audio/just_audio.dart';
 
 class Ringtone extends StatefulWidget {
@@ -13,7 +17,9 @@ class Ringtone extends StatefulWidget {
 class _RingtoneState extends State<Ringtone> {
   final AudioPlayer audioPlayer = AudioPlayer();
 
+  File file = File('');
   String? selectedItem;
+  String? filepath;
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +34,7 @@ class _RingtoneState extends State<Ringtone> {
         ),
         actions: [
           TextButton(
-              onPressed: () {
-                if (selectedItem == null) {
-                  toast(context, "Please select a ringtone");
-                  return;
-                }
-                Navigator.pop(context, selectedItem);
-              },
+              onPressed: () {},
               child: const Text(
                 'Select',
                 style: TextStyle(color: Colors.white),
@@ -54,8 +54,9 @@ class _RingtoneState extends State<Ringtone> {
                 String path = songs[index].toString();
                 bool isMp3 = path.contains(".mp3");
 
-                String title =
-                    path.replaceAll("assets/songs/", "").replaceAll(".mp3", "");
+                String title = path
+                    .replaceAll("assets/ringtone/", "")
+                    .replaceAll(".mp3", "");
 
                 bool isSelected = selectedItem == path;
 
@@ -101,19 +102,100 @@ class _RingtoneState extends State<Ringtone> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: const Text('Select from files'),
-        icon: const Icon(Icons.drive_file_move),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FloatingActionButton.small(
+              heroTag: 'list 1',
+              onPressed: () {
+                setState(() {
+                  file.delete();
+                });
+              },
+              backgroundColor: Colors.red,
+              child: const Icon(Icons.delete),
+            ),
+          ),
+          FloatingActionButton(
+            
+            onPressed: () {
+              setState(() {
+                restoreSettings();
+              });
+            },
+            child: const Icon(Icons.add_to_drive),
+          ),
+        ],
       ),
-    );
+      //     appBar: AppBar(
+      //       title: Text('Ringtones'),
+      //       centerTitle: true,
+      //       backgroundColor: Colors.transparent,
+      //       leading: IconButton(
+      //         icon: const Icon(Icons.arrow_back),
+      //         onPressed: () {
+      //           Navigator.pop(context);
+      //         },
+      //       ),
+      //       actions: [
+      //         TextButton(
+      //             onPressed: () {
+      //               print('$selectedItem');
+      //             },
+      //             child: const Text(
+      //               'Select',
+      //               style: TextStyle(color: Colors.white),
+      //             ))
+      //       ],
+      //     ),
+        );
+      }
+
+      void toast(BuildContext context, String text) {}
+
+      // void pickfile() async {
+      //   FilePickerResult? result =
+      //       await FilePicker.platform.pickFiles(type: FileType.audio);
+      //   String? outputFile = await FilePicker.platform.saveFile(
+      //       dialogTitle: 'Please select an output file:', type: FileType.audio);
+
+      //   if (outputFile == null) {
+      //     // User canceled the picker
+      //   }
+
+      //   if (result != null) {
+      //     File file = File(result.files.single.path ?? '');
+      //     String filename = file.path.split('/').last;
+      //     String filepath = file.path;
+      //   } else {
+      //     // User canceled the picker
+      //   }
+ 
   }
 
-  void toast(BuildContext context, String text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(text, textAlign: TextAlign.center),
-      behavior: SnackBarBehavior.fixed,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-    ));
+  Future<void> restoreSettings() async {
+    FilePickerResult? pickerResult =
+        await FilePicker.platform.pickFiles(type: FileType.audio);
+    if (pickerResult?.files.first != null) {
+      String fileName = pickerResult!.files.first.name;
+      print('picker fileName $fileName');
+      Uint8List? fileBytes = pickerResult.files.first.bytes;
+      print('picker fileBytes $fileBytes');
+    } else {
+     
+    }
   }
-}
+
+  
+  // void savefile(path) async {
+  //   SharedPreferences savefile = await SharedPreferences.getInstance();
+  //   savefile.setString('filepath', path);
+  // }
+
+  // void loadfile() async {
+  //   SharedPreferences savefile = await SharedPreferences.getInstance();
+  //   savefile.getString('');
+  // }
+

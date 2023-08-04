@@ -12,104 +12,99 @@ class CallerVoice extends StatefulWidget {
 }
 
 class _CallerVoiceState extends State<CallerVoice> {
-  AudioPlayer audioPlayer = AudioPlayer();
-  // PlayerState audioPlayerState = PlayerState.paused;
-  // late AudioCache audioCache;
-  // final path = 'assets/songs/1.mp3';
+final AudioPlayer audioPlayer = AudioPlayer();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   audioCache = AudioCache();
-  //   audioPlayer.onPlayerStateChanged.listen((PlayerState s) {
-  //     setState(() {
-  //       audioPlayerState = s;
-  //     });
-  //   });
-  // }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   audioPlayer.release();
-  //   audioPlayer.dispose();
-  //   // audioCache.load(path);
-  // }
-
-  // playMusic() async {
-  //   await audioPlayer.play(AssetSource('$Path()'));
-  // }
-
-  // pauseMusic() async {
-  //   await audioPlayer.pause();
-  // }
+  String? selectedItem;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder<String>(
-      future: DefaultAssetBundle.of(context).loadString("AssetManifest.json"),
-      builder: (context, item) {
-        if (item.hasData) {
-          Map? jsonMap = jsonDecode(item.data!);
-          List? songs = jsonMap?.keys.toList();
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          TextButton(
+              onPressed: () {},
+              child: const Text(
+                'Select',
+                style: TextStyle(color: Colors.white),
+              ))
+        ],
+      ),
+      body: FutureBuilder<String>(
+        future: DefaultAssetBundle.of(context).loadString("AssetManifest.json"),
+        builder: (context, item) {
+          if (item.hasData) {
+            Map? jsonMap = jsonDecode(item.data!);
+            List callervoice = jsonMap?.keys.toList() ?? [];
 
-          return ListView.builder(
-            itemCount: songs?.length,
-            itemBuilder: (context, index) {
-              var path = songs![index].toString();
-              var title = path.split("/").last.toString();
-              title = title.replaceAll("%20", '');
-              title = title.split('.').first;
+            return ListView.builder(
+              itemCount: callervoice.length,
+              itemBuilder: (context, index) {
+                String path = callervoice[index].toString();
+                bool isMp3 = path.contains(".mp3");
 
-              return Container(
-                margin:
-                    const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                decoration: const BoxDecoration(
-		             color: Colors.blue,
-	            	borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                child: ListTile(
-                  textColor: Colors.white,
-                  title: Text(title),
-                  // subtitle: Text(
-                  //   "path: $path",
-                  //   style: const TextStyle(color: Colors.white, fontSize: 12),
-                  // ),
-                  leading: const Icon(
-                    Icons.play_arrow,
-                    // audioPlayerState == PlayerState.playing
-                    //     ? Icons.pause_circle_rounded
-                    //     : Icons.play_arrow_rounded,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                  onTap: () async {
-                    toast(context, ' $title');
-                    // audioPlayerState == PlayerState.playing
-                    //     ? pauseMusic()
-                    //     : playMusic();
-                   await audioPlayer.setAsset(path);
-                        await audioPlayer.play();
+                String title =
+                    path.replaceAll("assets/voicecall/", "").replaceAll(".mp3", "");
+
+                bool isSelected = selectedItem == path;
+
+                if (!isMp3) return const SizedBox.shrink();
+
+                return InkWell(
+                  onTap: () {
+                    selectedItem = path;
+                    if (isSelected && audioPlayer.playing) {
+                      audioPlayer.pause();
+                    } else {
+                      audioPlayer
+                        ..setAsset(path)
+                        ..play();
+                    }
+                    setState(() {});
                   },
-                ),
-              );
-            },
-          );
-        } else {
-          return const Center(
-            child: Text('empty directory'),
-          );
-        }
-      },
-    ));
+                  child: Card(
+                    shadowColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      side: isSelected
+                          ? const BorderSide(color: Colors.green, width: 2)
+                          : const BorderSide(
+                              color: Colors.transparent, width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: const EdgeInsets.only(
+                        top: 10.0, left: 15.0, right: 15.0),
+                    child: ListTile(
+                        textColor: Colors.blue,
+                        title: Text(title),
+                        leading: audioPlayer.playing && isSelected
+                            ? const Icon(Icons.pause, color: Colors.blue)
+                            : const Icon(Icons.play_arrow, color: Colors.blue)),
+                  ),
+                );
+              },
+            );
+          } else {
+            return const Center(
+              child: Text('empty directory'),
+            );
+          }
+        },
+      ),
+      
+    );
   }
 
   void toast(BuildContext context, String text) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(text, textAlign: TextAlign.center),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      behavior: SnackBarBehavior.fixed,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
     ));
   }
 }

@@ -6,6 +6,7 @@ import 'package:prank_caller/components/ringtone.dart';
 import 'package:prank_caller/widget/app_text.dart';
 
 class HomePage extends StatefulWidget {
+  
   const HomePage({super.key});
 
   @override
@@ -13,7 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String? selectedRingtone;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +79,6 @@ class _HomePageState extends State<HomePage> {
               onPressed: () async {
                 selectedRingtone = await Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const Ringtone()));
-                setState(() {});
               },
               child: Text("Ringtone"),
             )),
@@ -105,6 +104,8 @@ class _HomePageState extends State<HomePage> {
               child: const Text('call me'),
             )),
       ])
-    ]));
+    
+    
+    );
   }
 }
