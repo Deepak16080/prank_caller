@@ -9,7 +9,7 @@ import 'package:prank_caller/models/ringtone_model_list.dart';
 
 import 'package:prank_caller/widget/app_text.dart';
 
-
+import 'utils/enums.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,9 +19,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String? selectedRingtone;
-  String? selectedVoicecall;
-  String name = lists.toString();
+  AppAudio? selectedAudio;
+  String name = networkFiles.toString();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,46 +72,54 @@ class _HomePageState extends State<HomePage> {
             ),
             child: MaterialButton(
               onPressed: () async {
-                selectedVoicecall = await
-                Navigator.push(
+                final audio = await Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const CallerVoice()));
+                if (audio is AppAudio) {
+                  selectedAudio = audio;
+                }
               },
-            
               child: const Text('voice '),
             )),
-              if (selectedVoicecall != null)
-               Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-            ),
-            child: Text(
-              "Selected callerVoice: ${selectedVoicecall?.replaceAll('assets/song/', '').replaceAll('.mp3', '')}",
-              style: const TextStyle(color: Colors.green),
-            ),
-          ),
-
+        // if (selectedVoicecall != null)
+        //   Padding(
+        //     padding: const EdgeInsets.only(
+        //       left: 20,
+        //     ),
+        //     child: Text(
+        //       "Selected callerVoice: ${selectedVoicecall?.replaceAll('assets/song/', '').replaceAll('.mp3', '')}",
+        //       style: const TextStyle(color: Colors.green),
+        //     ),
+        //   ),
         Padding(
             padding: const EdgeInsets.only(
               left: 20,
             ),
             child: MaterialButton(
               onPressed: () async {
-                selectedRingtone = await Navigator.push(context,
+                final audio = await Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const Ringtone()));
+                if (audio is AppAudio) {
+                  selectedAudio = audio;
+                }
                 setState(() {});
               },
               child: Text("Ringtone"),
             )),
-        if (selectedRingtone != null)
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-            ),
-            child: Text(
-              "Selected ringtone: ${selectedRingtone?.replaceAll("assets/song/", "").replaceAll(".mp3", "")}",
-              style: TextStyle(color: Colors.green),
+        if (selectedAudio != null)
+          GestureDetector(
+            onTap: () {
+              selectedAudio?.play();
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+              ),
+              child: Text(
+                "Selected ringtone: ${selectedAudio?.name?.replaceAll("assets/song/", "").replaceAll(".mp3", "")}",
+                style: TextStyle(color: Colors.green),
+              ),
             ),
           ),
         Padding(
