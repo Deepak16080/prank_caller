@@ -1,5 +1,5 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 
 import 'package:prank_caller/models/indexlist.dart';
 
@@ -12,12 +12,12 @@ class CallerVoice extends StatefulWidget {
 
 class _CallerVoiceState extends State<CallerVoice> {
   AudioPlayer audioPlayer = AudioPlayer();
-  late Source audioUrl;
 
   String? selectedvoice;
 
   @override
   Widget build(BuildContext context) {
+    final player = AudioPlayer();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -46,7 +46,7 @@ class _CallerVoiceState extends State<CallerVoice> {
           return ListView.builder(
             itemCount: lists.length,
             itemBuilder: (context, index) {
-              audioUrl = UrlSource(lists[index].url);
+              String audioUrl = lists[index].url;
               String name = lists[index].name.toString();
 
               String title = name;
@@ -55,16 +55,15 @@ class _CallerVoiceState extends State<CallerVoice> {
 
               return InkWell(
                 onTap: () async {
-                   selectedvoice = name;
-                    if (isSelected && audioPlayer.()) {
-                      audioPlayer.pause();
-                    } else {
-                      
-                        
-                      audioPlayer.play (audioUrl);
-                    }
-                    setState(() {});
-                  audioPlayer.play(audioUrl);
+                  selectedvoice = name;
+                  if (isSelected && audioPlayer.playing) {
+                    audioPlayer.pause();
+                  } else {
+                    audioPlayer
+                      ..setUrl(audioUrl)
+                      ..play();
+                  }
+                  setState(() {});
                 },
                 child: Card(
                   shadowColor: Colors.green,
@@ -79,8 +78,7 @@ class _CallerVoiceState extends State<CallerVoice> {
                   child: ListTile(
                       textColor: Colors.blue,
                       title: Text('$title '),
-                      leading: audioPlayer.onPlayerComplete.isBroadcast &&
-                              isSelected
+                      leading: audioPlayer.playing && isSelected
                           ? const Icon(Icons.pause, color: Colors.blue)
                           : const Icon(Icons.play_arrow, color: Colors.blue)),
                 ),
