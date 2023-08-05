@@ -1,11 +1,15 @@
 import 'package:duration_picker/duration_picker.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/caller_voice.dart';
 import 'package:prank_caller/components/ringtone.dart';
+import 'package:prank_caller/models/ringtone_model_list.dart';
+
 import 'package:prank_caller/widget/app_text.dart';
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,6 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String? selectedRingtone;
   String? selectedVoicecall;
+  String name = lists.toString();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +88,7 @@ class _HomePageState extends State<HomePage> {
               left: 20,
             ),
             child: Text(
-              "Selected callerVoice: ${selectedVoicecall?.replaceAll('', '').replaceAll('', '')}",
+              "Selected callerVoice: ${selectedVoicecall?.replaceAll('assets/song/', '').replaceAll('.mp3', '')}",
               style: const TextStyle(color: Colors.green),
             ),
           ),
