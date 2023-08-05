@@ -1,5 +1,9 @@
+
+
+import 'package:duration_picker/duration_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prank_caller/components/alarm.dart';
+
 import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/caller_voice.dart';
 import 'package:prank_caller/components/ringtone.dart';
@@ -53,8 +57,9 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(left: 20, top: 280),
             child: MaterialButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Alarm()));
+                setState(() {
+                  time();
+                });
               },
               child: const Text('Timer'),
             )),
@@ -107,4 +112,18 @@ class _HomePageState extends State<HomePage> {
       ])
     ]));
   }
-}
+
+  void time() async {
+     var resultingDuration = await showDurationPicker(
+      decoration: BoxDecoration(border: Border.symmetric(horizontal: BorderSide(color: Colors.transparent))),
+                    context: context,
+                    initialTime: const Duration(minutes: 0),
+                    baseUnit: BaseUnit.minute
+                  );
+                 
+                }
+
+     
+   
+  }
+
