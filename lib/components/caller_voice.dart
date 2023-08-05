@@ -1,24 +1,20 @@
-
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 
 import 'package:prank_caller/models/indexlist.dart';
 
 class CallerVoice extends StatefulWidget {
   const CallerVoice({super.key});
- 
+
   @override
   State<CallerVoice> createState() => _CallerVoiceState();
 }
 
 class _CallerVoiceState extends State<CallerVoice> {
- 
   AudioPlayer audioPlayer = AudioPlayer();
-  Future<void> playAudioFromUrl(String url) async {
-    await audioPlayer.setUrl('https://www.prokerala.com/downloads/ringtones/download.php?id=60526');
-  }
+  late Source audioUrl;
 
-  String? selectedItem;
+  String? selectedvoice;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +30,11 @@ class _CallerVoiceState extends State<CallerVoice> {
           actions: [
             TextButton(
                 onPressed: () {
-                  audioPlayer.stop();
+                  if (selectedvoice == null) {
+                    toast(context, "Please select a voice");
+                    return;
+                  }
+                  Navigator.pop(context, selectedvoice);
                 },
                 child: const Text(
                   'Select',
@@ -43,27 +43,28 @@ class _CallerVoiceState extends State<CallerVoice> {
           ],
         ),
         body: FutureBuilder<String>(builder: (context, item) {
-          // if (item.hasData) {
-          //   Map? jsonMap = jsonDecode(item.data!);
-          //   List lists = jsonMap?.keys.toList() ?? [];
-
           return ListView.builder(
             itemCount: lists.length,
             itemBuilder: (context, index) {
-              String name = lists[index].toString();
-              // bool isMp3 = name.contains(".mp3");
+              audioUrl = UrlSource(lists[index].url);
+              String name = lists[index].name.toString();
 
-              String title =
-                  name.replaceAll("$UriData", "").replaceAll(".mp3", "$name");
+              String title = name;
 
-              bool isSelected = selectedItem == name;
-
-              // if (!isMp3) return const SizedBox.shrink();
+              bool isSelected = selectedvoice == name;
 
               return InkWell(
-                onTap: () {
-                  playAudioFromUrl(
-                      'https://www.prokerala.com/downloads/ringtones/download.php?id=60526');
+                onTap: () async {
+                   selectedvoice = name;
+                    if (isSelected && audioPlayer.()) {
+                      audioPlayer.pause();
+                    } else {
+                      
+                        
+                      audioPlayer.play (audioUrl);
+                    }
+                    setState(() {});
+                  audioPlayer.play(audioUrl);
                 },
                 child: Card(
                   shadowColor: Colors.green,
@@ -77,15 +78,22 @@ class _CallerVoiceState extends State<CallerVoice> {
                       const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                   child: ListTile(
                       textColor: Colors.blue,
-                      title: Text('$title'),
-                      leading:
-                          // audioPlayer.onPlayerComplete.isBroadcast && isSelected
-                          //     ? const Icon(Icons.pause, color: Colors.blue):
-                          const Icon(Icons.play_arrow, color: Colors.blue)),
+                      title: Text('$title '),
+                      leading: audioPlayer.onPlayerComplete.isBroadcast &&
+                              isSelected
+                          ? const Icon(Icons.pause, color: Colors.blue)
+                          : const Icon(Icons.play_arrow, color: Colors.blue)),
                 ),
               );
             },
           );
         }));
+  }
+
+  void toast(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(text, textAlign: TextAlign.center),
+        behavior: SnackBarBehavior.fixed,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))));
   }
 }

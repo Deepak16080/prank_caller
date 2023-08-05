@@ -1,37 +1,21 @@
 class RingtoneList {
-  final String name,Url;
-//   // final String path;
+  final String name, url;
 
-  RingtoneList({required this.name,required this.Url});
+
+  RingtoneList({required this.url,required this.name});
 }
 
 List<RingtoneList> lists = [
-  RingtoneList(Url: 'https://mp3ringtonesdownload.net/ringtone/dil-bechara-neha-kakkar/#!',name: 'neha kakkar'),
-  RingtoneList(Url: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60526',name: '1'),
-  RingtoneList(Url: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60426',name: '2'),
-  RingtoneList(Url: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60427',name: '3'),
-  RingtoneList(Url: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60428',name: '4'),
-  RingtoneList(Url: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60529',name: '5'),
-  RingtoneList(Url: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60416',name: '6'),
-  RingtoneList(Url: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60536',name: '7'),
-  RingtoneList(Url: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60436',name: '8'),
-  RingtoneList(Url: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60423',name: '9'),
-  RingtoneList(Url: 'https://www.prokerala.com/downloads/ringtones/download.php?id=60412',name: '10'),
-
-// //   RingtoneList(path: 'assets/songs/1.mp3'),
-// //   RingtoneList(path: 'assets/songs/2.mp3'),
-// //   RingtoneList(path: 'assets/songs/3.mp3'),
-// //   RingtoneList(path: 'assets/songs/4.mp3'),
-// //   RingtoneList(path: 'assets/songs/5.mp3'),
-// //   RingtoneList(path: 'assets/songs/6.mp3'),
-// //   RingtoneList(path: 'assets/songs/7.mp3'),
-// //   RingtoneList(path: 'assets/songs/8.mp3'),
-// //   RingtoneList(path: 'assets/songs/9.mp3'),
-// //   RingtoneList(path: 'assets/songs/10.mp3'),
-// //   RingtoneList(path: 'assets/songs/11.mp3'),
-// //   RingtoneList(path: 'assets/songs/12.mp3'),
-// //   RingtoneList(path: 'assets/songs/13.mp3'),
-// //   RingtoneList(path: 'assets/songs/14.mp3'),
-// //   RingtoneList(path: 'assets/songs/15.mp3'),
-// //   RingtoneList(path: 'assets/songs/16.mp3'),
+  
+  RingtoneList(url: 'https://d6cp9b00-a.akamaihd.net/downloads/ringtones/files/mp3/ram-siya-ram-siya-ram-jay-jay-ram-siya-ram-60526.mp3',name: 'Ram siya ram ringtone'),
+  RingtoneList(url: 'https://d6cp9b00-a.akamaihd.net/downloads/ringtones/files/mp3/meri-good-morning-tu-60557.mp3',name: 'Meri Good morning tu hai '),
+  RingtoneList(url: 'https://d6cp9b00-a.akamaihd.net/downloads/ringtones/files/mp3/royi-na-jo-yaad-meri-aayi-sad-love-49876-1-50459-50473.mp3',name: 'Royi na jo yaad meri ayyi we'),
+  RingtoneList(url: 'https://d6cp9b00-a.akamaihd.net/downloads/ringtones/files/mp3/ishq-risk-ringtone-1143-60548.mp3',name: 'ishq- risk'),
+  RingtoneList(url: 'https://d6cp9b00-a.akamaihd.net/downloads/ringtones/files/mp3/pal-pal-dil-ke-paas-o-likhti-tere-naa-jindri-zaaniye-palak-muchhal-ringtone-60474.mp3',name: 'Pal Pal dil ke pass'),
+  RingtoneList(url: 'https://mp3ringtonesdownload.net/wp-content/uploads/2020/07/meri-maa-mera-rabb.mp3', name: 'Meri ma mera rab'),
+RingtoneList(url: 'https://www.allsamsungringtones.com/download/xiaomi-redmi-note-12r-pro-ringtone/?wpdmdl=38553&refresh=64cdfba0df6181691220896', name: 'Mi ringtone'),
+RingtoneList(url: 'https://www.allsamsungringtones.com/download/oppo-a58-4g-official-ringtone/?wpdmdl=40510&refresh=64cdfcd10bc641691221201', name: 'Oppo ringtone'),
+RingtoneList(url: 'https://www.allsamsungringtones.com/download/samsung-ringtone-original-clarity/?wpdmdl=39358&refresh=64cdfda68b8e01691221414', name: 'Samsung ringtone'),
+RingtoneList(url: 'https://www.allsamsungringtones.com/download/best-ringtone-for-ipad/?wpdmdl=22357&refresh=64cdfe273f7671691221543', name: 'Apple ipad ringtone'),
+RingtoneList(url: 'https://www.allsamsungringtones.com/download/iphone-whatsapp-ringtone-download-mp3/?wpdmdl=39206&refresh=64cdfeba583731691221690', name: 'Apple whatsapp ringtone')
 ];

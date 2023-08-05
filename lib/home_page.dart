@@ -1,5 +1,3 @@
-
-
 import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String? selectedRingtone;
+  String? selectedVoicecall;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,14 +67,27 @@ class _HomePageState extends State<HomePage> {
               left: 20,
             ),
             child: MaterialButton(
-              onPressed: () {
+              onPressed: () async {
+                selectedVoicecall = await
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const CallerVoice()));
               },
+            
               child: const Text('voice '),
             )),
+              if (selectedVoicecall != null)
+               Padding(
+            padding: const EdgeInsets.only(
+              left: 20,
+            ),
+            child: Text(
+              "Selected callerVoice: ${selectedVoicecall?.replaceAll('', '').replaceAll('', '')}",
+              style: const TextStyle(color: Colors.green),
+            ),
+          ),
+
         Padding(
             padding: const EdgeInsets.only(
               left: 20,
@@ -114,16 +126,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   void time() async {
-     var resultingDuration = await showDurationPicker(
-      decoration: BoxDecoration(border: Border.symmetric(horizontal: BorderSide(color: Colors.transparent))),
-                    context: context,
-                    initialTime: const Duration(minutes: 0),
-                    baseUnit: BaseUnit.minute
-                  );
-                 
-                }
-
-     
-   
+    var resultingDuration = await showDurationPicker(
+        decoration: BoxDecoration(
+            border: Border.symmetric(
+                horizontal: BorderSide(color: Colors.transparent))),
+        context: context,
+        initialTime: const Duration(minutes: 0),
+        baseUnit: BaseUnit.minute);
   }
-
+}
