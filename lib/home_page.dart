@@ -184,10 +184,14 @@ class _HomePageState extends State<HomePage> {
       hideHeader: true,
       confirmText: 'OK',
       onSelect: (picker, index, selected) {
-
-        setState(() {
-        print('value is printed but not showing');
-        });
+        if (selected == false) {}
+      },
+      onCancel: () {
+        if (Value == null) {
+          toast(context, "Please select a time");
+          return;
+        }
+        
       },
       confirmTextStyle:
           TextStyle(inherit: false, color: Colors.red, fontSize: 22),
@@ -201,6 +205,13 @@ class _HomePageState extends State<HomePage> {
       },
     ).showDialog(context);
   }
+
+  void toast(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(text, textAlign: TextAlign.center),
+      behavior: SnackBarBehavior.fixed,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+    ));
 
 //   void time() async {
 //     var resultingDuration = await showDurationPicker(
@@ -219,5 +230,5 @@ class _HomePageState extends State<HomePage> {
 //         context: context,
 //         initialTime: const Duration(minutes: 0),
 //         baseUnit: BaseUnit.minute);
-//   }
+  }
 }
