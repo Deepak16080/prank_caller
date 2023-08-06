@@ -43,6 +43,7 @@ dependencies:
   get: ^4.6.5
   file_picker: ^5.3.3
   duration_picker: ^1.1.1
+  flutter_picker: ^2.1.0
 
 dev_dependencies:
   flutter_test:

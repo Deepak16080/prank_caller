@@ -22,7 +22,7 @@ class _CallerVoiceState extends State<CallerVoice> {
       return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text('Caller Voice'),
+          title: const Text('Caller Voice'),
           backgroundColor: Colors.transparent,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),

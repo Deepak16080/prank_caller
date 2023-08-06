@@ -126,10 +126,11 @@ class _RingtoneState extends State<Ringtone> {
 
     if (result != null && result.files.single.path != null) {
       PlatformFile file = result.files.first;
+      // ignore: use_build_context_synchronously
       Navigator.pop(
           context, AppAudio(path: file.path!, name: path.basename(file.path!)));
     } else {
-      // TODO : show error
+      toast(context, 'please select an audio');
     }
   }
 }

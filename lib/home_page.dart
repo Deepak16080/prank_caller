@@ -1,6 +1,9 @@
 import 'package:duration_picker/duration_picker.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_picker/picker.dart';
+import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 
 import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/caller_voice.dart';
@@ -19,6 +22,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  AudioPlayer? audioPlayer;
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
+
+  // @override
+  // void dispose() {
+  //   audioPlayer?.stop();
+  //   super.dispose();
+  // }
+
   AppAudio? selectedAudio;
   String name = networkFiles.toString();
   @override
@@ -61,7 +76,7 @@ class _HomePageState extends State<HomePage> {
             child: MaterialButton(
               onPressed: () {
                 setState(() {
-                  time();
+                  onTap();
                 });
               },
               child: const Text('Timer'),
@@ -117,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                 left: 20,
               ),
               child: Text(
-                "Selected ringtone: ${selectedAudio?.name?.replaceAll("assets/song/", "").replaceAll(".mp3", "")}",
+                "Selected ringtone: ${selectedAudio?.name?.replaceAll("", "").replaceAll(".mp3", "")}",
                 style: TextStyle(color: Colors.green),
               ),
             ),
@@ -137,13 +152,72 @@ class _HomePageState extends State<HomePage> {
     ]));
   }
 
-  void time() async {
-    var resultingDuration = await showDurationPicker(
-        decoration: BoxDecoration(
-            border: Border.symmetric(
-                horizontal: BorderSide(color: Colors.transparent))),
-        context: context,
-        initialTime: const Duration(minutes: 0),
-        baseUnit: BaseUnit.minute);
+  void onTap() {
+    Picker(
+      adapter: NumberPickerAdapter(data: <NumberPickerColumn>[
+        const NumberPickerColumn(
+            begin: 0, end: 60, suffix: Text(' minutes'), jump: 0),
+        const NumberPickerColumn(
+            begin: 0, end: 60, suffix: Text('seconds'), jump: 5)
+      ]),
+      delimiter: <PickerDelimiter>[
+        PickerDelimiter(
+          child: Container(
+            //         decoration: const BoxDecoration(
+            //   color: Colors.white,
+            //   borderRadius: BorderRadius.all(Radius.circular(10)),
+            //   boxShadow: [
+            //     BoxShadow(
+            //       color: Colors.grey,
+            //       blurRadius: 20.0, // Soften the shaodw
+            //       spreadRadius: 2.0,
+            //       offset: Offset(0.0, 0.0),
+            //     )
+            //   ],
+            // ),
+            width: 30.0,
+            alignment: Alignment.center,
+            child: Icon(Icons.more_vert),
+          ),
+        )
+      ],
+      hideHeader: true,
+      confirmText: 'OK',
+      onSelect: (picker, index, selected) {
+
+        setState(() {
+        print('value is printed but not showing');
+        });
+      },
+      confirmTextStyle:
+          TextStyle(inherit: false, color: Colors.red, fontSize: 22),
+      title: const Text('Select Time'),
+      selectedTextStyle: TextStyle(color: Colors.blue),
+      onConfirm: (Picker picker, List<int> value) {
+        // You get your duration here
+        Duration _duration = Duration(
+            minutes: picker.getSelectedValues()[1],
+            seconds: picker.getSelectedValues()[1]);
+      },
+    ).showDialog(context);
   }
+
+//   void time() async {
+//     var resultingDuration = await showDurationPicker(
+//         decoration:  const BoxDecoration(
+//     color: Colors.white,
+//     borderRadius: BorderRadius.all(Radius.circular(10)),
+//     boxShadow: [
+//       BoxShadow(
+//         color: Colors.grey,
+//         blurRadius: 20.0, // Soften the shaodw
+//         spreadRadius: 2.0,
+//         offset: Offset(0.0, 0.0),
+//       )
+//     ],
+//   ),
+//         context: context,
+//         initialTime: const Duration(minutes: 0),
+//         baseUnit: BaseUnit.minute);
+//   }
 }
