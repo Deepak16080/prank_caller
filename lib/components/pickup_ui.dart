@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:prank_caller/components/pickup_ui.dart';
 
-class CallerProfilePage extends StatefulWidget {
-  const CallerProfilePage({super.key});
+class PickUpUi extends StatefulWidget {
+  const PickUpUi({super.key});
 
   @override
-  State<CallerProfilePage> createState() => _CallerProfilePageState();
+  State<PickUpUi> createState() => _PickUpUiState();
 }
 
-class _CallerProfilePageState extends State<CallerProfilePage> {
+class _PickUpUiState extends State<PickUpUi> {
   String? name = 'Gaurav';
   String? no = '+917665070041';
   @override
@@ -34,7 +33,7 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
                   padding: const EdgeInsets.only(top: 30),
                   child: Text(
                     '$name',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
                 Padding(
@@ -44,30 +43,19 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
                     style: const TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 100),
-                  child: Container(
-                    width: 160,
-                    height: 30,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(75),
-                        color: Colors.blueGrey.shade400),
-                    child: const Text(
-                      'Reply with message',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Text(
+                    '00:00',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PickUpUi(),
-                        ));
-                  },
-                  child: const Text('Ui call'),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  
+                  children: [
+                    Icon(Icons.macro_off)
+                  ],
                 )
               ],
             ),
@@ -75,5 +63,4 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
         ]));
   }
 }
-
 

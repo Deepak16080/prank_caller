@@ -1,17 +1,11 @@
-import 'package:duration_picker/duration_picker.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/picker.dart';
-import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-
 import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/caller_voice.dart';
 import 'package:prank_caller/components/ringtone.dart';
 import 'package:prank_caller/models/ringtone_model_list.dart';
-
 import 'package:prank_caller/widget/app_text.dart';
-
 import 'utils/enums.dart';
 
 class HomePage extends StatefulWidget {
@@ -184,15 +178,9 @@ class _HomePageState extends State<HomePage> {
       hideHeader: true,
       confirmText: 'OK',
       onSelect: (picker, index, selected) {
-        if (selected == false) {}
+        return ;
       },
-      onCancel: () {
-        if (Value == null) {
-          toast(context, "Please select a time");
-          return;
-        }
-        
-      },
+      onCancel: () {},
       confirmTextStyle:
           TextStyle(inherit: false, color: Colors.red, fontSize: 22),
       title: const Text('Select Time'),
@@ -221,7 +209,7 @@ class _HomePageState extends State<HomePage> {
 //     boxShadow: [
 //       BoxShadow(
 //         color: Colors.grey,
-//         blurRadius: 20.0, // Soften the shaodw
+//         blurRadius: 20.0, // Soften the shadow
 //         spreadRadius: 2.0,
 //         offset: Offset(0.0, 0.0),
 //       )
