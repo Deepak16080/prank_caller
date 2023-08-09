@@ -34,7 +34,7 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
                   padding: const EdgeInsets.only(top: 30),
                   child: Text(
                     '$name',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
                 Padding(

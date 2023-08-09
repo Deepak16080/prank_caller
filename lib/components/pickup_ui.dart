@@ -50,12 +50,14 @@ class _PickUpUiState extends State<PickUpUi> {
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  
-                  children: [
-                    Icon(Icons.macro_off)
-                  ],
+                const Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.mic),
+                      
+                    ],
+                  ),
                 )
               ],
             ),
