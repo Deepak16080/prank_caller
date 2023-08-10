@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:prank_caller/home_page.dart';
 
 class PickUpUi extends StatefulWidget {
   const PickUpUi({super.key});
@@ -13,14 +15,14 @@ class _PickUpUiState extends State<PickUpUi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blueGrey.shade200,
+        backgroundColor: Colors.white,
         body: Stack(children: [
           Center(
             child: Expanded(
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 90),
+                    padding: const EdgeInsets.only(top: 30),
                     child: CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.blueGrey.shade400,
@@ -33,92 +35,148 @@ class _PickUpUiState extends State<PickUpUi> {
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
                     child: Text(
-                      '$name',
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text(
-                      '$no',
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                      '$name', // add a name and number
+                      style: const TextStyle(
+                        fontSize: 35,
+                      ),
                     ),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(top: 10),
                     child: Text(
                       '00:00',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                  
-                  const Padding(
-                    padding: EdgeInsets.only(top: 260),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 45,),
-                              child: Icon(Icons.video_call,size: 50,),
-                              
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 45),
-                          child: Icon(Icons.add,size: 50,),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 45),
-                          child: Icon(Icons.note_add,size: 40,)
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 50),
-                          child: Row(
-                          children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 45),
-                            child: Icon(Icons.mic_off_outlined,size: 50,),
-                            
+                  Padding(
+                    padding: const EdgeInsets.only(top: 300),
+                    child: Container(
+                      height: 330,
+                      decoration: const BoxDecoration(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(30)),
+                          color: Color(0xffE2F0F3)),
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 40),
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.white,
+                                  child: IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.dialpad,
+                                      ),
+                                      alignment: Alignment.center,
+                                      iconSize: 40),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 40),
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.white,
+                                  child: IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.mic_off_outlined,
+                                      ),
+                                      alignment: Alignment.center,
+                                      iconSize: 40),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 40),
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.white,
+                                  child: IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.volume_up_outlined,
+                                      ),
+                                      alignment: Alignment.center,
+                                      iconSize: 40),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 40),
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.white,
+                                  child: IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.more_vert_outlined,
+                                      ),
+                                      alignment: Alignment.center,
+                                      iconSize: 40),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 24),
+                                child: Text(
+                                  'Dialpad',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 35),
+                                child: Text(
+                                  'Mute',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 50),
+                                child: Text(
+                                  'speaker',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 50),
+                                child: Text(
+                                  'more',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                            ],
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 40),
-                            child: Icon(Icons.pause_circle_filled_rounded,size: 50,),                    
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 50),
-                            child: Icon(Icons.record_voice_over_outlined,size: 40,)
-                          ),
-                          ],),
-                        ),
-                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8),
-                          child: Row(
-                          children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 40),
-                            child: Icon(Icons.speaker_phone_rounded,size: 50,),
-                            
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 40),
+                            padding: const EdgeInsets.only(top: 60),
                             child: CircleAvatar(
-                              radius: 40,
                               backgroundColor: Colors.red,
-                              child: Icon(Icons.call_end,size: 40),
-                            )                    
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 40),
-                            child: Icon(Icons.more_horiz_rounded,size: 40,)
-                          ),
-                          ],),
-                        ),
-                      ],
+                              radius: 35,
+                              child: IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => HomePage(),
+                                        ));
+                                  },
+                                  icon: Icon(Icons.call_end_outlined),iconSize: 40,color: Colors.white,),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  
+                  )
                 ],
               ),
             ),
@@ -126,4 +184,3 @@ class _PickUpUiState extends State<PickUpUi> {
         ]));
   }
 }
-
