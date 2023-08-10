@@ -17,16 +17,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   AudioPlayer? audioPlayer;
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
-  // @override
-  // void dispose() {
-  //   audioPlayer?.stop();
-  //   super.dispose();
-  // }
 
   AppAudio? selectedAudio;
   String name = networkFiles.toString();
@@ -114,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                 }
                 setState(() {});
               },
-              child: Text("Ringtone"),
+              child: const Text("Ringtone"),
             )),
         if (selectedAudio != null)
           GestureDetector(
@@ -127,7 +117,7 @@ class _HomePageState extends State<HomePage> {
               ),
               child: Text(
                 "Selected ringtone: ${selectedAudio?.name?.replaceAll("", "").replaceAll(".mp3", "")}",
-                style: TextStyle(color: Colors.green),
+                style: const TextStyle(color: Colors.green),
               ),
             ),
           ),
@@ -171,7 +161,7 @@ class _HomePageState extends State<HomePage> {
             // ),
             width: 30.0,
             alignment: Alignment.center,
-            child: Icon(Icons.more_vert),
+            child: const Icon(Icons.more_vert),
           ),
         )
       ],
@@ -182,7 +172,7 @@ class _HomePageState extends State<HomePage> {
       },
       onCancel: () {},
       confirmTextStyle:
-          TextStyle(inherit: false, color: Colors.red, fontSize: 22),
+          const TextStyle(inherit: false, color: Colors.red, fontSize: 22),
       title: const Text('Select Time'),
       selectedTextStyle: TextStyle(color: Colors.blue),
       onConfirm: (Picker picker, List<int> value) {
