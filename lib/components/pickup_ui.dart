@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:prank_caller/home_page.dart';
 
 class PickUpUi extends StatefulWidget {
@@ -10,7 +9,7 @@ class PickUpUi extends StatefulWidget {
 }
 
 class _PickUpUiState extends State<PickUpUi> {
-  String? name = 'Gaurav';
+  String? name = 'Deepak Yadav';
   String? no = '+917665070041';
   @override
   Widget build(BuildContext context) {
@@ -25,11 +24,7 @@ class _PickUpUiState extends State<PickUpUi> {
                     padding: const EdgeInsets.only(top: 30),
                     child: CircleAvatar(
                       radius: 50,
-                      backgroundColor: Colors.blueGrey.shade400,
-                      child: const Icon(
-                        Icons.person,
-                        size: 60,
-                      ),
+                      child: Image.asset('assets/Profile/Profile2.png',fit: BoxFit.cover,)
                     ),
                   ),
                   Padding(
@@ -75,7 +70,7 @@ class _PickUpUiState extends State<PickUpUi> {
                                         Icons.dialpad,
                                       ),
                                       alignment: Alignment.center,
-                                      iconSize: 40),
+                                      iconSize: 30,color: Colors.black,),
                                 ),
                               ),
                               Padding(
@@ -90,7 +85,7 @@ class _PickUpUiState extends State<PickUpUi> {
                                         Icons.mic_off_outlined,
                                       ),
                                       alignment: Alignment.center,
-                                      iconSize: 40),
+                                      iconSize: 30,color: Colors.black,),
                                 ),
                               ),
                               Padding(
@@ -105,7 +100,7 @@ class _PickUpUiState extends State<PickUpUi> {
                                         Icons.volume_up_outlined,
                                       ),
                                       alignment: Alignment.center,
-                                      iconSize: 40),
+                                      iconSize: 30,color: Colors.black,),
                                 ),
                               ),
                               Padding(
@@ -120,43 +115,46 @@ class _PickUpUiState extends State<PickUpUi> {
                                         Icons.more_vert_outlined,
                                       ),
                                       alignment: Alignment.center,
-                                      iconSize: 40),
+                                      iconSize: 30,color: Colors.black,),
                                 ),
                               ),
                             ],
                           ),
-                          const Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 24),
-                                child: Text(
-                                  'Dialpad',
-                                  style: TextStyle(fontSize: 16),
+                           const Padding(
+                             padding: EdgeInsets.only(bottom: 10),
+                             child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 24),
+                                  child: Text(
+                                    'Dialpad',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 35),
-                                child: Text(
-                                  'Mute',
-                                  style: TextStyle(fontSize: 16),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 35),
+                                  child: Text(
+                                    'Mute',
+                                    style: TextStyle(fontSize: 16,),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 50),
-                                child: Text(
-                                  'speaker',
-                                  style: TextStyle(fontSize: 16),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 50),
+                                  child: Text(
+                                    'speaker',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 50),
-                                child: Text(
-                                  'more',
-                                  style: TextStyle(fontSize: 16),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 50),
+                                  child: Text(
+                                    'more',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                 ),
+                              ],
                               ),
-                            ],
-                          ),
+                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 60),
                             child: CircleAvatar(

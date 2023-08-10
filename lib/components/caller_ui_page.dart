@@ -23,11 +23,8 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
                   padding: const EdgeInsets.only(top: 90),
                   child: CircleAvatar(
                     radius: 50,
-                    backgroundColor: Colors.blueGrey.shade400,
-                    child: const Icon(
-                      Icons.person,
-                      size: 60,
-                    ),
+                    backgroundColor: Colors.white,
+                    child: Image.asset('assets/Profile/profile.png',fit: BoxFit.cover,)
                   ),
                 ),
                 Padding(
