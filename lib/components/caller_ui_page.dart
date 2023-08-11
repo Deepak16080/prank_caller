@@ -26,27 +26,20 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 120),
-            child: RichText(
-                text: TextSpan(
-                    text: 'call via ',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                    children: const [
-                  TextSpan(
-                    text: 'airtel',
-                    style: TextStyle(fontSize: 20, color: Colors.green),
+            child: 
+                Text.rich(TextSpan( text: 'Call via',style: TextStyle(fontSize: 20,),children: const[
+                  TextSpan( text: ' airtel',style: TextStyle(fontSize: 20,color: Colors.green)),
+                  TextSpan(text: ' from',style: TextStyle(fontSize: 20,),
                   ),
-                  TextSpan(
-                    text: ' from',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                  )
-                ])),
+                ]),
+                 )
           ),
           Column(
             children: const [
               AppText(
                 'Deepak Yadav',
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),
-                padding: EdgeInsets.only(bottom: 40),
+               
               ),
             ],
           ),
@@ -59,7 +52,7 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
             child: Center(
               child: CircleAvatar(
                 radius: 90,
-                backgroundImage: AssetImage('assets/Profile/Profile2.png'),
+                backgroundImage: AssetImage('assets/Profile/profile.png'),
               ),
             ),
           ),

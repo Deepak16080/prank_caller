@@ -24,7 +24,7 @@ class _PickUpUiState extends State<PickUpUi> {
                   padding: EdgeInsets.only(top: 50),
                   child: CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('assets/Profile/Profile2.png'),
+                    backgroundImage: AssetImage('assets/Profile/profile.png'),
                   ),
                 ),
                 Padding(
@@ -39,7 +39,7 @@ class _PickUpUiState extends State<PickUpUi> {
                  Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(
-                    '00:00', //add a duratio
+                    '01:11:40', //add a duratio
                     style: TextStyle(
                       fontSize: 20,
                     ),
