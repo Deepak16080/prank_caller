@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/picker.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:prank_caller/components/Contact.dart';
 import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/caller_voice.dart';
 import 'package:prank_caller/components/ringtone.dart';
@@ -128,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CallerProfilePage()));
+                        builder: (context) => ContactScreen()));
               },
               child: const Text('Select a number'),
             )),
