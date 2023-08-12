@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 
 class ContactScreen extends StatefulWidget {
@@ -25,17 +24,16 @@ class _ContactScreenState extends State<ContactScreen> {
     if (!await FlutterContacts.requestPermission(readonly: true)) {
       setState(() => _permissionDenied = true);
     } else {
-      final contacts = await FlutterContacts.getContacts();
+      final contacts = await FlutterContacts.getContacts(withProperties: true);
       setState(() => _contacts = contacts);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final Contact contact;
-    if (_permissionDenied)
-      return Center(
-          child: Text('Please give a permission to access your contacts'));
+    if (_permissionDenied) {
+      return Center(child: Text('Please give a permission to access your contacts'));
+    }
     if (_contacts == null) return Center(child: CircularProgressIndicator());
     return Scaffold(body: FutureBuilder<String>(builder: ((
       context,
@@ -45,9 +43,11 @@ class _ContactScreenState extends State<ContactScreen> {
           itemCount: _contacts!.length,
           itemBuilder: (context, i) {
             return ListTile(
-              title: Text(_contacts![i].displayName),
-              subtitle: Text('${_contacts![i].phones}'),
-            );
+                title: Text(_contacts![i].displayName),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: _contacts![i].phones.map((e) => Text(e.normalizedNumber)).toList(),
+                ));
           });
     })));
   }
