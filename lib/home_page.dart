@@ -25,8 +25,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(children: [
-      const Column(
-        children: [
+       Column(
+        children: const[
           Padding(
             padding: EdgeInsets.only(right: 100, top: 40),
             child: AppText('Prank call',

@@ -46,7 +46,7 @@ class _ContactScreenState extends State<ContactScreen> {
                 title: Text(_contacts![i].displayName),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _contacts![i].phones.map((e) => Text(e.normalizedNumber)).toList(),
+                  children: _contacts![i].phones.map((e) => Text(e.number)).toList(),
                 ));
           });
     })));

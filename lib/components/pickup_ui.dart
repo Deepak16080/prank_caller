@@ -128,10 +128,10 @@ class _PickUpUiState extends State<PickUpUi> {
                             ),
                           ],
                         ),
-                        const Padding(
+                         Padding(
                           padding: EdgeInsets.only(bottom: 10),
                           child: Row(
-                            children: [
+                            children: const [
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 24),
                                 child: Text(
