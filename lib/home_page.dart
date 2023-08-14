@@ -7,6 +7,7 @@ import 'package:prank_caller/components/caller_voice.dart';
 import 'package:prank_caller/components/ringtone.dart';
 import 'package:prank_caller/models/ringtone_model_list.dart';
 import 'package:prank_caller/widget/app_text.dart';
+
 import 'utils/enums.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,8 +26,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(children: [
-       Column(
-        children: const[
+      Column(
+        children: const [
           Padding(
             padding: EdgeInsets.only(right: 100, top: 40),
             child: AppText('Prank call',
@@ -66,16 +67,24 @@ class _HomePageState extends State<HomePage> {
               },
               child: const Text('Timer'),
             )),
+        // Padding(
+        //   padding: const EdgeInsets.only(
+        //     left: 20,
+        //   ), //print a  time in text box
+        //   child: Text(
+        //     // "Selected time: ${select}",
+        //     // style: const TextStyle(color: Colors.green),
+        //   ),
+        // ),
+
         Padding(
             padding: const EdgeInsets.only(
               left: 20,
             ),
             child: MaterialButton(
               onPressed: () async {
-                final audio = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CallerVoice()));
+                final audio =
+                    await Navigator.push(context, MaterialPageRoute(builder: (context) => const CallerVoice()));
                 if (audio is AppAudio) {
                   selectedAudio = audio;
                 }
@@ -98,8 +107,7 @@ class _HomePageState extends State<HomePage> {
             ),
             child: MaterialButton(
               onPressed: () async {
-                final audio = await Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Ringtone()));
+                final audio = await Navigator.push(context, MaterialPageRoute(builder: (context) => const Ringtone()));
                 if (audio is AppAudio) {
                   selectedAudio = audio;
                 }
@@ -122,26 +130,20 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-           Padding(
-            padding: const EdgeInsets.only(left: 20, top: 10),
-            child: MaterialButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ContactScreen()));
-              },
-              child: const Text('Select a number'),
-            )),
-          
         Padding(
             padding: const EdgeInsets.only(left: 20, top: 10),
             child: MaterialButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CallerProfilePage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ContactScreen()));
+              },
+              child: const Text('Select a number'),
+            )),
+
+        Padding(
+            padding: const EdgeInsets.only(left: 20, top: 10),
+            child: MaterialButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const CallerProfilePage()));
               },
               child: const Text('call me'),
             )),
@@ -152,10 +154,8 @@ class _HomePageState extends State<HomePage> {
   void onTap() {
     Picker(
       adapter: NumberPickerAdapter(data: <NumberPickerColumn>[
-        const NumberPickerColumn(
-            begin: 0, end: 60, suffix: Text(' minutes'), jump: 0),
-        const NumberPickerColumn(
-            begin: 0, end: 60, suffix: Text('seconds'), jump: 5)
+        const NumberPickerColumn(begin: 0, end: 60, suffix: Text(' minutes'), jump: 0),
+        const NumberPickerColumn(begin: 0, end: 60, suffix: Text('seconds'), jump: 5)
       ]),
       delimiter: <PickerDelimiter>[
         PickerDelimiter(
@@ -179,20 +179,22 @@ class _HomePageState extends State<HomePage> {
         )
       ],
       hideHeader: true,
+      selecteds: const <int>[0, 0],
       confirmText: 'OK',
       onSelect: (picker, index, selected) {
-        return ;
+        print(selected);
+        print(index);
       },
-      onCancel: () {},
-      confirmTextStyle:
-          const TextStyle(inherit: false, color: Colors.red, fontSize: 22),
+      onCancel: () {
+        debugPrint('cancel');
+      },
+      confirmTextStyle: const TextStyle(inherit: false, color: Colors.red, fontSize: 22),
       title: const Text('Select Time'),
       selectedTextStyle: TextStyle(color: Colors.blue),
       onConfirm: (Picker picker, List<int> value) {
         // You get your duration here
-        Duration _duration = Duration(
-            minutes: picker.getSelectedValues()[1],
-            seconds: picker.getSelectedValues()[1]);
+
+        Duration duration = Duration(minutes: picker.getSelectedValues()[1], seconds: picker.getSelectedValues()[1]);
       },
     ).showDialog(context);
   }
