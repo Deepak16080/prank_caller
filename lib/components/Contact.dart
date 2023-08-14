@@ -12,6 +12,7 @@ class ContactScreen extends StatefulWidget {
 
 class _ContactScreenState extends State<ContactScreen> {
   List<Contact>? _contacts;
+  final selectedindex = null;
   bool _permissionDenied = false;
 
   @override
@@ -35,20 +36,70 @@ class _ContactScreenState extends State<ContactScreen> {
       return Center(child: Text('Please give a permission to access your contacts'));
     }
     if (_contacts == null) return Center(child: CircularProgressIndicator());
-    return Scaffold(body: FutureBuilder<String>(builder: ((
-      context,
-      snapshot,
-    ) {
-      return ListView.builder(
-          itemCount: _contacts!.length,
-          itemBuilder: (context, i) {
-            return ListTile(
-                title: Text(_contacts![i].displayName),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _contacts![i].phones.map((e) => Text(e.number)).toList(),
-                ));
-          });
-    })));
+    return Scaffold(
+      body: FutureBuilder<String>(builder: ((
+        context,
+        snapshot,
+      ) {
+        return ListView.builder(
+            itemCount: _contacts!.length,
+            itemBuilder: (context, i) {
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    selectedindex == i;
+                  });
+                },
+                child: Card(
+                  color: selectedindex == i ? Colors.red : Colors.white,
+                  shadowColor: Colors.green,
+                  shape: ContinuousRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 2.0,
+                  child: ListTile(
+                      title: Text(_contacts![i].displayName),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: _contacts![i].phones.map((e) => Text(e.number)).toList(),
+                      )),
+                ),
+              );
+            });
+      })),
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        centerTitle: true,
+        title: Text('Contacts'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          TextButton(
+              onPressed: () {
+                if (_contacts == null) {
+                  toast(context, "Please select a contact");
+                  return;
+                }
+                Navigator.pop(context, _contacts);
+              },
+              child: const Text(
+                'Select',
+                style: TextStyle(color: Colors.white),
+              ))
+        ],
+      ),
+    );
+  }
+
+  void toast(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(text, textAlign: TextAlign.center),
+      behavior: SnackBarBehavior.fixed,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+    ));
   }
 }
