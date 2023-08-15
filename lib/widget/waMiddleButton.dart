@@ -60,9 +60,10 @@ class _ArrowStackState extends State<ArrowStack> {
 //* ANIMATED MIDDLE BUTTON
 
 class AnimatedMiddleButton extends StatefulWidget {
+  final Color buttonColor;
   final AnimationController controller;
 
-  const AnimatedMiddleButton({super.key, required this.controller});
+  const AnimatedMiddleButton({super.key, required this.buttonColor, required this.controller});
 
   @override
   _AnimatedMiddleButtonState createState() => _AnimatedMiddleButtonState();
@@ -73,6 +74,7 @@ class _AnimatedMiddleButtonState extends State<AnimatedMiddleButton> {
   Widget build(BuildContext context) {
     return StaggerAnimation(
       controller: widget.controller.view,
+      buttonColor: widget.buttonColor,
     );
   }
 }
@@ -80,14 +82,16 @@ class _AnimatedMiddleButtonState extends State<AnimatedMiddleButton> {
 //* MIDDLE BUTTON
 
 class MiddleButton extends StatelessWidget {
-  const MiddleButton({super.key});
+  final Color buttonColor;
+  const MiddleButton({required this.buttonColor, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 500),
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Color(0xFF02D65D),
+        color: buttonColor,
       ),
       constraints: const BoxConstraints.tightFor(
         width: 56,
@@ -122,8 +126,9 @@ class ShakeCurve extends Curve {
 //* Stagger Animation
 
 class StaggerAnimation extends StatelessWidget {
+  final Color buttonColor;
   final Animation<double> controller;
-  StaggerAnimation({super.key, required this.controller})
+  StaggerAnimation({super.key, required this.buttonColor, required this.controller})
       : _moveUp = Matrix4Tween(
           begin: Matrix4.translationValues(0, 0, 0),
           end: Matrix4.translationValues(0, -30, 0),
@@ -161,7 +166,7 @@ class StaggerAnimation extends StatelessWidget {
           _moveDown.value,
           0,
         ),
-        child: MiddleButton(),
+        child: MiddleButton(buttonColor: buttonColor),
       ),
     );
   }

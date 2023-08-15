@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/contact.dart';
+import 'package:prank_caller/components/pickup_ui.dart';
 import 'package:prank_caller/widget/app_text.dart';
 
 import '../widget/waBottomButton.dart';
@@ -71,9 +72,7 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
                 child: BottomButton(
-                  nextRoute: "",
-                  sideButtonColor: Color(0xFF1A2227),
-                  middleArrowColor: Color(0xFF1F2831),
+                  pickUpPage: PickUpUi(contact: widget.contact),
                 ),
               ),
             ),

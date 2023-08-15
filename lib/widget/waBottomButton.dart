@@ -1,17 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'waMiddleButton.dart';
 
 class BottomButton extends StatefulWidget {
-  final String nextRoute;
-  final Color sideButtonColor;
-  final Color middleArrowColor;
+  final Widget pickUpPage;
+  final Widget? rejectPage;
 
-  const BottomButton(
-      {super.key, required this.nextRoute, required this.sideButtonColor, required this.middleArrowColor});
+  const BottomButton({super.key, this.rejectPage, required this.pickUpPage});
 
   @override
   State<BottomButton> createState() => _BottomButtonState();
@@ -23,6 +20,8 @@ class _BottomButtonState extends State<BottomButton> with TickerProviderStateMix
   late AnimationController _controller;
   bool _visibleAnimation = true;
   double _buttonPosition = 0.0;
+
+  bool isScrollingDown = false;
 
   void startTimer() {
     _incomingCallTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -57,26 +56,9 @@ class _BottomButtonState extends State<BottomButton> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        RawMaterialButton(
-          onPressed: () {
-            SystemNavigator.pop();
-          },
-          elevation: 0,
-          fillColor: widget.sideButtonColor,
-          constraints: const BoxConstraints.tightFor(
-            width: 55,
-            height: 55,
-          ),
-          shape: const CircleBorder(),
-          child: const Icon(
-            Icons.call_end,
-            size: 27,
-            color: Colors.white,
-          ),
-        ),
         Container(
           alignment: Alignment.bottomCenter,
           child: Stack(
@@ -88,7 +70,7 @@ class _BottomButtonState extends State<BottomButton> with TickerProviderStateMix
               ),
               ArrowStack(
                 controller: _controller,
-                middleArrowColor: widget.middleArrowColor,
+                middleArrowColor: Colors.grey,
               ),
               GestureDetector(
                 onPanStart: (details) {
@@ -97,18 +79,38 @@ class _BottomButtonState extends State<BottomButton> with TickerProviderStateMix
                   });
                 },
                 onPanUpdate: (details) {
-                  setState(() {
-                    _buttonPosition = details.localPosition.dy.clamp(-200.0, 0.0);
-                  });
-                  // print(buttonPosition);
+                  _buttonPosition = details.localPosition.dy.clamp(-200.0, 0.0);
+
+                  // checking if the user is scrolling down
+                  if (details.delta.dy > 0) {
+                    isScrollingDown = true;
+                  } else {
+                    isScrollingDown = false;
+                  }
+                  setState(() {});
                 },
                 onPanEnd: (details) {
                   setState(() {
                     if (_buttonPosition == -200.0) {
-                      Navigator.popAndPushNamed(context, widget.nextRoute);
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => widget.pickUpPage,
+                        ),
+                      );
+                    } else if (_buttonPosition == 0 && isScrollingDown) {
+                      if (widget.rejectPage == null) {
+                        Navigator.of(context).pop();
+                        return;
+                      }
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => widget.rejectPage!,
+                        ),
+                      );
                     } else {
                       _buttonPosition = 0.0;
                       _visibleAnimation = true;
+                      isScrollingDown = false;
                     }
                   });
                 },
@@ -118,12 +120,15 @@ class _BottomButtonState extends State<BottomButton> with TickerProviderStateMix
                     children: <Widget>[
                       Visibility(
                         visible: _visibleAnimation == false,
-                        child: MiddleButton(),
+                        child: MiddleButton(
+                          buttonColor: isScrollingDown ? Colors.red : Colors.green,
+                        ),
                       ),
                       Visibility(
                         visible: _visibleAnimation == true,
                         child: AnimatedMiddleButton(
                           controller: _controller,
+                          buttonColor: isScrollingDown ? Colors.red : Colors.green,
                         ),
                       ),
                     ],
@@ -131,23 +136,6 @@ class _BottomButtonState extends State<BottomButton> with TickerProviderStateMix
                 ),
               ),
             ],
-          ),
-        ),
-        RawMaterialButton(
-          onPressed: () {
-            SystemNavigator.pop();
-          },
-          elevation: 0,
-          fillColor: widget.sideButtonColor,
-          constraints: const BoxConstraints.tightFor(
-            width: 55,
-            height: 55,
-          ),
-          shape: const CircleBorder(),
-          child: const Icon(
-            Icons.message,
-            size: 20,
-            color: Colors.white,
           ),
         ),
       ],
