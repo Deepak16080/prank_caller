@@ -49,7 +49,7 @@ class _PickUpUiState extends State<PickUpUi> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 300),
+                  padding: const EdgeInsets.only(top: 200),
                   child: Container(
                     height: 300,
                     decoration: const BoxDecoration(
@@ -60,7 +60,7 @@ class _PickUpUiState extends State<PickUpUi> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 40),
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundColor: Colors.white,
