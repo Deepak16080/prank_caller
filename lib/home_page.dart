@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_picker/picker.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:prank_caller/components/Contact.dart';
 import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/caller_voice.dart';
+import 'package:prank_caller/components/pick_contact.dart';
 import 'package:prank_caller/components/ringtone.dart';
 import 'package:prank_caller/models/ringtone_model_list.dart';
 import 'package:prank_caller/widget/app_text.dart';
@@ -18,9 +18,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  AudioPlayer? audioPlayer;
-
   AppAudio? selectedAudio;
+  Contact? selectedContact;
+
   String name = networkFiles.toString();
   @override
   Widget build(BuildContext context) {
@@ -133,17 +133,35 @@ class _HomePageState extends State<HomePage> {
         Padding(
             padding: const EdgeInsets.only(left: 20, top: 10),
             child: MaterialButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ContactScreen()));
+              onPressed: () async {
+                final contact =
+                    await Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactScreen()));
+                if (contact is Contact) {
+                  selectedContact = contact;
+                }
               },
               child: const Text('Select a number'),
             )),
+
+        if (selectedContact != null)
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 10),
+            child: Text(
+              "Selected contact: ${selectedContact?.displayName}",
+              style: const TextStyle(color: Colors.green),
+            ),
+          ),
 
         Padding(
             padding: const EdgeInsets.only(left: 20, top: 10),
             child: MaterialButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const CallerProfilePage()));
+                if (selectedContact == null) {
+                  toast(context, "Please select a contact first");
+                  return;
+                }
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => CallerProfilePage(contact: selectedContact!)));
               },
               child: const Text('call me'),
             )),

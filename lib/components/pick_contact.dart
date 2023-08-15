@@ -11,8 +11,9 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
-  List<Contact>? _contacts;
-  final selectedindex = -1;
+  List<Contact> contacts = [];
+  Contact? selectedContact;
+
   bool _permissionDenied = false;
 
   @override
@@ -25,42 +26,44 @@ class _ContactScreenState extends State<ContactScreen> {
     if (!await FlutterContacts.requestPermission(readonly: true)) {
       setState(() => _permissionDenied = true);
     } else {
-      final contacts = await FlutterContacts.getContacts(withProperties: true);
-      setState(() => _contacts = contacts);
+      contacts = await FlutterContacts.getContacts(withProperties: true);
+      setState(() {});
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_permissionDenied) {
-      return Center(child: Text('Please give a permission to access your contacts'));
-    }
-    if (_contacts == null) return Center(child: CircularProgressIndicator());
     return Scaffold(
-      body: FutureBuilder<String>(builder: ((
+      body: Builder(builder: ((
         context,
-        snapshot,
       ) {
+        if (_permissionDenied) {
+          return Center(child: Text('Please give a permission to access your contacts'));
+        }
+        if (contacts.isEmpty) {
+          return Center(child: CircularProgressIndicator());
+        }
         return ListView.builder(
-            itemCount: _contacts!.length,
+            itemCount: contacts.length,
             itemBuilder: (context, i) {
+              bool isSelected = selectedContact == contacts[i];
               return InkWell(
                 onTap: () async {
-                  selectedindex == i ? _contacts!.removeAt(i) : _contacts!.add(_contacts![i]);
+                  selectedContact = contacts[i];
                   setState(() {});
                 },
                 child: Card(
-                  color: selectedindex == i ? Colors.green : Colors.yellow,
+                  color: isSelected ? Colors.green : Colors.yellow,
                   shadowColor: Colors.green,
                   shape: ContinuousRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                   elevation: 2.0,
                   child: ListTile(
-                      title: Text(_contacts![i].displayName),
+                      title: Text(contacts[i].displayName),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: _contacts![i].phones.map((e) => Text(e.number)).toList(),
+                        children: contacts[i].phones.map((e) => Text(e.number)).toList(),
                       )),
                 ),
               );
@@ -79,11 +82,11 @@ class _ContactScreenState extends State<ContactScreen> {
         actions: [
           TextButton(
               onPressed: () {
-                if (_contacts == null) {
+                if (selectedContact == null) {
                   toast(context, "Please select a contact");
                   return;
                 }
-                Navigator.pop(context, _contacts);
+                Navigator.pop(context, selectedContact);
               },
               child: const Text(
                 'Select',

@@ -1,7 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' as path;
 import 'package:just_audio/just_audio.dart';
+import 'package:path/path.dart' as path;
 import 'package:prank_caller/models/ringtone_model_list.dart';
 import 'package:prank_caller/utils/enums.dart';
 
@@ -88,8 +88,7 @@ class _RingtoneState extends State<Ringtone> {
                       : const BorderSide(color: Colors.transparent, width: 2),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                margin:
-                    const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
+                margin: const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
                 child: ListTile(
                     textColor: Colors.blue,
                     title: Text('$title '),
@@ -119,16 +118,13 @@ class _RingtoneState extends State<Ringtone> {
   }
 
   void pickfile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.audio,
-        dialogTitle: 'Select an audio file',
-        initialDirectory: '$Path');
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(type: FileType.audio, dialogTitle: 'Select an audio file', initialDirectory: '$Path');
 
     if (result != null && result.files.single.path != null) {
       PlatformFile file = result.files.first;
       // ignore: use_build_context_synchronously
-      Navigator.pop(
-          context, AppAudio(path: file.path!, name: path.basename(file.path!)));
+      Navigator.pop(context, AppAudio(path: file.path!, name: path.basename(file.path!)));
     } else {
       toast(context, 'please select an audio');
     }

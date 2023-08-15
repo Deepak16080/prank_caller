@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:prank_caller/home_page.dart';
 
 class PickUpUi extends StatefulWidget {
-  const PickUpUi({super.key});
+  final Contact contact;
+  const PickUpUi({required this.contact, super.key});
 
   @override
   State<PickUpUi> createState() => _PickUpUiState();
 }
 
 class _PickUpUiState extends State<PickUpUi> {
-  String? name = 'Deepak Yadav';
-  String? no = '+917665070041';
-  Icon? icon = Icon(Icons.call,size: 10,);
+  Icon? icon = Icon(
+    Icons.call,
+    size: 10,
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,13 +33,13 @@ class _PickUpUiState extends State<PickUpUi> {
                 Padding(
                   padding: const EdgeInsets.only(top: 30),
                   child: Text(
-                    '$name', // add a name and number
+                    widget.contact.displayName,
                     style: const TextStyle(
                       fontSize: 35,
                     ),
                   ),
                 ),
-                 Padding(
+                Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(
                     '01:11:40', //add a duratio
@@ -50,17 +53,14 @@ class _PickUpUiState extends State<PickUpUi> {
                   child: Container(
                     height: 300,
                     decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(25)),
-                        color: Color(0xffE2F0F3)),
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(25)), color: Color(0xffE2F0F3)),
                     child: Column(
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 40),
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundColor: Colors.white,
@@ -76,8 +76,7 @@ class _PickUpUiState extends State<PickUpUi> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 40),
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundColor: Colors.white,
@@ -93,8 +92,7 @@ class _PickUpUiState extends State<PickUpUi> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 40),
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundColor: Colors.white,
@@ -110,8 +108,7 @@ class _PickUpUiState extends State<PickUpUi> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 40),
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundColor: Colors.white,
@@ -128,7 +125,7 @@ class _PickUpUiState extends State<PickUpUi> {
                             ),
                           ],
                         ),
-                         Padding(
+                        Padding(
                           padding: EdgeInsets.only(bottom: 10),
                           child: Row(
                             children: const [

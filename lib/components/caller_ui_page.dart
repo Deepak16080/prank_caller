@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:prank_caller/components/pickup_ui.dart';
+import 'package:flutter_contacts/contact.dart';
 import 'package:prank_caller/widget/app_text.dart';
 
 class CallerProfilePage extends StatefulWidget {
-  const CallerProfilePage({super.key});
+  final Contact contact;
+  const CallerProfilePage({required this.contact, super.key});
 
   @override
   State<CallerProfilePage> createState() => _CallerProfilePageState();
 }
 
 class _CallerProfilePageState extends State<CallerProfilePage> {
-  String? name = 'Gaurav';
-  String? no = '+917665070041';
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,27 +21,34 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
               height: 35,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: 
-                  Text.rich(TextSpan( text: 'Call via',style: TextStyle(fontSize: 20,),children: const[
-                    TextSpan( text: ' airtel',style: TextStyle(fontSize: 20,color: Colors.green)),
-                    TextSpan(text: ' from',style: TextStyle(fontSize: 20,),
-                    ),
-                  ]),
-                   )
-            ),
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text.rich(
+                  TextSpan(
+                      text: 'Call via',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                      children: const [
+                        TextSpan(text: ' airtel', style: TextStyle(fontSize: 20, color: Colors.green)),
+                        TextSpan(
+                          text: ' from',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ]),
+                )),
             Column(
-              children: const [
+              children: [
                 AppText(
-                  'Deepak Yadav',
+                  widget.contact.displayName,
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
-                 
                 ),
               ],
             ),
             AppText(
-              'Mobile +917665070041',
-              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),
+              'Mobile ${widget.contact.phones.first.normalizedNumber}',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               padding: EdgeInsets.symmetric(vertical: 20),
             ),
             Padding(
@@ -56,7 +61,10 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
               ),
             ),
             OutlinedButton.icon(
-              onPressed: (){}, icon: Icon(Icons.message),label: Text('Reply'),)
+              onPressed: () {},
+              icon: Icon(Icons.message),
+              label: Text('Reply'),
+            )
           ],
         ),
       ),
