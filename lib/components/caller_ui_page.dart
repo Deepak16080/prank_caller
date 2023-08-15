@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:prank_caller/widget/app_text.dart';
 
+import '../widget/waBottomButton.dart';
+
 class CallerProfilePage extends StatefulWidget {
   final Contact contact;
   const CallerProfilePage({required this.contact, super.key});
@@ -64,7 +66,17 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
               onPressed: () {},
               icon: Icon(Icons.message),
               label: Text('Reply'),
-            )
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
+                child: BottomButton(
+                  nextRoute: "",
+                  sideButtonColor: Color(0xFF1A2227),
+                  middleArrowColor: Color(0xFF1F2831),
+                ),
+              ),
+            ),
           ],
         ),
       ),
