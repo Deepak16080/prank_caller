@@ -67,15 +67,15 @@ class _HomePageState extends State<HomePage> {
               },
               child: const Text('Timer'),
             )),
-        // Padding(
-        //   padding: const EdgeInsets.only(
-        //     left: 20,
-        //   ), //print a  time in text box
-        //   child: Text(
-        //     // "Selected time: ${select}",
-        //     // style: const TextStyle(color: Colors.green),
-        //   ),
-        // ),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+          ), //print a  time in text box
+          // child: Text(
+          //   "Selected time: ${}",
+          //   style: const TextStyle(color: Colors.green),
+          // ),
+        ),
 
         Padding(
             padding: const EdgeInsets.only(
@@ -182,8 +182,7 @@ class _HomePageState extends State<HomePage> {
       selecteds: const <int>[0, 0],
       confirmText: 'OK',
       onSelect: (picker, index, selected) {
-        print(selected);
-        print(index);
+        // print a time in text box when selected
       },
       onCancel: () {
         debugPrint('cancel');
