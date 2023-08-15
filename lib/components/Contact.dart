@@ -12,7 +12,7 @@ class ContactScreen extends StatefulWidget {
 
 class _ContactScreenState extends State<ContactScreen> {
   List<Contact>? _contacts;
-  final selectedindex = null;
+  final selectedindex = -1;
   bool _permissionDenied = false;
 
   @override
@@ -45,13 +45,12 @@ class _ContactScreenState extends State<ContactScreen> {
             itemCount: _contacts!.length,
             itemBuilder: (context, i) {
               return InkWell(
-                onTap: () {
-                  setState(() {
-                    selectedindex == i;
-                  });
+                onTap: () async {
+                  selectedindex == i ? _contacts!.removeAt(i) : _contacts!.add(_contacts![i]);
+                  setState(() {});
                 },
                 child: Card(
-                  color: selectedindex == i ? Colors.red : Colors.white,
+                  color: selectedindex == i ? Colors.green : Colors.yellow,
                   shadowColor: Colors.green,
                   shape: ContinuousRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
