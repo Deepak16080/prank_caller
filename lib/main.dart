@@ -1,20 +1,9 @@
-import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:prank_caller/home_page.dart';
 
 void main() {
-  const method = int.fromEnvironment('method', defaultValue: 1);
-  runApp(DevicePreview(
-      enabled: kDebugMode && kIsWeb,
-      builder: (context) {
-        if (method == 1) {
-          return MyApp();
-        } else {
-          return MyApp();
-        }
-      }));
+  runApp(const MyApp());
 }
 
 final player = AudioPlayer();

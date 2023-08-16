@@ -1,47 +1,45 @@
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-class SizeConfig {
-  /// create singleton instance
-  SizeConfig._internal();
-  static final SizeConfig _instance = SizeConfig._internal();
-  factory SizeConfig() => _instance;
+class SizeConfig extends StatelessWidget {
+  final Widget largeScreen;
+  final Widget mediumScreen;
+  final Widget smallScreen;
+  final Widget verysmallScreen;
 
-  double screenWidth =
-      Get.context?.orientation == Orientation.portrait ? Get.mediaQuery.size.width : Get.mediaQuery.size.height;
+  const SizeConfig(
+      {super.key,
+      required this.largeScreen,
+      required this.mediumScreen,
+      required this.smallScreen,
+      required this.verysmallScreen});
+  static bool isSmallScreen(BuildContext context) {
+    return MediaQuery.of(context).size.width < 300;
+  }
 
-  double screenHeight =
-      Get.context?.orientation == Orientation.portrait ? Get.mediaQuery.size.height : Get.mediaQuery.size.width;
+  static bool isMediumScreen(BuildContext context) {
+    return MediaQuery.of(context).size.width > 600;
+  }
 
-  double infinityHeight() => double.infinity;
+  static bool isLargeScreen(BuildContext context) {
+    return MediaQuery.of(context).size.width > 1200;
+  }
 
-  double infinityWidth() => double.infinity;
+  static bool isVerySmallScreen(BuildContext context) {
+    return MediaQuery.of(context).size.width < 300;
+  }
 
-  double blockSizeHorizontal() => screenWidth / 100;
-
-  double blockSizeVertical() => screenHeight / 100;
-
-  double _safeAreaHorizontal() => Get.mediaQuery.padding.left + Get.mediaQuery.padding.right;
-
-  double _safeAreaVertical() => Get.mediaQuery.padding.top + Get.mediaQuery.padding.bottom;
-
-  double safeBlockHorizontal() =>
-      (screenWidth - (Get.context?.orientation == Orientation.portrait ? _safeAreaHorizontal() : _safeAreaVertical())) /
-      100;
-
-  double safeBlockVertical() =>
-      (screenHeight -
-          (Get.context?.orientation == Orientation.portrait ? _safeAreaVertical() : _safeAreaHorizontal())) /
-      100;
-
-  double fontSize50() => safeBlockHorizontal() * 5.0;
-  double fontSize51() => safeBlockHorizontal() * 5.1;
-  double fontSize52() => safeBlockHorizontal() * 5.2;
-  double fontSize53() => safeBlockHorizontal() * 5.3;
-  double fontSize54() => safeBlockHorizontal() * 5.4;
-  double fontSize55() => safeBlockHorizontal() * 5.5;
-  double fontSize56() => safeBlockHorizontal() * 5.6;
-  double fontSize57() => safeBlockHorizontal() * 5.7;
-  double fontSize58() => safeBlockHorizontal() * 5.8;
-  double fontSize59() => safeBlockHorizontal() * 5.9;
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      if (constraints.maxWidth > 1200) {
+        return largeScreen;
+      } else if (constraints.maxWidth > 600) {
+        return mediumScreen;
+      } else if (constraints.maxWidth < 300) {
+        return smallScreen;
+      } else {
+        return verysmallScreen;
+      }
+    });
+  }
 }
