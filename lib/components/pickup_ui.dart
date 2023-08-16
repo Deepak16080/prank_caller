@@ -42,7 +42,7 @@ class _PickUpUiState extends State<PickUpUi> {
                 Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(
-                    '01:11:40', //add a duratio
+                    '01:11:40', //add a duration
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -51,7 +51,7 @@ class _PickUpUiState extends State<PickUpUi> {
                 Padding(
                   padding: const EdgeInsets.only(top: 184),
                   child: Container(
-                    height: 300,
+                    height: 310,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.vertical(top: Radius.circular(25)), color: Color(0xffE2F0F3)),
                     child: Column(
