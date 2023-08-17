@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:prank_caller/home_page.dart';
-import 'package:prank_caller/widget/app_size.dart';
 
 class PickUpUi extends StatefulWidget {
   final Contact contact;
+
   const PickUpUi({required this.contact, super.key});
 
   @override
@@ -51,7 +51,7 @@ class _PickUpUiState extends State<PickUpUi> {
               Container(
                 margin: EdgeInsets.only(top: 180),
                 padding: EdgeInsets.only(top: 30),
-                height: SizeConfig.isLargeScreen(context) ? 200 : 355,
+                height: MediaQuery.of(context).size.width * 0.9,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.vertical(top: Radius.circular(25)), color: Color(0xffE2F0F3)),
                 child: Column(

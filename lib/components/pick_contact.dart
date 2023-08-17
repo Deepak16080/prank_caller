@@ -53,7 +53,7 @@ class _ContactScreenState extends State<ContactScreen> {
                   setState(() {});
                 },
                 child: Card(
-                  color: isSelected ? Colors.green : Colors.yellow,
+                  color: isSelected ? Colors.green : Colors.white,
                   shadowColor: Colors.green,
                   shape: ContinuousRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
