@@ -41,7 +41,10 @@ class _ContactScreenState extends State<ContactScreen> {
           return Center(child: Text('Please give a permission to access your contacts'));
         }
         if (contacts.isEmpty) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+            color: Colors.pink,
+          ));
         }
         return ListView.builder(
             itemCount: contacts.length,
@@ -58,7 +61,7 @@ class _ContactScreenState extends State<ContactScreen> {
                   shape: ContinuousRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  elevation: 2.0,
+                  elevation: 10,
                   child: ListTile(
                       title: Text(contacts[i].displayName),
                       subtitle: Column(

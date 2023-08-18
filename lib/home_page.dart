@@ -212,15 +212,17 @@ class _HomePageState extends State<HomePage> {
       confirmTextStyle: const TextStyle(inherit: false, color: Colors.red, fontSize: 22),
       title: const Text('Select Time'),
       hideHeader: true,
-      itemExtent: 40.0,
       height: 200.0,
       backgroundColor: Colors.white,
       selectedTextStyle: TextStyle(color: Colors.blue),
       onConfirm: (Picker picker, List<int> value) {
         // You get your duration here
 
-        Duration resultingDuration =
-            Duration(minutes: value[0], seconds: value[1]); // Duration(minutes: 0, seconds: 0) is the default value
+        Duration resultingDuration = Duration(minutes: value[1], seconds: value[1]);
+        // Duration(minutes: 0, seconds: 0) is the default value
+        selectedDuration = resultingDuration;
+
+        setState(() {});
       },
     ).showDialog(context);
   }

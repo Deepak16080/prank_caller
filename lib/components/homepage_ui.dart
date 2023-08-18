@@ -18,28 +18,22 @@ class _HomepageUiState extends State<HomepageUi> {
             padding: const EdgeInsets.all(100),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              clipper: MyClipper(),
               child: Container(
-                height: 100,
-                width: 200 * 6,
-                color: Colors.black,
-              ),
+                  height: 100,
+                  width: 200 * 6,
+                  color: Colors.blue,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Hello World',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  )),
             ),
           ),
         )
       ],
     ));
   }
-}
-
-class MyClipper extends CustomClipper<RRect> {
-  @override
-  RRect getClip(Size size) {
-    final path = Path();
-    path.moveTo(0, 0);
-    return RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(20));
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<RRect> oldClipper) => false;
 }
