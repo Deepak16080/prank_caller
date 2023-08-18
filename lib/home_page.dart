@@ -20,6 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   AppAudio? selectedAudio;
   Contact? selectedContact;
+  Duration? selectedDuration;
 
   String name = networkFiles.toString();
   @override
@@ -71,10 +72,10 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(
             left: 20,
           ), //print a  time in text box
-          // child: Text(
-          //   "Selected time: ${}",
-          //   style: const TextStyle(color: Colors.green),
-          // ),
+          child: Text(
+            "Selected time: ${selectedDuration?.inMinutes ?? 0} minutes ${selectedDuration?.inSeconds ?? 0} seconds",
+            style: const TextStyle(color: Colors.green),
+          ),
         ),
 
         Padding(
@@ -169,7 +170,7 @@ class _HomePageState extends State<HomePage> {
     ]));
   }
 
-  void onTap() {
+  onTap() {
     Picker(
       adapter: NumberPickerAdapter(data: <NumberPickerColumn>[
         const NumberPickerColumn(begin: 0, end: 60, suffix: Text(' minutes'), jump: 0),
@@ -178,7 +179,7 @@ class _HomePageState extends State<HomePage> {
       delimiter: <PickerDelimiter>[
         PickerDelimiter(
           child: Container(
-            //         decoration: const BoxDecoration(
+            //          decoration: const BoxDecoration(
             //   color: Colors.white,
             //   borderRadius: BorderRadius.all(Radius.circular(10)),
             //   boxShadow: [
@@ -196,10 +197,13 @@ class _HomePageState extends State<HomePage> {
           ),
         )
       ],
-      hideHeader: true,
-      selecteds: const <int>[0, 0],
       confirmText: 'OK',
       onSelect: (picker, index, selected) {
+        if (index == 0) {
+          toast(context, 'Please select a time');
+          return;
+        }
+        print(selected.toString());
         // print a time in text box when selected
       },
       onCancel: () {
@@ -207,11 +211,16 @@ class _HomePageState extends State<HomePage> {
       },
       confirmTextStyle: const TextStyle(inherit: false, color: Colors.red, fontSize: 22),
       title: const Text('Select Time'),
+      hideHeader: true,
+      itemExtent: 40.0,
+      height: 200.0,
+      backgroundColor: Colors.white,
       selectedTextStyle: TextStyle(color: Colors.blue),
       onConfirm: (Picker picker, List<int> value) {
         // You get your duration here
 
-        Duration duration = Duration(minutes: picker.getSelectedValues()[1], seconds: picker.getSelectedValues()[1]);
+        Duration resultingDuration =
+            Duration(minutes: value[0], seconds: value[1]); // Duration(minutes: 0, seconds: 0) is the default value
       },
     ).showDialog(context);
   }
