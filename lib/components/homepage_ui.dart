@@ -16,20 +16,16 @@ class _HomepageUiState extends State<HomepageUi> {
         Center(
           child: Padding(
             padding: const EdgeInsets.all(100),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+            child: ClipRect(
               child: Container(
-                  height: 100,
-                  width: 200 * 6,
+                height: 100,
+                width: 400 * 2,
+                decoration: BoxDecoration(
                   color: Colors.blue,
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Hello World',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  )),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                alignment: Alignment.center,
+              ),
             ),
           ),
         )
@@ -37,3 +33,15 @@ class _HomepageUiState extends State<HomepageUi> {
     ));
   }
 }
+
+// class MyClipper extends CustomClipper<Rect> {
+//   @override
+//   Future<Path> getClip(Size size) async {
+//     Path path = Path();
+//     path.moveTo(size.height, 0);
+//     return Rect.fromLTWH(0, 0, size.width, size.height).Path;
+//   }
+
+//   @override
+//   bool shouldReclip(CustomClipper<Rect> oldClipper) => false;
+// }
