@@ -1,25 +1,11 @@
-import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:prank_caller/components/homepage_ui.dart';
 import 'package:prank_caller/home_page.dart';
 
-void main() {
-  const method = int.fromEnvironment('method', defaultValue: 1);
-  runApp(
-    DevicePreview(
-      enabled: kDebugMode && kIsWeb,
-      builder: (context) {
-        if (method == 1) {
-          return MyApp();
-        } else {
-          return MyApp();
-        }
-      },
-    ),
-  );
+void main() async {
+  await ScreenUtil.ensureScreenSize();
+  runApp(MyApp());
 }
 
 final player = AudioPlayer();
@@ -31,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(400, 400),
+      designSize: const Size(360, 729),
       builder: (BuildContext context, Widget? child) => MaterialApp(
           title: 'Prank Caller',
           theme: ThemeData(
