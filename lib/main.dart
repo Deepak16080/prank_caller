@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:prank_caller/home_page.dart';
+import 'package:prank_caller/components/homepage_ui.dart';
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          home: const HomePage()),
+          home: const HomepageUi()),
     );
   }
 }
