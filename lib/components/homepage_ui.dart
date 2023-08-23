@@ -17,33 +17,36 @@ class _HomepageUiState extends State<HomepageUi> {
           height: 100,
           width: 200,
           decoration: BoxDecoration(
-            color: Colors.blue,
             borderRadius: BorderRadius.circular(20),
           ),
           alignment: Alignment.center,
+          child: Image.asset('assets/images/Timer.png', fit: BoxFit.cover),
         ),
-        Row(
-          children: [
-            Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(20),
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                alignment: Alignment.center,
               ),
-              alignment: Alignment.center,
-            ),
-            Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(20),
+              Container(
+                height: 100,
+                width: 100, // 200
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                alignment: Alignment.center,
               ),
-              alignment: Alignment.center,
-            ),
-          ],
-        )
+            ],
+          ),
+        ),
       ],
     ));
   }
