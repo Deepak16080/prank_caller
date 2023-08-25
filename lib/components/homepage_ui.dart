@@ -80,7 +80,7 @@ class RPSCustomPainter extends CustomPainter {
     canvas.translate(-pivot_1739013739183.dx, -pivot_1739013739183.dy);
     TextPainter tp_1739013739183 = TextPainter(
       text: TextSpan(
-          text: """You Text Here""",
+          text: """Its me""",
           style: TextStyle(
             fontSize: size.width * 0.06,
             fontWeight: FontWeight.normal,
@@ -126,7 +126,7 @@ class RPSCustomPainter extends CustomPainter {
     canvas.translate(-pivot_4268002071757.dx, -pivot_4268002071757.dy);
     TextPainter tp_4268002071757 = TextPainter(
       text: TextSpan(
-          text: """You""",
+          text: """image""", // add an Clock Icon
           style: TextStyle(
             fontSize: size.width * 0.03,
             fontWeight: FontWeight.normal,
