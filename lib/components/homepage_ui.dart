@@ -71,8 +71,6 @@ class RPSCustomPainter extends CustomPainter {
 
     canvas.drawPath(path_1, paintStroke1);
 
-    // Text Layer 1
-
     canvas.save();
     final pivot_1739013739183 = Offset(size.width * 0.27, size.height * 0.12);
     canvas.translate(pivot_1739013739183.dx, pivot_1739013739183.dy);
