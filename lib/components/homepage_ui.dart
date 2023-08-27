@@ -44,7 +44,7 @@ class RPSCustomPainter extends CustomPainter {
     // Square
 
     Paint paintFill1 = Paint()
-      ..color = const Color.fromARGB(255, 0, 0, 255)
+      ..color = Colors.purple
       ..style = PaintingStyle.fill
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt
