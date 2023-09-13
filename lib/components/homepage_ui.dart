@@ -23,7 +23,7 @@ class _HomepageUiState extends State<HomepageUi> {
                   height: 200,
                   width: 400,
                   child: CustomPaint(
-                    size: Size(600, (500 * 0.625).toDouble()),
+                    size: Size(400, (400 * 0.625).toDouble()),
                     //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
                     painter: RPSCustomPainter(),
                   ),
@@ -39,7 +39,7 @@ class _HomepageUiState extends State<HomepageUi> {
               children: [
                 SizedBox(
                   height: 200,
-                  width: 255,
+                  width: 300,
                   child: CustomPaint(
                     size: Size(
                         400,
@@ -50,7 +50,7 @@ class _HomepageUiState extends State<HomepageUi> {
                 ),
                 SizedBox(
                   height: 200,
-                  width: 255,
+                  width: 300,
                   child: CustomPaint(
                     size: Size(
                         400,
@@ -70,7 +70,7 @@ class _HomepageUiState extends State<HomepageUi> {
                 children: [
                   SizedBox(
                     height: 200,
-                    width: 255,
+                    width: 300,
                     child: CustomPaint(
                       size: Size(
                           400,
@@ -81,13 +81,20 @@ class _HomepageUiState extends State<HomepageUi> {
                   ),
                   SizedBox(
                     height: 200,
-                    width: 255,
+                    width: 300,
                     child: CustomPaint(
                       size: Size(
                           400,
                           (400 * 0.625)
                               .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
                       painter: FCustomPainter(),
+                      child: SizedBox(
+                          child: CircleAvatar(
+                              minRadius: 20,
+                              maxRadius: 20,
+                              backgroundImage: AssetImage(
+                                'assets/Profile/profile2.png',
+                              ))),
                     ),
                   ),
                 ],
