@@ -17,13 +17,16 @@ class _HomepageUiState extends State<HomepageUi> {
         Column(
           children: [
             Center(
-              child: SizedBox(
-                height: 200,
-                width: 400,
-                child: CustomPaint(
-                  size: Size(600, (500 * 0.625).toDouble()),
-                  //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                  painter: RPSCustomPainter(),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: SizedBox(
+                  height: 200,
+                  width: 400,
+                  child: CustomPaint(
+                    size: Size(600, (500 * 0.625).toDouble()),
+                    //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                    painter: RPSCustomPainter(),
+                  ),
                 ),
               ),
             ),
@@ -36,7 +39,7 @@ class _HomepageUiState extends State<HomepageUi> {
               children: [
                 SizedBox(
                   height: 200,
-                  width: 250,
+                  width: 255,
                   child: CustomPaint(
                     size: Size(
                         400,
@@ -47,7 +50,7 @@ class _HomepageUiState extends State<HomepageUi> {
                 ),
                 SizedBox(
                   height: 200,
-                  width: 250,
+                  width: 255,
                   child: CustomPaint(
                     size: Size(
                         400,
@@ -67,7 +70,7 @@ class _HomepageUiState extends State<HomepageUi> {
                 children: [
                   SizedBox(
                     height: 200,
-                    width: 250,
+                    width: 255,
                     child: CustomPaint(
                       size: Size(
                           400,
@@ -78,7 +81,7 @@ class _HomepageUiState extends State<HomepageUi> {
                   ),
                   SizedBox(
                     height: 200,
-                    width: 250,
+                    width: 255,
                     child: CustomPaint(
                       size: Size(
                           400,
@@ -188,7 +191,7 @@ class RPSCustomPainter extends CustomPainter {
     canvas.translate(-pivot_9886373671211.dx, -pivot_9886373671211.dy);
     TextPainter tp_9886373671211 = TextPainter(
       text: TextSpan(
-          text: """You Text Here""",
+          text: """Hello world""",
           style: TextStyle(
             fontSize: size.width * 0.03,
             fontWeight: FontWeight.normal,
@@ -300,11 +303,11 @@ class RSCustomPainter extends CustomPainter {
     canvas.translate(-pivot_4922996302460.dx, -pivot_4922996302460.dy);
     TextPainter tp_4922996302460 = TextPainter(
       text: TextSpan(
-          text: """Timer""",
+          text: """Caller Voice""",
           style: TextStyle(
             fontSize: size.width * 0.06,
             fontWeight: FontWeight.normal,
-            color: Color(0xff000000),
+            color: Colors.white,
             fontStyle: FontStyle.normal,
             decoration: TextDecoration.none,
           )),
@@ -435,7 +438,7 @@ class RCustomPainter extends CustomPainter {
     canvas.translate(-pivot_2077906947162.dx, -pivot_2077906947162.dy);
     TextPainter tp_2077906947162 = TextPainter(
       text: TextSpan(
-          text: """Timer""",
+          text: """Ringtone""",
           style: TextStyle(
             fontSize: size.width * 0.06,
             fontWeight: FontWeight.bold,
@@ -676,11 +679,11 @@ class FCustomPainter extends CustomPainter {
       ..strokeJoin = StrokeJoin.miter;
 
     Path path_1 = Path();
-    path_1.moveTo(size.width * -0.0100000, size.height * 0.0080000);
-    path_1.lineTo(size.width * 0.5550000, size.height * 0.0120000);
+    path_1.moveTo(size.width * -0.0183125, size.height * 0.0292800);
+    path_1.lineTo(size.width * 0.5616500, size.height * 0.0280000);
     path_1.lineTo(size.width * 0.5525000, size.height * 0.9503000);
     path_1.lineTo(size.width * 0.1325000, size.height * 0.9543000);
-    path_1.lineTo(size.width * -0.0100000, size.height * 0.0080000);
+    path_1.lineTo(size.width * -0.0183125, size.height * 0.0292800);
     path_1.close();
 
     canvas.drawPath(path_1, paintFill1);
