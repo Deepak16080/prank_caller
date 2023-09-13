@@ -56,50 +56,52 @@ class _RingtoneState extends State<Ringtone> {
               ))
         ],
       ),
-      body: FutureBuilder<String>(builder: (context, item) {
-        return ListView.builder(
-          itemCount: networkFiles.length,
-          itemBuilder: (context, index) {
-            final audio = networkFiles[index];
-            String audioUrl = networkFiles[index].path;
-            String name = networkFiles[index].name.toString();
+      body: FutureBuilder<String>(
+          future: DefaultAssetBundle.of(context).loadString("AssetManifest.json"),
+          builder: (context, item) {
+            return ListView.builder(
+              itemCount: networkFiles.length,
+              itemBuilder: (context, index) {
+                final audio = networkFiles[index];
+                String audioUrl = networkFiles[index].path;
+                String name = networkFiles[index].name.toString();
 
-            String title = name;
+                String title = name;
 
-            bool isSelected = selectedvoice == audio;
+                bool isSelected = selectedvoice == audio;
 
-            return InkWell(
-              onTap: () async {
-                selectedvoice = networkFiles[index];
-                if (isSelected && audioPlayer.playing) {
-                  audioPlayer.pause();
-                } else {
-                  audioPlayer
-                    ..setUrl(audioUrl)
-                    ..play();
-                }
-                setState(() {});
+                return InkWell(
+                  onTap: () async {
+                    selectedvoice = networkFiles[index];
+                    if (isSelected && audioPlayer.playing) {
+                      audioPlayer.pause();
+                    } else {
+                      audioPlayer
+                        ..setUrl(audioUrl)
+                        ..play();
+                    }
+                    setState(() {});
+                  },
+                  child: Card(
+                    shadowColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      side: isSelected
+                          ? const BorderSide(color: Colors.green, width: 2)
+                          : const BorderSide(color: Colors.transparent, width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
+                    child: ListTile(
+                        textColor: Colors.blue,
+                        title: Text('$title '),
+                        leading: audioPlayer.playing && isSelected
+                            ? const Icon(Icons.pause, color: Colors.blue)
+                            : const Icon(Icons.play_arrow, color: Colors.blue)),
+                  ),
+                );
               },
-              child: Card(
-                shadowColor: Colors.green,
-                shape: RoundedRectangleBorder(
-                  side: isSelected
-                      ? const BorderSide(color: Colors.green, width: 2)
-                      : const BorderSide(color: Colors.transparent, width: 2),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                margin: const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
-                child: ListTile(
-                    textColor: Colors.blue,
-                    title: Text('$title '),
-                    leading: audioPlayer.playing && isSelected
-                        ? const Icon(Icons.pause, color: Colors.blue)
-                        : const Icon(Icons.play_arrow, color: Colors.blue)),
-              ),
             );
-          },
-        );
-      }),
+          }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           pickfile();

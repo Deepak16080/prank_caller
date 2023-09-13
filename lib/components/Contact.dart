@@ -37,37 +37,39 @@ class _ContactScreenState extends State<ContactScreen> {
     }
     if (_contacts == null) return Center(child: CircularProgressIndicator());
     return Scaffold(
-      body: FutureBuilder<String>(builder: ((
-        context,
-        snapshot,
-      ) {
-        return ListView.builder(
-            itemCount: _contacts!.length,
-            itemBuilder: (context, i) {
-              return InkWell(
-                onTap: () async {
-                  if (selectedindex == i) {
-                    return;
-                  }
-                  setState(() {});
-                },
-                child: Card(
-                  color: selectedindex == i ? Colors.green : Colors.white,
-                  shadowColor: Colors.green,
-                  shape: ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  elevation: 2.0,
-                  child: ListTile(
-                      title: Text(_contacts![i].displayName),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: _contacts![i].phones.map((e) => Text(e.number)).toList(),
-                      )),
-                ),
-              );
-            });
-      })),
+      body: FutureBuilder<String>(
+          future: DefaultAssetBundle.of(context).loadString("AssetManifest.json"),
+          builder: ((
+            context,
+            snapshot,
+          ) {
+            return ListView.builder(
+                itemCount: _contacts!.length,
+                itemBuilder: (context, i) {
+                  return InkWell(
+                    onTap: () async {
+                      if (selectedindex == i) {
+                        return;
+                      }
+                      setState(() {});
+                    },
+                    child: Card(
+                      color: selectedindex == i ? Colors.green : Colors.white,
+                      shadowColor: Colors.green,
+                      shape: ContinuousRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      elevation: 2.0,
+                      child: ListTile(
+                          title: Text(_contacts![i].displayName),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: _contacts![i].phones.map((e) => Text(e.number)).toList(),
+                          )),
+                    ),
+                  );
+                });
+          })),
       appBar: AppBar(
         backgroundColor: Colors.blue,
         centerTitle: true,
