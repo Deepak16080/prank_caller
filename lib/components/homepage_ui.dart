@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:flutter_picker/picker.dart';
+import 'package:prank_caller/components/Contact.dart';
+import 'package:prank_caller/components/caller_voice.dart';
+import 'package:prank_caller/components/ringtone.dart';
+import 'package:prank_caller/models/ringtone_model_list.dart';
+import 'package:prank_caller/utils/enums.dart';
+import 'package:prank_caller/widget/app_size.dart';
+import 'package:prank_caller/widget/app_text.dart';
 
 class HomepageUi extends StatefulWidget {
   const HomepageUi({super.key});
@@ -8,113 +17,252 @@ class HomepageUi extends StatefulWidget {
 }
 
 class _HomepageUiState extends State<HomepageUi> {
+  AppAudio? selectedAudio;
+  Contact? selectedContact;
+  Duration? selectedDuration;
+
+  String name = networkFiles.toString();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(
-      alignment: Alignment.center,
-      children: [
-        Column(
-          children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: SizedBox(
-                  height: 200,
-                  width: 400,
-                  child: CustomPaint(
-                    size: Size(400, (400 * 0.625).toDouble()),
-                    //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                    painter: RPSCustomPainter(),
+    return AppSizeHeight.isMediumScreen(context)
+        ? Scaffold(
+            body: Stack(children: [
+            Column(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(right: 100, top: 40),
+                  child: AppText('Prank call',
+                      style: TextStyle(
+                        fontSize: 35,
+                      )),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: SizedBox(
+                    height: 90,
+                    width: 250,
+                    child: AppText(
+                      'You can have a imaginary friend to save your intimity ',
+                      style: TextStyle(fontSize: 15, color: Colors.grey),
+                      textAlign: TextAlign.start,
+                    ),
                   ),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 200,
-                  width: 300,
-                  child: CustomPaint(
-                    size: Size(
-                        400,
-                        (400 * 0.625)
-                            .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                    painter: RSCustomPainter(),
-                  ),
-                ),
-                SizedBox(
-                  height: 200,
-                  width: 300,
-                  child: CustomPaint(
-                    size: Size(
-                        400,
-                        (400 * 0.625)
-                            .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                    painter: RCustomPainter(),
+                Padding(
+                  padding: EdgeInsets.only(right: 180, top: 50),
+                  child: AppText(
+                    'Settings',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
             ),
-            SizedBox(
-              height: 15,
-            ),
-            Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 190),
+              child: Column(
                 children: [
-                  SizedBox(
-                    height: 200,
-                    width: 300,
-                    child: CustomPaint(
-                      size: Size(
-                          400,
-                          (400 * 0.625)
-                              .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                      painter: SCustomPainter(),
+                  InkWell(
+                    onTap: () {},
+                    child: SizedBox(
+                      //=============> Container 1st
+                      height: MediaQuery.of(context).size.height * 0.25,
+                      width: MediaQuery.of(context).size.width * 0.90,
+                      child: CustomPaint(
+                        size: Size(600, (500 * 0.625).toDouble()),
+                        //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                        painter: RPSCustomPainter(),
+                      ),
                     ),
                   ),
                   SizedBox(
-                    height: 200,
-                    width: 300,
-                    child: CustomPaint(
-                      size: Size(
-                          400,
-                          (400 * 0.625)
-                              .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                      painter: FCustomPainter(),
-                      child: SizedBox(
-                          child: CircleAvatar(
-                              minRadius: 20,
-                              maxRadius: 20,
-                              backgroundImage: AssetImage(
-                                'assets/Profile/profile2.png',
-                              ))),
+                    height: 10,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: BouncingScrollPhysics(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            final audio = await Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => const CallerVoice()));
+                            if (audio is AppAudio) {
+                              selectedAudio = audio;
+                            }
+                          },
+                          child: SizedBox(
+                            //============> Container 2nd
+                            height: MediaQuery.of(context).size.height * 0.80,
+                            width: MediaQuery.of(context).size.width * 0.90,
+                            child: CustomPaint(
+                              size: Size(
+                                  500,
+                                  (600 * 0.625)
+                                      .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                              painter: RSCustomPainter(),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            final audio = await Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => const Ringtone()));
+                            if (audio is AppAudio) {
+                              selectedAudio = audio;
+                            }
+                            setState(() {});
+                          },
+                          child: SizedBox(
+                            //============> Container 3rd
+                            height: MediaQuery.of(context).size.height * 0.25,
+                            width: MediaQuery.of(context).size.width * 0.70,
+                            child: CustomPaint(
+                              size: Size(
+                                  400,
+                                  (400 * 0.625)
+                                      .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                              painter: RCustomPainter(),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            final contact = await Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => const ContactScreen()));
+                            if (contact is Contact) {
+                              selectedContact = contact;
+                            }
+                          },
+                          child: SizedBox(
+                            //============> Container 4th
+                            height: MediaQuery.of(context).size.height * 0.30,
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            child: CustomPaint(
+                              size: Size(
+                                  400,
+                                  (400 * 0.625)
+                                      .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                              painter: SCustomPainter(),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          child: SizedBox(
+                            //=========> Container 5th
+                            height: MediaQuery.of(context).size.height * 0.30,
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            child: CustomPaint(
+                              size: Size(
+                                  400,
+                                  (400 * 0.625)
+                                      .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                              painter: FCustomPainter(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
-            )
-          ],
-        ),
+            ),
+          ]))
+        : MaterialButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('please open app again in mobile'),
+          );
+  }
+
+  onTap() {
+    Picker(
+      adapter: NumberPickerAdapter(data: <NumberPickerColumn>[
+        const NumberPickerColumn(begin: 0, end: 60, suffix: Text(' minutes'), jump: 0),
+        const NumberPickerColumn(begin: 0, end: 60, suffix: Text('seconds'), jump: 5)
+      ]),
+      delimiter: <PickerDelimiter>[
+        PickerDelimiter(
+          child: Container(
+            //          decoration: const BoxDecoration(
+            //   color: Colors.white,
+            //   borderRadius: BorderRadius.all(Radius.circular(10)),
+            //   boxShadow: [
+            //     BoxShadow(
+            //       color: Colors.grey,
+            //       blurRadius: 20.0, // Soften the shaodw
+            //       spreadRadius: 2.0,
+            //       offset: Offset(0.0, 0.0),
+            //     )
+            //   ],
+            // ),
+            width: 30.0,
+            alignment: Alignment.center,
+            child: const Icon(Icons.more_vert),
+          ),
+        )
       ],
+      confirmText: 'OK',
+      onSelect: (picker, index, selected) {
+        if (index == 0) {
+          toast(context, 'Please select a time');
+          return;
+        }
+        print(selected.toString());
+        // print a time in text box when selected
+      },
+      onCancel: () {
+        debugPrint('cancel');
+      },
+      confirmTextStyle: const TextStyle(inherit: false, color: Colors.red, fontSize: 22),
+      title: const Text('Select Time'),
+      hideHeader: true,
+      height: 200.0,
+      backgroundColor: Colors.white,
+      selectedTextStyle: TextStyle(color: Colors.blue),
+      onConfirm: (Picker picker, List<int> value) {
+        // You get your duration here
+
+        Duration resultingDuration = Duration(minutes: value[1], seconds: value[1]);
+        // Duration(minutes: 0, seconds: 0) is the default value
+        selectedDuration = resultingDuration;
+
+        setState(() {});
+      },
+    ).showDialog(context);
+  }
+
+  void toast(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(text, textAlign: TextAlign.center),
+      behavior: SnackBarBehavior.fixed,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
     ));
   }
 }
 // Container 1
 
+// 3rd  container color = Color(0xfff5b942)
+
 class RPSCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
+    // canvas.drawImage(myBackground, const Offset(0, 0), Paint());
     // Layer 1
 
     Paint paintFill0 = Paint()
-      ..color = const Color.fromARGB(255, 255, 255, 255)
+      ..color = Colors.indigo
       ..style = PaintingStyle.fill
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt
@@ -128,7 +276,7 @@ class RPSCustomPainter extends CustomPainter {
     // Layer 1
 
     Paint paintStroke0 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
+      ..color = Colors.indigo
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt
@@ -139,18 +287,18 @@ class RPSCustomPainter extends CustomPainter {
     // Square
 
     Paint paintFill1 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
+      ..color = Colors.indigo
       ..style = PaintingStyle.fill
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt
       ..strokeJoin = StrokeJoin.miter;
 
     Path path_1 = Path();
-    path_1.moveTo(size.width * 0.0350625, size.height * 0.4630200);
-    path_1.lineTo(size.width * 0.9667750, size.height * 0.4630200);
-    path_1.lineTo(size.width * 0.9534875, size.height * 0.8396800);
-    path_1.lineTo(size.width * 0.0350625, size.height * 0.9939600);
-    path_1.lineTo(size.width * 0.0350625, size.height * 0.4630200);
+    path_1.moveTo(size.width * 0.035, size.height * 0.46);
+    path_1.lineTo(size.width * 0.96, size.height * 0.46);
+    path_1.lineTo(size.width * 0.95, size.height * 0.839);
+    path_1.lineTo(size.width * 0.035, size.height * 0.99);
+    path_1.lineTo(size.width * 0.035, size.height * 0.46);
     path_1.close();
 
     canvas.drawPath(path_1, paintFill1);
@@ -158,7 +306,7 @@ class RPSCustomPainter extends CustomPainter {
     // Square
 
     Paint paintStroke1 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
+      ..color = Colors.indigo
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.06
       ..strokeCap = StrokeCap.round
@@ -179,7 +327,7 @@ class RPSCustomPainter extends CustomPainter {
           style: TextStyle(
             fontSize: size.width * 0.06,
             fontWeight: FontWeight.normal,
-            color: Color(0xff000000),
+            color: Colors.white,
             fontStyle: FontStyle.normal,
             decoration: TextDecoration.none,
           )),
@@ -192,17 +340,17 @@ class RPSCustomPainter extends CustomPainter {
     // Text Layer 1
 
     canvas.save();
-    final pivot_9886373671211 = Offset(size.width * 0.36, size.height * 0.67);
+    final pivot_9886373671211 = Offset(size.width * 0.36, size.height * 0.71); //0.67
     canvas.translate(pivot_9886373671211.dx, pivot_9886373671211.dy);
     canvas.rotate(0.0);
     canvas.translate(-pivot_9886373671211.dx, -pivot_9886373671211.dy);
     TextPainter tp_9886373671211 = TextPainter(
       text: TextSpan(
-          text: """Hello world""",
+          text: """write a time""",
           style: TextStyle(
             fontSize: size.width * 0.03,
             fontWeight: FontWeight.normal,
-            color: Color(0xff000000),
+            color: Colors.white,
             fontStyle: FontStyle.normal,
             decoration: TextDecoration.none,
           )),
@@ -221,7 +369,7 @@ class RPSCustomPainter extends CustomPainter {
     canvas.translate(-pivot_7674689915787.dx, -pivot_7674689915787.dy);
     TextPainter tp_7674689915787 = TextPainter(
       text: TextSpan(
-          text: """You Text Here""",
+          text: """""", //  add an image here
           style: TextStyle(
             fontSize: size.width * 0.03,
             fontWeight: FontWeight.normal,
@@ -249,21 +397,21 @@ class RSCustomPainter extends CustomPainter {
     // Layer 1
 
     Paint paintFill0 = Paint()
-      ..color = const Color.fromARGB(255, 255, 255, 255)
+      ..color = Colors.purple
       ..style = PaintingStyle.fill
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt
       ..strokeJoin = StrokeJoin.miter;
 
     Path path_0 = Path();
-    path_0.moveTo(size.width * 0.3637500, size.height * 0.4780000);
+    path_0.moveTo(0.3637500, 0.4780000);
 
     canvas.drawPath(path_0, paintFill0);
 
     // Layer 1
 
     Paint paintStroke0 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
+      ..color = Colors.purple
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt
@@ -274,18 +422,18 @@ class RSCustomPainter extends CustomPainter {
     // Square
 
     Paint paintFill1 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
+      ..color = Colors.purple
       ..style = PaintingStyle.fill
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt
       ..strokeJoin = StrokeJoin.miter;
 
     Path path_1 = Path();
-    path_1.moveTo(size.width * 0.3249250, size.height * 0.0604400);
-    path_1.lineTo(size.width * 0.9678250, size.height * 0.0018200);
-    path_1.lineTo(size.width * 0.8695375, size.height * 0.9578800);
-    path_1.lineTo(size.width * 0.3349000, size.height * 0.9711800);
-    path_1.lineTo(size.width * 0.3249250, size.height * 0.0604400);
+    path_1.moveTo(size.width * 0.32, size.height * 0.060);
+    path_1.lineTo(size.width * 0.96, size.height * 0.001);
+    path_1.lineTo(size.width * 0.86, size.height * 0.95);
+    path_1.lineTo(size.width * 0.33, size.height * 0.97);
+    path_1.lineTo(size.width * 0.32, size.height * 0.060);
     path_1.close();
 
     canvas.drawPath(path_1, paintFill1);
@@ -293,7 +441,7 @@ class RSCustomPainter extends CustomPainter {
     // Square
 
     Paint paintStroke1 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
+      ..color = Colors.purple
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.06
       ..strokeCap = StrokeCap.round
@@ -304,7 +452,7 @@ class RSCustomPainter extends CustomPainter {
     // Text Layer 1
 
     canvas.save();
-    final pivot_4922996302460 = Offset(size.width * 0.52, size.height * 0.50);
+    final pivot_4922996302460 = Offset(size.width * 0.50, size.height * 0.50);
     canvas.translate(pivot_4922996302460.dx, pivot_4922996302460.dy);
     canvas.rotate(0.0);
     canvas.translate(-pivot_4922996302460.dx, -pivot_4922996302460.dy);
@@ -333,11 +481,11 @@ class RSCustomPainter extends CustomPainter {
     canvas.translate(-pivot_5254258018463.dx, -pivot_5254258018463.dy);
     TextPainter tp_5254258018463 = TextPainter(
       text: TextSpan(
-          text: """You Text Here""",
+          text: """  """,
           style: TextStyle(
             fontSize: size.width * 0.03,
             fontWeight: FontWeight.normal,
-            color: Color(0xff000000),
+            color: Colors.white,
             fontStyle: FontStyle.normal,
             decoration: TextDecoration.none,
           )),
@@ -356,7 +504,7 @@ class RSCustomPainter extends CustomPainter {
     canvas.translate(-pivot_7379452923972.dx, -pivot_7379452923972.dy);
     TextPainter tp_7379452923972 = TextPainter(
       text: TextSpan(
-          text: """You Text Here""",
+          text: """""", // add an image here
           style: TextStyle(
             fontSize: size.width * 0.03,
             fontWeight: FontWeight.normal,
@@ -379,48 +527,24 @@ class RSCustomPainter extends CustomPainter {
 
 // container 3
 class RCustomPainter extends CustomPainter {
+  AppAudio? selectedAudio;
   @override
   void paint(Canvas canvas, Size size) {
-    // Layer 1
-
-    Paint paintFill0 = Paint()
-      ..color = const Color.fromARGB(255, 255, 255, 255)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = size.width * 0.00
-      ..strokeCap = StrokeCap.butt
-      ..strokeJoin = StrokeJoin.miter;
-
-    Path path_0 = Path();
-    path_0.moveTo(size.width * 0.5787500, size.height * 0.5460000);
-
-    canvas.drawPath(path_0, paintFill0);
-
-    // Layer 1
-
-    Paint paintStroke0 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.00
-      ..strokeCap = StrokeCap.butt
-      ..strokeJoin = StrokeJoin.miter;
-
-    canvas.drawPath(path_0, paintStroke0);
-
     // Square
 
     Paint paintFill1 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
+      ..color = const Color.fromARGB(255, 245, 185, 66)
       ..style = PaintingStyle.fill
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt
       ..strokeJoin = StrokeJoin.miter;
 
     Path path_1 = Path();
-    path_1.moveTo(size.width * 0.0800000, size.height * -0.0241200);
-    path_1.lineTo(size.width * 0.5931125, size.height * -0.0721200);
-    path_1.lineTo(size.width * 0.5531125, size.height * 0.9748200);
-    path_1.lineTo(size.width * -0.0250000, size.height * 0.9628200);
-    path_1.lineTo(size.width * 0.0800000, size.height * -0.0241200);
+    path_1.moveTo(size.width * 0.0800250, size.height * -0.0266000);
+    path_1.lineTo(size.width * 0.6269625, size.height * -0.0926600);
+    path_1.lineTo(size.width * 0.6271875, size.height * 0.9607400);
+    path_1.lineTo(size.width * -0.0082250, size.height * 0.9555000);
+    path_1.lineTo(size.width * 0.0800250, size.height * -0.0266000);
     path_1.close();
 
     canvas.drawPath(path_1, paintFill1);
@@ -428,7 +552,7 @@ class RCustomPainter extends CustomPainter {
     // Square
 
     Paint paintStroke1 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
+      ..color = const Color.fromARGB(255, 245, 185, 66)
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.06
       ..strokeCap = StrokeCap.round
@@ -439,36 +563,60 @@ class RCustomPainter extends CustomPainter {
     // Text Layer 1
 
     canvas.save();
-    final pivot_2077906947162 = Offset(size.width * 0.21, size.height * 0.44);
-    canvas.translate(pivot_2077906947162.dx, pivot_2077906947162.dy);
+    final pivot_2976991653767 = Offset(size.width * 0.19, size.height * 0.50);
+    canvas.translate(pivot_2976991653767.dx, pivot_2976991653767.dy);
     canvas.rotate(0.0);
-    canvas.translate(-pivot_2077906947162.dx, -pivot_2077906947162.dy);
-    TextPainter tp_2077906947162 = TextPainter(
+    canvas.translate(-pivot_2976991653767.dx, -pivot_2976991653767.dy);
+    TextPainter tp_2976991653767 = TextPainter(
       text: TextSpan(
           text: """Ringtone""",
           style: TextStyle(
             fontSize: size.width * 0.06,
             fontWeight: FontWeight.bold,
-            color: Color(0xff000000),
+            color: Colors.white,
             fontStyle: FontStyle.normal,
             decoration: TextDecoration.none,
           )),
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.left,
     )..layout(maxWidth: size.width * 0.50, minWidth: size.width * 0.50);
-    tp_2077906947162.paint(canvas, pivot_2077906947162);
+    tp_2976991653767.paint(canvas, pivot_2976991653767);
+    canvas.restore();
+
+    // Text Layer 1
+    if (selectedAudio != null) {
+      canvas.save();
+    }
+    final pivot_2591185296752 = Offset(size.width * 0.21, size.height * 0.65);
+    canvas.translate(pivot_2591185296752.dx, pivot_2591185296752.dy);
+    canvas.rotate(0.0);
+    canvas.translate(-pivot_2591185296752.dx, -pivot_2591185296752.dy);
+    TextPainter tp_2591185296752 = TextPainter(
+      text: TextSpan(
+          text: """Selected ringtone: ${selectedAudio?.name?.replaceAll("", "").replaceAll(".mp3", "")} """,
+          style: TextStyle(
+            fontSize: size.width * 0.03,
+            fontWeight: FontWeight.normal,
+            color: Colors.white,
+            fontStyle: FontStyle.normal,
+            decoration: TextDecoration.none,
+          )),
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.left,
+    )..layout(maxWidth: size.width * 0.50, minWidth: size.width * 0.50);
+    tp_2591185296752.paint(canvas, pivot_2591185296752);
     canvas.restore();
 
     // Text Layer 1
 
     canvas.save();
-    final pivot_3360721686832 = Offset(size.width * 0.21, size.height * 0.61);
-    canvas.translate(pivot_3360721686832.dx, pivot_3360721686832.dy);
+    final pivot_1414960345870 = Offset(size.width * 0.23, size.height * 0.09);
+    canvas.translate(pivot_1414960345870.dx, pivot_1414960345870.dy);
     canvas.rotate(0.0);
-    canvas.translate(-pivot_3360721686832.dx, -pivot_3360721686832.dy);
-    TextPainter tp_3360721686832 = TextPainter(
+    canvas.translate(-pivot_1414960345870.dx, -pivot_1414960345870.dy);
+    TextPainter tp_1414960345870 = TextPainter(
       text: TextSpan(
-          text: """You Text Here""",
+          text: """""",
           style: TextStyle(
             fontSize: size.width * 0.03,
             fontWeight: FontWeight.normal,
@@ -479,30 +627,7 @@ class RCustomPainter extends CustomPainter {
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.left,
     )..layout(maxWidth: size.width * 0.50, minWidth: size.width * 0.50);
-    tp_3360721686832.paint(canvas, pivot_3360721686832);
-    canvas.restore();
-
-    // Text Layer 1
-
-    canvas.save();
-    final pivot_2516557029649 = Offset(size.width * 0.24, size.height * 0.22);
-    canvas.translate(pivot_2516557029649.dx, pivot_2516557029649.dy);
-    canvas.rotate(0.0);
-    canvas.translate(-pivot_2516557029649.dx, -pivot_2516557029649.dy);
-    TextPainter tp_2516557029649 = TextPainter(
-      text: TextSpan(
-          text: """Image""",
-          style: TextStyle(
-            fontSize: size.width * 0.03,
-            fontWeight: FontWeight.normal,
-            color: Color(0xff000000),
-            fontStyle: FontStyle.normal,
-            decoration: TextDecoration.none,
-          )),
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.left,
-    )..layout(maxWidth: size.width * 0.50, minWidth: size.width * 0.50);
-    tp_2516557029649.paint(canvas, pivot_2516557029649);
+    tp_1414960345870.paint(canvas, pivot_1414960345870);
     canvas.restore();
   }
 
@@ -514,12 +639,13 @@ class RCustomPainter extends CustomPainter {
 
 // container 4
 class SCustomPainter extends CustomPainter {
+  Contact? selectedContact;
   @override
   void paint(Canvas canvas, Size size) {
     // Layer 1
 
     Paint paintFill0 = Paint()
-      ..color = const Color.fromARGB(255, 255, 255, 255)
+      ..color = Color(0xff4266f5)
       ..style = PaintingStyle.fill
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt
@@ -533,7 +659,7 @@ class SCustomPainter extends CustomPainter {
     // Layer 1
 
     Paint paintStroke0 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
+      ..color = Color(0xff4266f5)
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt
@@ -544,18 +670,18 @@ class SCustomPainter extends CustomPainter {
     // Square
 
     Paint paintFill1 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
+      ..color = Color(0xff4266f5)
       ..style = PaintingStyle.fill
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt
       ..strokeJoin = StrokeJoin.miter;
 
     Path path_1 = Path();
-    path_1.moveTo(size.width * 0.3450000, size.height * 0.0315400);
-    path_1.lineTo(size.width * 0.8786375, size.height * 0.0315400);
-    path_1.lineTo(size.width * 1.0286375, size.height * 0.9474400);
-    path_1.lineTo(size.width * 0.3425000, size.height * 0.9634400);
-    path_1.lineTo(size.width * 0.3450000, size.height * 0.0315400);
+    path_1.moveTo(size.width * 0.34, size.height * 0.03);
+    path_1.lineTo(size.width * 0.87, size.height * 0.03);
+    path_1.lineTo(size.width * 1.02, size.height * 0.94);
+    path_1.lineTo(size.width * 0.34, size.height * 0.96);
+    path_1.lineTo(size.width * 0.34, size.height * 0.03);
     path_1.close();
 
     canvas.drawPath(path_1, paintFill1);
@@ -563,7 +689,7 @@ class SCustomPainter extends CustomPainter {
     // Square
 
     Paint paintStroke1 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
+      ..color = Color(0xff4266f5)
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.06
       ..strokeCap = StrokeCap.round
@@ -580,7 +706,7 @@ class SCustomPainter extends CustomPainter {
     canvas.translate(-pivot_945982681551.dx, -pivot_945982681551.dy);
     TextPainter tp_945982681551 = TextPainter(
       text: TextSpan(
-          text: """You Text Here""",
+          text: """ """, // add an image
           style: TextStyle(
             fontSize: size.width * 0.03,
             fontWeight: FontWeight.normal,
@@ -595,19 +721,20 @@ class SCustomPainter extends CustomPainter {
     canvas.restore();
 
     // Text Layer 1
-
-    canvas.save();
-    final pivot_4389557702333 = Offset(size.width * 0.53, size.height * 0.46);
+    {
+      canvas.save();
+    }
+    final pivot_4389557702333 = Offset(size.width * 0.44, size.height * 0.46);
     canvas.translate(pivot_4389557702333.dx, pivot_4389557702333.dy);
     canvas.rotate(0.0);
     canvas.translate(-pivot_4389557702333.dx, -pivot_4389557702333.dy);
     TextPainter tp_4389557702333 = TextPainter(
       text: TextSpan(
-          text: """Timer""",
+          text: """ Select a Contact""",
           style: TextStyle(
             fontSize: size.width * 0.06,
             fontWeight: FontWeight.bold,
-            color: Color(0xff000000),
+            color: Colors.white,
             fontStyle: FontStyle.normal,
             decoration: TextDecoration.none,
           )),
@@ -618,26 +745,27 @@ class SCustomPainter extends CustomPainter {
     canvas.restore();
 
     // Text Layer 1
-
-    canvas.save();
-    final pivot_8490036281206 = Offset(size.width * 0.53, size.height * 0.64);
-    canvas.translate(pivot_8490036281206.dx, pivot_8490036281206.dy);
+    if (selectedContact != null) {
+      canvas.save();
+    }
+    final pivot_84 = Offset(size.width * 0.58, size.height * 0.64);
+    canvas.translate(pivot_84.dx, pivot_84.dy);
     canvas.rotate(0.0);
-    canvas.translate(-pivot_8490036281206.dx, -pivot_8490036281206.dy);
+    canvas.translate(-pivot_84.dx, -pivot_84.dy);
     TextPainter tp_8490036281206 = TextPainter(
       text: TextSpan(
-          text: """You Text Here""",
+          text: """Selected contact: ${selectedContact?.displayName}""",
           style: TextStyle(
             fontSize: size.width * 0.03,
             fontWeight: FontWeight.normal,
-            color: Color(0xff000000),
+            color: Colors.white,
             fontStyle: FontStyle.normal,
             decoration: TextDecoration.none,
           )),
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.left,
     )..layout(maxWidth: size.width * 0.50, minWidth: size.width * 0.50);
-    tp_8490036281206.paint(canvas, pivot_8490036281206);
+    tp_8490036281206.paint(canvas, pivot_84);
     canvas.restore();
   }
 
@@ -651,31 +779,6 @@ class SCustomPainter extends CustomPainter {
 class FCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    // Layer 1
-
-    Paint paintFill0 = Paint()
-      ..color = const Color.fromARGB(255, 255, 255, 255)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = size.width * 0.00
-      ..strokeCap = StrokeCap.butt
-      ..strokeJoin = StrokeJoin.miter;
-
-    Path path_0 = Path();
-    path_0.moveTo(size.width * 0.6612500, size.height * 0.5580000);
-
-    canvas.drawPath(path_0, paintFill0);
-
-    // Layer 1
-
-    Paint paintStroke0 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.00
-      ..strokeCap = StrokeCap.butt
-      ..strokeJoin = StrokeJoin.miter;
-
-    canvas.drawPath(path_0, paintStroke0);
-
     // Square
 
     Paint paintFill1 = Paint()
@@ -686,11 +789,11 @@ class FCustomPainter extends CustomPainter {
       ..strokeJoin = StrokeJoin.miter;
 
     Path path_1 = Path();
-    path_1.moveTo(size.width * -0.0183125, size.height * 0.0292800);
-    path_1.lineTo(size.width * 0.5616500, size.height * 0.0280000);
-    path_1.lineTo(size.width * 0.5525000, size.height * 0.9503000);
-    path_1.lineTo(size.width * 0.1325000, size.height * 0.9543000);
-    path_1.lineTo(size.width * -0.0183125, size.height * 0.0292800);
+    path_1.moveTo(size.width * -0.0016750, size.height * 0.0372800);
+    path_1.lineTo(size.width * 0.6255250, size.height * 0.0345800);
+    path_1.lineTo(size.width * 0.6255000, size.height * 0.9502000);
+    path_1.lineTo(size.width * 0.1464250, size.height * 0.9583200);
+    path_1.lineTo(size.width * -0.0016750, size.height * 0.0372800);
     path_1.close();
 
     canvas.drawPath(path_1, paintFill1);
@@ -709,70 +812,24 @@ class FCustomPainter extends CustomPainter {
     // Text Layer 1
 
     canvas.save();
-    final pivot_379650780352 = Offset(size.width * 0.23, size.height * 0.50);
-    canvas.translate(pivot_379650780352.dx, pivot_379650780352.dy);
+    final pivot_9853522823899 = Offset(size.width * 0.22, size.height * 0.44);
+    canvas.translate(pivot_9853522823899.dx, pivot_9853522823899.dy);
     canvas.rotate(0.0);
-    canvas.translate(-pivot_379650780352.dx, -pivot_379650780352.dy);
-    TextPainter tp_379650780352 = TextPainter(
+    canvas.translate(-pivot_9853522823899.dx, -pivot_9853522823899.dy);
+    TextPainter tp_9853522823899 = TextPainter(
       text: TextSpan(
-          text: """Text""",
+          text: """More""",
           style: TextStyle(
             fontSize: size.width * 0.06,
             fontWeight: FontWeight.bold,
-            color: Color(0xff000000),
+            color: Color(0xfffffafa),
             fontStyle: FontStyle.normal,
             decoration: TextDecoration.none,
           )),
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.left,
     )..layout(maxWidth: size.width * 0.50, minWidth: size.width * 0.50);
-    tp_379650780352.paint(canvas, pivot_379650780352);
-    canvas.restore();
-
-    // Text Layer 1
-
-    canvas.save();
-    final pivot_3539612076627 = Offset(size.width * 0.21, size.height * 0.19);
-    canvas.translate(pivot_3539612076627.dx, pivot_3539612076627.dy);
-    canvas.rotate(0.0);
-    canvas.translate(-pivot_3539612076627.dx, -pivot_3539612076627.dy);
-    TextPainter tp_3539612076627 = TextPainter(
-      text: TextSpan(
-          text: """You Text Here""",
-          style: TextStyle(
-            fontSize: size.width * 0.03,
-            fontWeight: FontWeight.normal,
-            color: Color(0xff000000),
-            fontStyle: FontStyle.normal,
-            decoration: TextDecoration.none,
-          )),
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.left,
-    )..layout(maxWidth: size.width * 0.50, minWidth: size.width * 0.50);
-    tp_3539612076627.paint(canvas, pivot_3539612076627);
-    canvas.restore();
-
-    // Text Layer 1
-
-    canvas.save();
-    final pivot_5744230864546 = Offset(size.width * 0.22, size.height * 0.70);
-    canvas.translate(pivot_5744230864546.dx, pivot_5744230864546.dy);
-    canvas.rotate(0.0);
-    canvas.translate(-pivot_5744230864546.dx, -pivot_5744230864546.dy);
-    TextPainter tp_5744230864546 = TextPainter(
-      text: TextSpan(
-          text: """You Text Here""",
-          style: TextStyle(
-            fontSize: size.width * 0.03,
-            fontWeight: FontWeight.normal,
-            color: Color(0xff000000),
-            fontStyle: FontStyle.normal,
-            decoration: TextDecoration.none,
-          )),
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.left,
-    )..layout(maxWidth: size.width * 0.50, minWidth: size.width * 0.50);
-    tp_5744230864546.paint(canvas, pivot_5744230864546);
+    tp_9853522823899.paint(canvas, pivot_9853522823899);
     canvas.restore();
   }
 
