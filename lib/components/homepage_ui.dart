@@ -93,8 +93,8 @@ class _HomepageUiState extends State<HomepageUi> {
                           },
                           child: SizedBox(
                             //============> Container 2nd
-                            height: MediaQuery.of(context).size.height * 0.80,
-                            width: MediaQuery.of(context).size.width * 0.90,
+                            height: MediaQuery.of(context).size.height * 0.30,
+                            width: MediaQuery.of(context).size.width * 0.30,
                             child: CustomPaint(
                               size: Size(
                                   500,
