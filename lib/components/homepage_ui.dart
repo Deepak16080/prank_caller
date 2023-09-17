@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/caller_voice.dart';
+import 'package:prank_caller/components/contact.dart';
 import 'package:prank_caller/components/ringtone.dart';
 import 'package:prank_caller/models/ringtone_model_list.dart';
 import 'package:prank_caller/utils/enums.dart';
@@ -188,11 +190,80 @@ class _HomepageUiState extends State<HomepageUi> {
                     BoxShadow(blurRadius: 30.0, blurStyle: BlurStyle.outer, spreadRadius: 10),
                   ],
                 ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.55,
+                          child: Text(
+                            'Please select a Contact number in you contact list ',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            final contact = await Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => const ContactScreen()));
+                            if (contact is Contact) {
+                              selectedContact = contact;
+                            }
+                          },
+                          child: Text(
+                            'select a contact',
+                            style: TextStyle(color: Colors.blue, fontSize: 10),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    if (selectedContact != null)
+                      Text(
+                        "Selected contact: ${selectedContact?.displayName}",
+                        style: const TextStyle(color: Colors.green),
+                      ),
+                    SizedBox(
+                      height: 35,
+                    ),
+                    MaterialButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40),
+                            side: BorderSide(color: Colors.black, width: 1, style: BorderStyle.solid)),
+                        onPressed: () {
+                          if (selectedContact == null) {
+                            toast(context, "Please select a contact first");
+                            return;
+                          }
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => CallerProfilePage(contact: selectedContact!)));
+                        },
+                        splashColor: Colors.blueAccent,
+                        textColor: Colors.green,
+                        child: Text('Call Me')),
+                  ],
+                ),
               )
             ],
           ),
         ),
       ]),
+    ));
+  }
+
+  void toast(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(text, textAlign: TextAlign.center),
+      behavior: SnackBarBehavior.fixed,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
     ));
   }
 }
