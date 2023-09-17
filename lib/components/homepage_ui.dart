@@ -24,239 +24,254 @@ class _HomepageUiState extends State<HomepageUi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.deepPurple,
         body: SingleChildScrollView(
-      physics: NeverScrollableScrollPhysics(),
-      child: Stack(children: [
-        Column(
-          children: const [
-            Padding(
-              padding: EdgeInsets.only(right: 100, top: 40),
-              child: AppText('Prank call',
-                  style: TextStyle(
-                    fontSize: 35,
-                  )),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: SizedBox(
-                height: 90,
-                width: 250,
-                child: AppText(
-                  'You can have a imaginary friend to save your intimity ',
-                  style: TextStyle(fontSize: 15, color: Colors.grey),
-                  textAlign: TextAlign.start,
-                ),
+          physics: NeverScrollableScrollPhysics(),
+          child: Stack(children: [
+            Container(
+              width: MediaQuery.of(context).size.width * 2.80,
+              height: MediaQuery.of(context).size.height * 0.85,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(50)),
+                color: Colors.white,
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 180, top: 50),
-              child: AppText(
-                'Settings',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 190),
-          child: Column(
-            children: [
-              InkWell(
-                onTap: () {},
-                child: SizedBox(
-                  //=============> Container 1st
-                  height: MediaQuery.of(context).size.height * 0.25,
-                  width: MediaQuery.of(context).size.width * 0.90,
-                  child: CustomPaint(
-                    size: Size(600, (500 * 0.625).toDouble()),
-                    //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                    painter: RPSCustomPainter(),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Row(
+              child: Column(
                 children: [
-                  SizedBox(
-                    width: 30,
+                  Padding(
+                    padding: EdgeInsets.only(right: 200, top: 40),
+                    child: AppText('Prank call',
+                        style: TextStyle(
+                          fontSize: 35,
+                        )),
                   ),
-                  InkWell(
-                    onTap: () async {
-                      final audio =
-                          await Navigator.push(context, MaterialPageRoute(builder: (context) => const CallerVoice()));
-                      if (audio is AppAudio) {
-                        selectedAudio = audio;
-                      }
-                    },
+                  Padding(
+                    padding: EdgeInsets.only(right: 120, top: 20),
                     child: SizedBox(
-                      //============> Container 2nd
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      width: MediaQuery.of(context).size.width * 0.35,
-                      child: CustomPaint(
-                        size: Size(
-                            500,
-                            (600 * 0.625)
-                                .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                        painter: RSCustomPainter(),
+                      height: MediaQuery.of(context).size.height * 0.10,
+                      width: MediaQuery.of(context).size.width * 0.60,
+                      child: AppText(
+                        'You can have a imaginary friend to save your intimity ',
+                        style: TextStyle(fontSize: 15, color: Colors.grey),
+                        textAlign: TextAlign.start,
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      final audio =
-                          await Navigator.push(context, MaterialPageRoute(builder: (context) => const Ringtone()));
-                      if (audio is AppAudio) {
-                        selectedAudio = audio;
-                      }
-                      setState(() {});
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: SizedBox(
-                        //============> Container 3rd
-                        height: MediaQuery.of(context).size.height * 0.14,
-                        width: MediaQuery.of(context).size.width * 0.35,
-                        child: CustomPaint(
-                          size: Size(
-                              400,
-                              (400 * 0.625)
-                                  .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                          painter: RCustomPainter(),
-                        ),
-                      ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 290, top: 50),
+                    child: AppText(
+                      'Settings',
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
               ),
-              // SizedBox(
-              //   height: 15,
-              // ),
-              // Center(
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       InkWell(
-              //         onTap: () async {
-              //           final contact = await Navigator.push(
-              //               context, MaterialPageRoute(builder: (context) => const ContactScreen()));
-              //           if (contact is Contact) {
-              //             selectedContact = contact;
-              //           }
-              //         },
-              //   child: SizedBox(
-              //     //============> Container 4th
-              //     height: MediaQuery.of(context).size.height * 0.20,
-              //     width: MediaQuery.of(context).size.width * 0.40,
-              //     child: CustomPaint(
-              //       size: Size(
-              //           400,
-              //           (400 * 0.625)
-              //               .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-              //       painter: SCustomPainter(),
-              //     ),
-              //   ),
-              // ),
-              // InkWell(
-              //               child: SizedBox(
-              //                 //=========> Container 5th
-              //                 height: MediaQuery.of(context).size.height * 0.20,
-              //                 width: MediaQuery.of(context).size.width * 0.40,
-              //                 child: CustomPaint(
-              //                   size: Size(
-              //                       400,
-              //                       (400 * 0.625)
-              //                           .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-              //                   painter: FCustomPainter(),
-              //                 ),
-              //               ),
-              //     ),
-              //   ],
-              // ),
-              // )
-              SizedBox(
-                height: 50,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.95,
-                height: MediaQuery.of(context).size.height * 0.80,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.horizontal(left: Radius.circular(50), right: Radius.circular(50)),
-                  boxShadow: const [
-                    BoxShadow(blurRadius: 30.0, blurStyle: BlurStyle.outer, spreadRadius: 10),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 20,
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.55,
-                          child: Text(
-                            'Please select a Contact number in you contact list ',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            final contact = await Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => const ContactScreen()));
-                            if (contact is Contact) {
-                              selectedContact = contact;
-                            }
-                          },
-                          child: Text(
-                            'select a contact',
-                            style: TextStyle(color: Colors.blue, fontSize: 10),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    if (selectedContact != null)
-                      Text(
-                        "Selected contact: ${selectedContact?.displayName}",
-                        style: const TextStyle(color: Colors.green),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 190),
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: () {},
+                    child: SizedBox(
+                      //=============> Container 1st
+                      height: MediaQuery.of(context).size.height * 0.25,
+                      width: MediaQuery.of(context).size.width * 0.90,
+                      child: CustomPaint(
+                        size: Size(600, (500 * 0.625).toDouble()),
+                        //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                        painter: RPSCustomPainter(),
                       ),
-                    SizedBox(
-                      height: 35,
                     ),
-                    MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
-                            side: BorderSide(color: Colors.black, width: 1, style: BorderStyle.solid)),
-                        onPressed: () {
-                          if (selectedContact == null) {
-                            toast(context, "Please select a contact first");
-                            return;
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 30,
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          final audio = await Navigator.push(
+                              context, MaterialPageRoute(builder: (context) => const CallerVoice()));
+                          if (audio is AppAudio) {
+                            selectedAudio = audio;
                           }
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => CallerProfilePage(contact: selectedContact!)));
                         },
-                        splashColor: Colors.blueAccent,
-                        textColor: Colors.green,
-                        child: Text('Call Me')),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ]),
-    ));
+                        child: SizedBox(
+                          //============> Container 2nd
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          child: CustomPaint(
+                            size: Size(
+                                500,
+                                (600 * 0.625)
+                                    .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                            painter: RSCustomPainter(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          final audio =
+                              await Navigator.push(context, MaterialPageRoute(builder: (context) => const Ringtone()));
+                          if (audio is AppAudio) {
+                            selectedAudio = audio;
+                          }
+                          setState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: SizedBox(
+                            //============> Container 3rd
+                            height: MediaQuery.of(context).size.height * 0.14,
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            child: CustomPaint(
+                              size: Size(
+                                  400,
+                                  (400 * 0.625)
+                                      .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                              painter: RCustomPainter(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      final contact =
+                          await Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactScreen()));
+                      if (contact is Contact) {
+                        selectedContact = contact;
+                      }
+                    },
+                    child: Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Colors.purple[100],
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 15),
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.55,
+                                  child: Text(
+                                    ' select a Contact number  ',
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              if (selectedContact != null)
+                                Text(
+                                  '"Selected contact: ${selectedContact?.displayName}",',
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                            ],
+                          ),
+                        ])),
+                  ),
+                  // SizedBox(
+                  //   height: 15,
+                  // ),
+                  // Center(
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       InkWell(
+                  //         onTap: () async {
+                  //           final contact = await Navigator.push(
+                  //               context, MaterialPageRoute(builder: (context) => const ContactScreen()));
+                  //           if (contact is Contact) {
+                  //             selectedContact = contact;
+                  //           }
+                  //         },
+                  //   child: SizedBox(
+                  //     //============> Container 4th
+                  //     height: MediaQuery.of(context).size.height * 0.20,
+                  //     width: MediaQuery.of(context).size.width * 0.40,
+                  //     child: CustomPaint(
+                  //       size: Size(
+                  //           400,
+                  //           (400 * 0.625)
+                  //               .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                  //       painter: SCustomPainter(),
+                  //     ),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //               child: SizedBox(
+                  //                 //=========> Container 5th
+                  //                 height: MediaQuery.of(context).size.height * 0.20,
+                  //                 width: MediaQuery.of(context).size.width * 0.40,
+                  //                 child: CustomPaint(
+                  //                   size: Size(
+                  //                       400,
+                  //                       (400 * 0.625)
+                  //                           .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                  //                   painter: FCustomPainter(),
+                  //                 ),
+                  //               ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // )
+                  SizedBox(
+                    height: 50,
+                  ),
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width * 0.95,
+                  //   height: MediaQuery.of(context).size.height * 0.80,
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.horizontal(left: Radius.circular(50), right: Radius.circular(50)),
+                  //     boxShadow: const [
+                  //       BoxShadow(blurRadius: 30.0, blurStyle: BlurStyle.outer, spreadRadius: 10),
+                  //     ],
+                  //   ),
+                  //   child:
+
+                  SizedBox(
+                    height: 35,
+                  ),
+                  MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+                          side: BorderSide(color: Colors.black, width: 1, style: BorderStyle.solid)),
+                      onPressed: () {
+                        if (selectedContact == null) {
+                          toast(context, "Please select a contact first");
+                          return;
+                        }
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => CallerProfilePage(contact: selectedContact!)));
+                      },
+                      splashColor: Colors.blueAccent,
+                      textColor: Colors.green,
+                      child: Text('Call Me')),
+                ],
+              ),
+            ),
+          ]),
+        ));
   }
 
   void toast(BuildContext context, String text) {
@@ -582,7 +597,6 @@ class RCustomPainter extends CustomPainter {
     return true;
   }
 }
-
 
 // container 4
 // class RCustomPainter extends CustomPainter {
