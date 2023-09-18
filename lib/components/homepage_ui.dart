@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/caller_voice.dart';
-import 'package:prank_caller/components/contact.dart';
+import 'package:prank_caller/components/contact_page.dart';
 import 'package:prank_caller/components/ringtone.dart';
 import 'package:prank_caller/models/ringtone_model_list.dart';
 import 'package:prank_caller/utils/enums.dart';
@@ -165,7 +165,7 @@ class _HomepageUiState extends State<HomepageUi> {
                           Row(
                             children: [
                               SizedBox(
-                                width: 20,
+                                width: 10,
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 15),
@@ -178,79 +178,17 @@ class _HomepageUiState extends State<HomepageUi> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
                               if (selectedContact != null)
                                 Text(
-                                  '"Selected contact: ${selectedContact?.displayName}",',
-                                  style: const TextStyle(color: Colors.white),
+                                  " ${selectedContact?.displayName}",
+                                  style: TextStyle(color: Colors.white, fontSize: 10),
                                 ),
                             ],
                           ),
                         ])),
                   ),
-                  // SizedBox(
-                  //   height: 15,
-                  // ),
-                  // Center(
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       InkWell(
-                  //         onTap: () async {
-                  //           final contact = await Navigator.push(
-                  //               context, MaterialPageRoute(builder: (context) => const ContactScreen()));
-                  //           if (contact is Contact) {
-                  //             selectedContact = contact;
-                  //           }
-                  //         },
-                  //   child: SizedBox(
-                  //     //============> Container 4th
-                  //     height: MediaQuery.of(context).size.height * 0.20,
-                  //     width: MediaQuery.of(context).size.width * 0.40,
-                  //     child: CustomPaint(
-                  //       size: Size(
-                  //           400,
-                  //           (400 * 0.625)
-                  //               .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                  //       painter: SCustomPainter(),
-                  //     ),
-                  //   ),
-                  // ),
-                  // InkWell(
-                  //               child: SizedBox(
-                  //                 //=========> Container 5th
-                  //                 height: MediaQuery.of(context).size.height * 0.20,
-                  //                 width: MediaQuery.of(context).size.width * 0.40,
-                  //                 child: CustomPaint(
-                  //                   size: Size(
-                  //                       400,
-                  //                       (400 * 0.625)
-                  //                           .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                  //                   painter: FCustomPainter(),
-                  //                 ),
-                  //               ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // )
                   SizedBox(
                     height: 50,
-                  ),
-                  // Container(
-                  //   width: MediaQuery.of(context).size.width * 0.95,
-                  //   height: MediaQuery.of(context).size.height * 0.80,
-                  //   decoration: BoxDecoration(
-                  //     borderRadius: BorderRadius.horizontal(left: Radius.circular(50), right: Radius.circular(50)),
-                  //     boxShadow: const [
-                  //       BoxShadow(blurRadius: 30.0, blurStyle: BlurStyle.outer, spreadRadius: 10),
-                  //     ],
-                  //   ),
-                  //   child:
-
-                  SizedBox(
-                    height: 35,
                   ),
                   MaterialButton(
                       shape: RoundedRectangleBorder(
@@ -261,8 +199,12 @@ class _HomepageUiState extends State<HomepageUi> {
                           toast(context, "Please select a contact first");
                           return;
                         }
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => CallerProfilePage(contact: selectedContact!)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CallerProfilePage(
+                                      contact: selectedContact!,
+                                    )));
                       },
                       splashColor: Colors.blueAccent,
                       textColor: Colors.green,

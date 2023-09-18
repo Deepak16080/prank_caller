@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_picker/picker.dart';
+import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/caller_voice.dart';
+import 'package:prank_caller/components/contact_page.dart';
 import 'package:prank_caller/components/ringtone.dart';
 import 'package:prank_caller/models/ringtone_model_list.dart';
 import 'package:prank_caller/widget/app_text.dart';
@@ -129,41 +131,41 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-        // Padding(
-        //     padding: const EdgeInsets.only(left: 20, top: 10),
-        //     child: MaterialButton(
-        //       onPressed: () async {
-        //         final contact =
-        //             await Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactScreen()));
-        //         if (contact is Contact) {
-        //           selectedContact = contact;
-        //         }
-        //       },
-        //       child: const Text('Select a number'),
-        //     )),
+        Padding(
+            padding: const EdgeInsets.only(left: 20, top: 10),
+            child: MaterialButton(
+              onPressed: () async {
+                final contact =
+                    await Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactScreen()));
+                if (contact is Contact) {
+                  selectedContact = contact;
+                }
+              },
+              child: const Text('Select a number'),
+            )),
 
-        // if (selectedContact != null)
-        //   Padding(
-        //     padding: const EdgeInsets.only(left: 20, top: 10),
-        //     child: Text(
-        //       "Selected contact: ${selectedContact?.displayName}",
-        //       style: const TextStyle(color: Colors.green),
-        //     ),
-        //   ),
+        if (selectedContact != null)
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 10),
+            child: Text(
+              "Selected contact: ${selectedContact?.displayName}",
+              style: const TextStyle(color: Colors.green),
+            ),
+          ),
 
-        // Padding(
-        //     padding: const EdgeInsets.only(left: 20, top: 10),
-        //     child: MaterialButton(
-        //       onPressed: () {
-        //         if (selectedContact == null) {
-        //           toast(context, "Please select a contact first");
-        //           return;
-        //         }
-        //         Navigator.push(
-        //             context, MaterialPageRoute(builder: (context) => CallerProfilePage(contact: selectedContact!)));
-        //       },
-        //       child: const Text('call me'),
-        //     )),
+        Padding(
+            padding: const EdgeInsets.only(left: 20, top: 10),
+            child: MaterialButton(
+              onPressed: () {
+                if (selectedContact == null) {
+                  toast(context, "Please select a contact first");
+                  return;
+                }
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => CallerProfilePage(contact: selectedContact!)));
+              },
+              child: const Text('call me'),
+            ))
       ])
     ]));
   }

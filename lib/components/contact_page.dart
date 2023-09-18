@@ -37,13 +37,14 @@ class _ContactScreenState extends State<ContactScreen> {
       return Center(child: Text('Please give a permission to access your contacts'));
     }
     if (_contacts == null) return Center(child: CircularProgressIndicator());
+    final Future<String> calculation = Future<String>.delayed(
+      const Duration(seconds: 2),
+      () => 'Data Loaded',
+    );
     return Scaffold(
       body: FutureBuilder<String>(
-          future: DefaultAssetBundle.of(context).loadString("AssetManifest.json"),
-          builder: ((
-            context,
-            snapshot,
-          ) {
+          future: calculation,
+          builder: (context, snapshot) {
             return ListView.builder(
                 itemCount: _contacts!.length,
                 itemBuilder: (context, i) {
@@ -70,7 +71,7 @@ class _ContactScreenState extends State<ContactScreen> {
                     ),
                   );
                 });
-          })),
+          }),
       appBar: AppBar(
         backgroundColor: Colors.blue,
         centerTitle: true,
