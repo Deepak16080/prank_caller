@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:prank_caller/components/caller_ui_page.dart';
@@ -16,6 +18,8 @@ class HomepageUi extends StatefulWidget {
 }
 
 class _HomepageUiState extends State<HomepageUi> {
+  final String imageUrl =
+      'https://images.unsplash.com/photo-1695239510467-f1e93d649c2b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80';
   AppAudio? selectedAudio;
   Contact? selectedContact;
   Duration? selectedDuration;
@@ -70,7 +74,8 @@ class _HomepageUiState extends State<HomepageUi> {
               padding: const EdgeInsets.symmetric(vertical: 190),
               child: Column(
                 children: [
-                  InkWell(
+                  GestureDetector(
+                    onPanDown: (details) {},
                     onTap: () {},
                     child: SizedBox(
                       //=============> Container 1st
@@ -229,8 +234,26 @@ class _HomepageUiState extends State<HomepageUi> {
 // 3rd  container color = Color(0xfff5b942)
 
 class RPSCustomPainter extends CustomPainter {
+  // final ImageProvider imageProvider;
+  // RPSCustomPainter({required this.imageProvider});
+  // final String imageUrl =
+  //     "https://favpng.com/png_view/hansika-motwani-hansika-motwani-4k-resolution-tamil-cinema-tollywood-wallpaper-png/iWnvcPJ0";
   @override
-  void paint(Canvas canvas, Size size) {
+  Future<void> paint(Canvas canvas, Size size) async {
+    // final paint = Paint();
+    // paint.isAntiAlias = true;
+    // final center = Offset(size.width / 2, size.height / 2);
+    // final radius = min(size.width / 2, size.height / 2);
+    // final rect = Rect.fromCircle(center: center, radius: radius);
+    // final image = await loadImage(imageProvider);
+    // final shader = ImageShader(
+    //   image as ui.Image,
+    //   TileMode.clamp,
+    //   TileMode.clamp,
+    //   rect as Float64List,
+    // );
+    // paint.shader = shader;
+    // canvas.drawCircle(center, radius, paint);
     // canvas.drawImage(myBackground, const Offset(0, 0), Paint());
     // Layer 1
 

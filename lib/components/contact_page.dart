@@ -51,6 +51,7 @@ class _ContactScreenState extends State<ContactScreen> {
                   return InkWell(
                     onTap: () async {
                       if (selectedindex == i) {
+                        _contacts!.removeAt(i);
                         return;
                       }
                       setState(() {});

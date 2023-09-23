@@ -1,0 +1,36 @@
+  class RPSCustomPainter extends CustomPainter {
+        final String imageUrl;
+        RPSCustomPainter({required this.imageUrl});
+
+        @override
+        Future<void> paint(Canvas canvas, Size size) async {
+          final paint = Paint();
+          paint.isAntiAlias = true;
+          final center = Offset(size.width / 2, size.height / 2);
+          final radius = min(size.width / 2, size.height / 2);
+          final rect = Rect.fromCircle(center: center, radius: radius);
+          final image = await loadImage(imageUrl);
+          final shader = ImageShader(
+            image,
+            TileMode.clamp,
+            TileMode.clamp,
+            rect as Float64List,
+          );
+          paint.shader = shader;
+          canvas.drawCircle(center, radius, paint);
+          // rest of your code
+        }
+
+        Future<ui.Image> loadImage(String imageUrl) async {
+          final completer = Completer<ui.Image>();
+          final image = NetworkImage(imageUrl);
+          image.resolve(const ImageConfiguration()).addListener(
+            ImageStreamListener(
+              (ImageInfo info, bool _) => completer.complete(info.image),
+            ),
+          );
+          return completer.future;
+        }
+
+        // rest of your code
+      }
