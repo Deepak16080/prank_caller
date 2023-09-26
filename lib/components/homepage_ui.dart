@@ -98,7 +98,7 @@ class _HomepageUiState extends State<HomepageUi> {
                             CircleAvatar(
                               radius: 30,
                               backgroundColor: Colors.transparent,
-                              backgroundImage: AssetImage('assets/images/timer.png'),
+                              backgroundImage: AssetImage("assets/images/timer1.png"),
                             ),
                             SizedBox(
                               width: 20,
@@ -181,7 +181,8 @@ class _HomepageUiState extends State<HomepageUi> {
                                 height: 8,
                               ),
                               if (selectedAudio != null)
-                                Text(' ${selectedAudio?.name ?? 'No audio selected'}',
+                                Text(
+                                    "${selectedAudio?.name?.replaceAll("assets/callervoice/ ", "").replaceAll(".mp3", "")}",
                                     style: TextStyle(color: Colors.white)),
                             ],
                           ),
