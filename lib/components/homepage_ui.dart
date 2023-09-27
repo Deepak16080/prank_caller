@@ -20,6 +20,7 @@ class _HomepageUiState extends State<HomepageUi> {
   AppAudio? selectedAudio;
   Contact? selectedContact;
   Duration? selectedDuration;
+  final contact = Contact();
 
   String name = networkFiles.toString();
   @override
@@ -288,9 +289,9 @@ class _HomepageUiState extends State<HomepageUi> {
                                   ),
                                 ),
                               ),
-                              if (selectedContact != null)
+                              if (selectedContact == null)
                                 Text(
-                                  " ${selectedContact?.displayName}",
+                                  " contact ${selectedContact?.displayName}",
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),

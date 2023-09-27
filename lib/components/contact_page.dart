@@ -13,7 +13,7 @@ class ContactScreen extends StatefulWidget {
 
 class _ContactScreenState extends State<ContactScreen> {
   List<Contact>? _contacts;
-  final selectedindex = -1;
+  var selectedindex = -1;
   bool _permissionDenied = false;
 
   @override
@@ -37,23 +37,25 @@ class _ContactScreenState extends State<ContactScreen> {
       return Center(child: Text('Please give a permission to access your contacts'));
     }
     if (_contacts == null) return Center(child: CircularProgressIndicator());
-    final Future<String> calculation = Future<String>.delayed(
-      const Duration(seconds: 2),
-      () => 'Data Loaded',
-    );
+
     return Scaffold(
       body: FutureBuilder<String>(
-          future: calculation,
+          future: DefaultAssetBundle.of(context).loadString("AssetManifest.json"),
           builder: (context, snapshot) {
             return ListView.builder(
                 itemCount: _contacts!.length,
                 itemBuilder: (context, i) {
                   return InkWell(
-                    onTap: () async {
+                    onTap: () {
                       if (selectedindex == i) {
+                        toast(context, 'Already selected');
                         return;
+                        // setState(() {});
+                      } else {
+                        setState(() {
+                          selectedindex = i;
+                        });
                       }
-                      setState(() {});
                     },
                     child: Card(
                       color: selectedindex == i ? Colors.green : Colors.white,
@@ -85,11 +87,11 @@ class _ContactScreenState extends State<ContactScreen> {
         actions: [
           TextButton(
               onPressed: () {
-                if (_contacts == null) {
+                if (selectedindex == -1) {
                   toast(context, "Please select a contact");
                   return;
                 }
-                Navigator.pop(context, _contacts);
+                Navigator.pop(context, _contacts![selectedindex].displayName);
               },
               child: const Text(
                 'Select',
