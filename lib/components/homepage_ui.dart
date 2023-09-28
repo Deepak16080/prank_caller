@@ -319,7 +319,6 @@ class _HomepageUiState extends State<HomepageUi> {
                                     )));
                       },
                       color: Colors.white,
-                      splashColor: Colors.blueAccent,
                       textColor: Colors.green,
                       child: Text('Call Me')),
                 ],
