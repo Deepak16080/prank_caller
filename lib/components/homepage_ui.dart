@@ -184,7 +184,7 @@ class _HomepageUiState extends State<HomepageUi> {
                               ),
                               if (selectedAudio != null)
                                 Text(
-                                    "${selectedAudio?.name?.replaceAll("assets/callervoice/ ", "").replaceAll(".mp3", "")}",
+                                    "${selectedAudio!.name?.replaceAll("assets/callervoice/ ", "assets/callervoice/").replaceAll(".mp3", "assets/callervoice/")}",
                                     style: TextStyle(color: Colors.white)),
                             ],
                           ),
@@ -270,15 +270,12 @@ class _HomepageUiState extends State<HomepageUi> {
                           Row(
                             children: [
                               SizedBox(
-                                width: 20,
+                                width: 2,
                               ),
                               CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.transparent,
                                 backgroundImage: AssetImage('assets/images/contact.png'),
-                              ),
-                              SizedBox(
-                                width: 10,
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 15),
@@ -292,11 +289,14 @@ class _HomepageUiState extends State<HomepageUi> {
                                 ),
                               ),
                               if (selectedContact != null)
-                                Text(
-                                  "${selectedContact?.displayName}",
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.white,
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Text(
+                                    "${selectedContact?.displayName}",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                             ],

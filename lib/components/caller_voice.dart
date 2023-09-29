@@ -36,6 +36,7 @@ class _CallerVoiceState extends State<CallerVoice> {
                   return;
                 }
                 Navigator.pop(context, selectedItem);
+                print(selectedItem);
               },
               child: const Text(
                 'Select',

@@ -78,11 +78,10 @@ class _ContactScreenState extends State<ContactScreen> {
         actions: [
           TextButton(
               onPressed: () {
-                if (_contacts == null) {
+                if (selectedContact == null) {
                   toast(context, "Please select a contact");
                 } else {
-                  Navigator.pop(context, _contacts![selectedindex].displayName);
-                  print(_contacts![selectedindex].displayName);
+                  Navigator.pop(context, selectedContact);
                 }
               },
               child: const Text(

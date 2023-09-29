@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:prank_caller/home_page.dart';
+import 'package:prank_caller/components/homepage_ui.dart';
 
 class PickUpUi extends StatefulWidget {
   final Contact contact;
@@ -154,7 +154,7 @@ class _PickUpUiState extends State<PickUpUi> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomePage(),
+                                    builder: (context) => HomepageUi(),
                                   ));
                             },
                             icon: Icon(Icons.call_end_outlined),
