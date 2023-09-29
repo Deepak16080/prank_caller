@@ -13,6 +13,7 @@ class ContactScreen extends StatefulWidget {
 
 class _ContactScreenState extends State<ContactScreen> {
   List<Contact>? _contacts;
+  Contact? selectedContact;
   var selectedindex = -1;
   bool _permissionDenied = false;
 
@@ -39,40 +40,30 @@ class _ContactScreenState extends State<ContactScreen> {
     if (_contacts == null) return Center(child: CircularProgressIndicator());
 
     return Scaffold(
-      body: FutureBuilder<String>(
-          future: DefaultAssetBundle.of(context).loadString("AssetManifest.json"),
-          builder: (context, snapshot) {
-            return ListView.builder(
-                itemCount: _contacts!.length,
-                itemBuilder: (context, i) {
-                  return InkWell(
-                    onTap: () {
-                      if (selectedindex == i) {
-                        toast(context, 'Already selected');
-                        return;
-                        // setState(() {});
-                      } else {
-                        setState(() {
-                          selectedindex = i;
-                        });
-                      }
-                    },
-                    child: Card(
-                      color: selectedindex == i ? Colors.green : Colors.white,
-                      shadowColor: Colors.green,
-                      shape: ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      elevation: 2.0,
-                      child: ListTile(
-                          title: Text(_contacts![i].displayName),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: _contacts![i].phones.map((e) => Text(e.number)).toList(),
-                          )),
-                    ),
-                  );
-                });
+      body: ListView.builder(
+          itemCount: _contacts!.length,
+          itemBuilder: (context, i) {
+            return InkWell(
+                onTap: () async {
+                  selectedContact = _contacts![i];
+                  setState(() {
+                    selectedindex = i;
+                  });
+                },
+                child: Card(
+                  color: selectedindex == i ? Colors.green : Colors.white,
+                  shadowColor: Colors.green,
+                  shape: ContinuousRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 2.0,
+                  child: ListTile(
+                      title: Text(_contacts![i].displayName),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: _contacts![i].phones.map((e) => Text(e.number)).toList(),
+                      )),
+                ));
           }),
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -87,11 +78,12 @@ class _ContactScreenState extends State<ContactScreen> {
         actions: [
           TextButton(
               onPressed: () {
-                if (selectedindex == -1) {
+                if (_contacts == null) {
                   toast(context, "Please select a contact");
-                  return;
+                } else {
+                  Navigator.pop(context, _contacts![selectedindex].displayName);
+                  print(_contacts![selectedindex].displayName);
                 }
-                Navigator.pop(context, _contacts![selectedindex].displayName);
               },
               child: const Text(
                 'Select',

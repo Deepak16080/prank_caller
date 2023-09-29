@@ -17,6 +17,7 @@ class HomepageUi extends StatefulWidget {
 }
 
 class _HomepageUiState extends State<HomepageUi> {
+  List<Contact>? contacts;
   AppAudio? selectedAudio;
   Contact? selectedContact;
   Duration? selectedDuration;
@@ -254,6 +255,7 @@ class _HomepageUiState extends State<HomepageUi> {
                           await Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactScreen()));
                       if (contact is Contact) {
                         selectedContact = contact;
+                        setState(() {});
                       }
                     },
                     child: Container(
@@ -289,10 +291,11 @@ class _HomepageUiState extends State<HomepageUi> {
                                   ),
                                 ),
                               ),
-                              if (selectedContact == null)
+                              if (selectedContact != null)
                                 Text(
-                                  " contact ${selectedContact?.displayName}",
+                                  "${selectedContact?.displayName}",
                                   style: TextStyle(
+                                    fontSize: 10,
                                     color: Colors.white,
                                   ),
                                 ),
