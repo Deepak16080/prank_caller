@@ -1,6 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:get/get.dart';
 import 'package:prank_caller/components/homepage_ui.dart';
+
+Timer? selectedtime;
+String greeting = '';
 
 class PickUpUi extends StatefulWidget {
   final Contact contact;
@@ -16,6 +22,23 @@ class _PickUpUiState extends State<PickUpUi> {
     Icons.call,
     size: 10,
   );
+  int counter = 0;
+  @override
+  void initState() {
+    super.initState();
+    selectedtime = Timer.periodic(Duration(minutes: 0, seconds: 0), (timer) {
+      setState(() {
+        greeting = '${DateTime.now().second}';
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    selectedtime?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +67,7 @@ class _PickUpUiState extends State<PickUpUi> {
                 Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(
-                    '01:11:40', //add a duration
+                    '${DateTime.now().hour.minutes}', //add a duration
                     style: TextStyle(
                       fontSize: 20,
                     ),
