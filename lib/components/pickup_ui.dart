@@ -3,16 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
-import 'package:prank_caller/components/homepage_ui.dart';
-import 'package:prank_caller/utils/enums.dart';
+import 'package:prank_caller/home.dart';
 
 class PickUpUi extends StatefulWidget {
   final Contact contact;
-  final Duration time;
-  final AppAudio selectedAudio;
   final OnTap ontap;
-  const PickUpUi(
-      {required this.contact, required this.time, required this.ontap, required this.selectedAudio, super.key});
+  const PickUpUi({required this.contact, required this.ontap, super.key});
 
   @override
   State<PickUpUi> createState() => _PickUpUiState();
@@ -38,6 +34,12 @@ class _PickUpUiState extends State<PickUpUi> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
   void _stopTimer() {
     time.cancel();
     setState(() {
@@ -47,7 +49,7 @@ class _PickUpUiState extends State<PickUpUi> {
 
   @override
   void dispose() {
-    time.cancel(); // Don't forget to cancel the timer to avoid memory leaks
+    _stopTimer();
     super.dispose();
   }
 
@@ -84,7 +86,16 @@ class _PickUpUiState extends State<PickUpUi> {
                 Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(
-                    ' ${DateTime.now().minute.toString()}:${DateTime.now().second.toString()}', //add a duration
+                    widget.contact.phones.first.normalizedNumber,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Text(
+                    "${_duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:${_duration.inSeconds.remainder(60).toString().padLeft(2, '0')}",
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -194,7 +205,7 @@ class _PickUpUiState extends State<PickUpUi> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomepageUi(),
+                                    builder: (context) => HomePage(),
                                   ));
                             },
                             icon: Icon(Icons.call_end_outlined),

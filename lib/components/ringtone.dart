@@ -1,9 +1,11 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:path/path.dart' as path;
 import 'package:prank_caller/models/ringtone_model_list.dart';
 import 'package:prank_caller/utils/enums.dart';
+
+import '../main.dart';
+import '../utils/common.dart';
 
 class Ringtone extends StatefulWidget {
   const Ringtone({super.key});
@@ -13,8 +15,6 @@ class Ringtone extends StatefulWidget {
 }
 
 class _RingtoneState extends State<Ringtone> {
-  AudioPlayer audioPlayer = AudioPlayer();
-
   AppAudio? selectedringtone;
 
   @override
@@ -24,7 +24,7 @@ class _RingtoneState extends State<Ringtone> {
 
   @override
   void dispose() {
-    audioPlayer.stop();
+    player.stop();
     super.dispose();
   }
 
@@ -63,7 +63,7 @@ class _RingtoneState extends State<Ringtone> {
               itemCount: networkFiles.length,
               itemBuilder: (context, index) {
                 final audio = networkFiles[index];
-                String audioUrl = networkFiles[index].path;
+
                 String name = networkFiles[index].name.toString();
 
                 String title = name;
@@ -73,12 +73,10 @@ class _RingtoneState extends State<Ringtone> {
                 return InkWell(
                   onTap: () async {
                     selectedringtone = networkFiles[index];
-                    if (isSelected && audioPlayer.playing) {
-                      audioPlayer.pause();
+                    if (isSelected && player.playing) {
+                      player.pause();
                     } else {
-                      audioPlayer
-                        ..setUrl(audioUrl)
-                        ..play();
+                      selectedringtone!.play();
                     }
                     setState(() {});
                   },
@@ -94,7 +92,7 @@ class _RingtoneState extends State<Ringtone> {
                     child: ListTile(
                         textColor: Colors.blue,
                         title: Text('$title '),
-                        leading: audioPlayer.playing && isSelected
+                        leading: player.playing && isSelected
                             ? const Icon(Icons.pause, color: Colors.blue)
                             : const Icon(Icons.play_arrow, color: Colors.blue)),
                   ),
@@ -109,14 +107,6 @@ class _RingtoneState extends State<Ringtone> {
         child: const Icon(Icons.add_to_drive),
       ),
     );
-  }
-
-  void toast(BuildContext context, String text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(text, textAlign: TextAlign.center),
-      behavior: SnackBarBehavior.fixed,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-    ));
   }
 
   void pickfile() async {

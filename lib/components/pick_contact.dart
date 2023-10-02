@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 
+import '../utils/common.dart';
+
 class ContactScreen extends StatefulWidget {
   const ContactScreen({
     super.key,
@@ -98,13 +100,5 @@ class _ContactScreenState extends State<ContactScreen> {
         ],
       ),
     );
-  }
-
-  void toast(BuildContext context, String text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(text, textAlign: TextAlign.center),
-      behavior: SnackBarBehavior.fixed,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-    ));
   }
 }
