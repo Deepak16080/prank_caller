@@ -2,16 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:get/get.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:prank_caller/components/homepage_ui.dart';
-
-Timer? selectedtime;
-String greeting = '';
+import 'package:prank_caller/utils/enums.dart';
 
 class PickUpUi extends StatefulWidget {
   final Contact contact;
-
-  const PickUpUi({required this.contact, super.key});
+  final Duration time;
+  final AppAudio selectedAudio;
+  final OnTap ontap;
+  const PickUpUi(
+      {required this.contact, required this.time, required this.ontap, required this.selectedAudio, super.key});
 
   @override
   State<PickUpUi> createState() => _PickUpUiState();
@@ -22,20 +23,31 @@ class _PickUpUiState extends State<PickUpUi> {
     Icons.call,
     size: 10,
   );
-  int counter = 0;
-  @override
-  void initState() {
-    super.initState();
-    selectedtime = Timer.periodic(Duration(minutes: 0, seconds: 0), (timer) {
+
+  Duration _duration = Duration(seconds: 0);
+  bool isTimerActive = false;
+  late Timer time;
+  void _startTimer() {
+    time = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        greeting = '${DateTime.now().second}';
+        _duration = _duration + Duration(seconds: 1);
       });
+    });
+    setState(() {
+      isTimerActive = true;
+    });
+  }
+
+  void _stopTimer() {
+    time.cancel();
+    setState(() {
+      isTimerActive = false;
     });
   }
 
   @override
   void dispose() {
-    selectedtime?.cancel();
+    time.cancel(); // Don't forget to cancel the timer to avoid memory leaks
     super.dispose();
   }
 
@@ -52,7 +64,12 @@ class _PickUpUiState extends State<PickUpUi> {
                   padding: EdgeInsets.only(top: 50),
                   child: CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('assets/Profile/profile.png'),
+                    backgroundColor: Colors.blueGrey,
+                    child: Icon(
+                      Icons.person,
+                      color: Colors.white,
+                      size: 80,
+                    ),
                   ),
                 ),
                 Padding(
@@ -67,7 +84,7 @@ class _PickUpUiState extends State<PickUpUi> {
                 Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(
-                    '${DateTime.now().hour.minutes}', //add a duration
+                    ' ${DateTime.now().minute.toString()}:${DateTime.now().second.toString()}', //add a duration
                     style: TextStyle(
                       fontSize: 20,
                     ),

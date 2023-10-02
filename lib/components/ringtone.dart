@@ -15,7 +15,7 @@ class Ringtone extends StatefulWidget {
 class _RingtoneState extends State<Ringtone> {
   AudioPlayer audioPlayer = AudioPlayer();
 
-  AppAudio? selectedvoice;
+  AppAudio? selectedringtone;
 
   @override
   void initState() {
@@ -44,11 +44,11 @@ class _RingtoneState extends State<Ringtone> {
         actions: [
           TextButton(
               onPressed: () {
-                if (selectedvoice == null) {
+                if (selectedringtone == null) {
                   toast(context, "Please select a voice");
                   return;
                 }
-                Navigator.pop(context, selectedvoice);
+                Navigator.pop(context, selectedringtone);
               },
               child: const Text(
                 'Select',
@@ -68,11 +68,11 @@ class _RingtoneState extends State<Ringtone> {
 
                 String title = name;
 
-                bool isSelected = selectedvoice == audio;
+                bool isSelected = selectedringtone == audio;
 
                 return InkWell(
                   onTap: () async {
-                    selectedvoice = networkFiles[index];
+                    selectedringtone = networkFiles[index];
                     if (isSelected && audioPlayer.playing) {
                       audioPlayer.pause();
                     } else {

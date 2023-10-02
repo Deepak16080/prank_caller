@@ -32,11 +32,10 @@ class _CallerVoiceState extends State<CallerVoice> {
           TextButton(
               onPressed: () {
                 if (selectedItem == null) {
-                  toast(context, "Please select a ringtone");
+                  toast(context, "Please select a caller voice");
                   return;
                 }
                 Navigator.pop(context, selectedItem);
-                print(selectedItem);
               },
               child: const Text(
                 'Select',

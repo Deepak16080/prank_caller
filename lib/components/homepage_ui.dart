@@ -19,6 +19,7 @@ class HomepageUi extends StatefulWidget {
 class _HomepageUiState extends State<HomepageUi> {
   List<Contact>? contacts;
   AppAudio? selectedAudio;
+
   Contact? selectedContact;
   Duration? selectedDuration;
   final contact = Contact();
@@ -183,9 +184,14 @@ class _HomepageUiState extends State<HomepageUi> {
                                 height: 8,
                               ),
                               if (selectedAudio != null)
-                                Text(
-                                    "${selectedAudio!.name?.replaceAll("assets/callervoice/ ", "assets/callervoice/").replaceAll(".mp3", "assets/callervoice/")}",
-                                    style: TextStyle(color: Colors.white)),
+                                GestureDetector(
+                                  onTap: () {
+                                    selectedAudio?.play();
+                                  },
+                                  child: Text(
+                                      '${selectedAudio!.name?.replaceAll("assets/callervoice/ ", "assets/callervoice/").replaceAll(".mp3", "assets/callervoice/")}',
+                                      style: TextStyle(color: Colors.white)),
+                                ),
                             ],
                           ),
                         ),
@@ -310,16 +316,28 @@ class _HomepageUiState extends State<HomepageUi> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40),
                           side: BorderSide(color: Colors.black, width: 1, style: BorderStyle.solid)),
-                      onPressed: () {
+                      onPressed: () async {
                         if (selectedContact == null) {
                           return toast(context, "Please select a contact first");
+                        }
+                        if (selectedAudio == null) {
+                          return toast(context, "Please select a ringtone");
+                        }
+
+                        if (selectedDuration == null) {
+                          return toast(context, "Please select a duration");
                         }
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => CallerProfilePage(
+                                      audio: selectedAudio!,
                                       contact: selectedContact!,
                                     )));
+
+                        setState(() {
+                          selectedAudio?.play();
+                        });
                       },
                       color: Colors.white,
                       textColor: Colors.green,

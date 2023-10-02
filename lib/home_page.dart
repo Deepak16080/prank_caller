@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_picker/picker.dart';
-import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/caller_voice.dart';
 import 'package:prank_caller/components/contact_page.dart';
 import 'package:prank_caller/components/ringtone.dart';
@@ -161,8 +160,8 @@ class _HomePageState extends State<HomePage> {
                   toast(context, "Please select a contact first");
                   return;
                 }
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => CallerProfilePage(contact: selectedContact!)));
+                // Navigator.push(
+                //     context, MaterialPageRoute(builder: (context) => CallerProfilePage(contact: selectedContact!, audio: ,)));
               },
               child: const Text('call me'),
             ))

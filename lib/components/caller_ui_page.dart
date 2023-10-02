@@ -1,25 +1,64 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:prank_caller/components/pickup_ui.dart';
+import 'package:prank_caller/utils/enums.dart';
 import 'package:prank_caller/widget/app_text.dart';
 
 import '../widget/waBottomButton.dart';
 
 class CallerProfilePage extends StatefulWidget {
   final Contact contact;
-  const CallerProfilePage({required this.contact, super.key});
+  final AppAudio audio;
+
+  const CallerProfilePage({required this.contact, required this.audio, super.key});
 
   @override
   State<CallerProfilePage> createState() => _CallerProfilePageState();
 }
 
 class _CallerProfilePageState extends State<CallerProfilePage> {
+  AppAudio? selectedAudio;
+  late Timer _timer;
+  Duration _duration = Duration(minutes: 0, seconds: 0);
+  bool _isTimerActive = false;
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _duration = _duration + Duration(seconds: 1);
+      });
+    });
+    setState(() {
+      _isTimerActive = true;
+    });
+  }
+
+  void _stopTimer() {
+    _timer.cancel();
+    setState(() {
+      _isTimerActive = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    // Don't forget to cancel the timer to avoid memory leaks
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
+            Text(
+              '${selectedAudio?.name?.replaceAll("", "").replaceAll(".mp3", "")}',
+              style: TextStyle(color: Colors.transparent, fontSize: 2),
+            ),
             SizedBox(
               height: 35,
             ),
@@ -59,7 +98,12 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
               child: Center(
                 child: CircleAvatar(
                   radius: 90,
-                  backgroundImage: AssetImage('assets/Profile/Profile2.png'),
+                  backgroundColor: Colors.blueGrey,
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                    size: 120,
+                  ),
                 ),
               ),
             ),
@@ -72,7 +116,17 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
                 child: BottomButton(
-                  pickUpPage: PickUpUi(contact: widget.contact),
+                  pickUpPage: PickUpUi(
+                    ontap: (
+                      snack,
+                    ) {
+                      _startTimer();
+                      if (selectedAudio == null) {}
+                    },
+                    contact: widget.contact,
+                    selectedAudio: selectedAudio ?? widget.audio,
+                    time: _isTimerActive ? _duration : Duration(minutes: 00, seconds: 00),
+                  ),
                 ),
               ),
             ),
