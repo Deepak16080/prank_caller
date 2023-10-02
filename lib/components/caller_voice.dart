@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:prank_caller/main.dart';
 import 'package:prank_caller/utils/enums.dart';
 
+import '../utils/common.dart';
+
 class CallerVoice extends StatefulWidget {
   const CallerVoice({super.key});
 
@@ -103,13 +105,5 @@ class _CallerVoiceState extends State<CallerVoice> {
         },
       ),
     );
-  }
-
-  void toast(BuildContext context, String text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(text, textAlign: TextAlign.center),
-      behavior: SnackBarBehavior.fixed,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-    ));
   }
 }

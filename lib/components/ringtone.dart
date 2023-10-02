@@ -5,6 +5,7 @@ import 'package:prank_caller/models/ringtone_model_list.dart';
 import 'package:prank_caller/utils/enums.dart';
 
 import '../main.dart';
+import '../utils/common.dart';
 
 class Ringtone extends StatefulWidget {
   const Ringtone({super.key});
@@ -106,14 +107,6 @@ class _RingtoneState extends State<Ringtone> {
         child: const Icon(Icons.add_to_drive),
       ),
     );
-  }
-
-  void toast(BuildContext context, String text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(text, textAlign: TextAlign.center),
-      behavior: SnackBarBehavior.fixed,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-    ));
   }
 
   void pickfile() async {

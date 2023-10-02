@@ -11,6 +11,8 @@ import 'package:prank_caller/utils/enums.dart';
 import 'package:prank_caller/widget/app_text.dart';
 import 'package:prank_caller/widget/box.dart';
 
+import 'utils/common.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -315,13 +317,5 @@ class _HomePageState extends State<HomePage> {
     selectedDuration =
         await showDurationPicker(context: context, initialTime: const Duration(minutes: 0), baseUnit: BaseUnit.second);
     setState(() {});
-  }
-
-  void toast(BuildContext context, String text) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(text, textAlign: TextAlign.center),
-      behavior: SnackBarBehavior.fixed,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-    ));
   }
 }
