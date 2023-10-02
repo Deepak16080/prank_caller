@@ -1,9 +1,10 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:path/path.dart' as path;
 import 'package:prank_caller/models/ringtone_model_list.dart';
 import 'package:prank_caller/utils/enums.dart';
+
+import '../main.dart';
 
 class Ringtone extends StatefulWidget {
   const Ringtone({super.key});
@@ -13,8 +14,6 @@ class Ringtone extends StatefulWidget {
 }
 
 class _RingtoneState extends State<Ringtone> {
-  AudioPlayer audioPlayer = AudioPlayer();
-
   AppAudio? selectedringtone;
 
   @override
@@ -24,7 +23,7 @@ class _RingtoneState extends State<Ringtone> {
 
   @override
   void dispose() {
-    audioPlayer.stop();
+    player.stop();
     super.dispose();
   }
 
@@ -73,10 +72,10 @@ class _RingtoneState extends State<Ringtone> {
                 return InkWell(
                   onTap: () async {
                     selectedringtone = networkFiles[index];
-                    if (isSelected && audioPlayer.playing) {
-                      audioPlayer.pause();
+                    if (isSelected && player.playing) {
+                      player.pause();
                     } else {
-                      audioPlayer
+                      player
                         ..setUrl(audioUrl)
                         ..play();
                     }
@@ -94,7 +93,7 @@ class _RingtoneState extends State<Ringtone> {
                     child: ListTile(
                         textColor: Colors.blue,
                         title: Text('$title '),
-                        leading: audioPlayer.playing && isSelected
+                        leading: player.playing && isSelected
                             ? const Icon(Icons.pause, color: Colors.blue)
                             : const Icon(Icons.play_arrow, color: Colors.blue)),
                   ),

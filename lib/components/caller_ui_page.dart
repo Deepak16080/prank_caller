@@ -1,11 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:prank_caller/components/pickup_ui.dart';
 import 'package:prank_caller/utils/enums.dart';
 import 'package:prank_caller/widget/app_text.dart';
 
+import '../main.dart';
 import '../widget/waBottomButton.dart';
 
 class CallerProfilePage extends StatefulWidget {
@@ -19,33 +18,18 @@ class CallerProfilePage extends StatefulWidget {
 }
 
 class _CallerProfilePageState extends State<CallerProfilePage> {
-  AppAudio? selectedAudio;
-  late Timer _timer;
-  Duration _duration = Duration(minutes: 0, seconds: 0);
-  bool _isTimerActive = false;
+  AppAudio get selectedAudio => widget.audio;
 
-  void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        _duration = _duration + Duration(seconds: 1);
-      });
-    });
-    setState(() {
-      _isTimerActive = true;
-    });
-  }
+  @override
+  void initState() {
+    super.initState();
 
-  void _stopTimer() {
-    _timer.cancel();
-    setState(() {
-      _isTimerActive = false;
-    });
+    selectedAudio.play();
   }
 
   @override
   void dispose() {
-    _timer.cancel();
-    // Don't forget to cancel the timer to avoid memory leaks
+    player.stop();
     super.dispose();
   }
 
@@ -56,7 +40,7 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
         child: Column(
           children: [
             Text(
-              '${selectedAudio?.name?.replaceAll("", "").replaceAll(".mp3", "")}',
+              '${selectedAudio.name?.replaceAll("", "").replaceAll(".mp3", "")}',
               style: TextStyle(color: Colors.transparent, fontSize: 2),
             ),
             SizedBox(
@@ -117,16 +101,10 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
                 padding: const EdgeInsets.only(bottom: 20, left: 30, right: 30),
                 child: BottomButton(
                   pickUpPage: PickUpUi(
-                    ontap: (
-                      snack,
-                    ) {
-                      _startTimer();
-                      if (selectedAudio == null) {}
-                    },
-                    contact: widget.contact,
-                    selectedAudio: selectedAudio ?? widget.audio,
-                    time: _isTimerActive ? _duration : Duration(minutes: 00, seconds: 00),
-                  ),
+                      ontap: (
+                        snack,
+                      ) {},
+                      contact: widget.contact),
                 ),
               ),
             ),

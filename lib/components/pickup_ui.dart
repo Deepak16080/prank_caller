@@ -4,15 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:prank_caller/components/homepage_ui.dart';
-import 'package:prank_caller/utils/enums.dart';
 
 class PickUpUi extends StatefulWidget {
   final Contact contact;
-  final Duration time;
-  final AppAudio selectedAudio;
   final OnTap ontap;
-  const PickUpUi(
-      {required this.contact, required this.time, required this.ontap, required this.selectedAudio, super.key});
+  const PickUpUi({required this.contact, required this.ontap, super.key});
 
   @override
   State<PickUpUi> createState() => _PickUpUiState();
@@ -38,6 +34,12 @@ class _PickUpUiState extends State<PickUpUi> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
   void _stopTimer() {
     time.cancel();
     setState(() {
@@ -47,7 +49,7 @@ class _PickUpUiState extends State<PickUpUi> {
 
   @override
   void dispose() {
-    time.cancel(); // Don't forget to cancel the timer to avoid memory leaks
+    _stopTimer();
     super.dispose();
   }
 

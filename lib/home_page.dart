@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_picker/picker.dart';
@@ -7,6 +10,7 @@ import 'package:prank_caller/components/ringtone.dart';
 import 'package:prank_caller/models/ringtone_model_list.dart';
 import 'package:prank_caller/widget/app_text.dart';
 
+import 'components/caller_ui_page.dart';
 import 'utils/enums.dart';
 
 class HomePage extends StatefulWidget {
@@ -155,13 +159,27 @@ class _HomePageState extends State<HomePage> {
         Padding(
             padding: const EdgeInsets.only(left: 20, top: 10),
             child: MaterialButton(
-              onPressed: () {
+              onPressed: () async {
                 if (selectedContact == null) {
                   toast(context, "Please select a contact first");
                   return;
                 }
-                // Navigator.push(
-                //     context, MaterialPageRoute(builder: (context) => CallerProfilePage(contact: selectedContact!, audio: ,)));
+                if (selectedAudio == null) {
+                  toast(context, "Please select a ringtone first");
+                  return;
+                }
+                if (selectedDuration == null) {
+                  toast(context, "Please select a duration first");
+                  return;
+                }
+
+                log("Calling ${selectedContact?.displayName} with ${selectedAudio?.name} for ${selectedDuration?.inMinutes} minutes");
+                Timer(selectedDuration!, () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CallerProfilePage(contact: selectedContact!, audio: selectedAudio!)));
+                });
               },
               child: const Text('call me'),
             ))

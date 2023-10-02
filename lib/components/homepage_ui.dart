@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_picker/picker.dart';
@@ -327,16 +329,12 @@ class _HomepageUiState extends State<HomepageUi> {
                         if (selectedDuration == null) {
                           return toast(context, "Please select a duration");
                         }
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CallerProfilePage(
-                                      audio: selectedAudio!,
-                                      contact: selectedContact!,
-                                    )));
-
-                        setState(() {
-                          selectedAudio?.play();
+                        Timer(selectedDuration!, () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CallerProfilePage(contact: selectedContact!, audio: selectedAudio!)));
                         });
                       },
                       color: Colors.white,
