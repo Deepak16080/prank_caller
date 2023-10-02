@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              selectedAudio?.name ?? "",
+                                              '${selectedAudio?.name?.replaceAll("assets/callervoice/", "").replaceAll(".mp3", "")}',
                                               style: TextStyle(color: Colors.white),
                                               textAlign: TextAlign.center,
                                             ),
@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              selectedAudio?.name ?? "",
+                                              selectedAudio?.name ?? '',
                                               style: TextStyle(color: Colors.white),
                                               textAlign: TextAlign.center,
                                             ),
