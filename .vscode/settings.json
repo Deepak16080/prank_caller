@@ -1,6 +1,4 @@
 {
-    "emulator.emulatorPathWindows": "C:\\Users\\MANOJ\\AppData\\Local\\Android\\Sdk\\emulator"
-    ,
     "dart.lineLength": 120,
     "[dart]": {
           "editor.formatOnSave": true,
