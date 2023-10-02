@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          home: HomepageUi()),
+          home: HomePage()),
     );
   }
 }

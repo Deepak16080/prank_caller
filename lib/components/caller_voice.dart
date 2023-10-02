@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:prank_caller/main.dart';
+import 'package:prank_caller/utils/enums.dart';
 
 class CallerVoice extends StatefulWidget {
   const CallerVoice({super.key});
@@ -11,9 +12,12 @@ class CallerVoice extends StatefulWidget {
 }
 
 class _CallerVoiceState extends State<CallerVoice> {
-  final AudioPlayer audioPlayer = AudioPlayer();
-
-  String? selectedItem;
+  AppAudio? selectedringtone;
+  @override
+  void dispose() {
+    super.dispose();
+    player.stop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +35,11 @@ class _CallerVoiceState extends State<CallerVoice> {
         actions: [
           TextButton(
               onPressed: () {
-                if (selectedItem == null) {
+                if (selectedringtone == null) {
                   toast(context, "Please select a caller voice");
                   return;
                 }
-                Navigator.pop(context, selectedItem);
+                Navigator.pop(context, selectedringtone);
               },
               child: const Text(
                 'Select',
@@ -58,19 +62,17 @@ class _CallerVoiceState extends State<CallerVoice> {
 
                 String title = path.replaceAll("assets/callervoice/", "").replaceAll(".mp3", "");
 
-                bool isSelected = selectedItem == path;
+                bool isSelected = selectedringtone?.path == path;
 
                 if (!isMp3) return const SizedBox.shrink();
 
                 return InkWell(
                   onTap: () {
-                    selectedItem = path;
-                    if (isSelected && audioPlayer.playing) {
-                      audioPlayer.pause();
+                    selectedringtone = AppAudio(path: path, name: title);
+                    if (isSelected && player.playing) {
+                      player.pause();
                     } else {
-                      audioPlayer
-                        ..setAsset(path)
-                        ..play();
+                      selectedringtone!.play();
                     }
                     setState(() {});
                   },
@@ -86,7 +88,7 @@ class _CallerVoiceState extends State<CallerVoice> {
                     child: ListTile(
                         textColor: Colors.blue,
                         title: Text(title),
-                        leading: audioPlayer.playing && isSelected
+                        leading: player.playing && isSelected
                             ? const Icon(Icons.pause, color: Colors.blue)
                             : const Icon(Icons.play_arrow, color: Colors.blue)),
                   ),

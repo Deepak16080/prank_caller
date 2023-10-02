@@ -86,7 +86,16 @@ class _PickUpUiState extends State<PickUpUi> {
                 Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(
-                    ' ${DateTime.now().minute.toString()}:${DateTime.now().second.toString()}', //add a duration
+                    widget.contact.phones.first.normalizedNumber,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Text(
+                    "${_duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:${_duration.inSeconds.remainder(60).toString().padLeft(2, '0')}",
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -196,7 +205,7 @@ class _PickUpUiState extends State<PickUpUi> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomepageUi(),
+                                    builder: (context) => HomePage(),
                                   ));
                             },
                             icon: Icon(Icons.call_end_outlined),

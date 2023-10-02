@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:flutter_picker/picker.dart';
 import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/caller_voice.dart';
 import 'package:prank_caller/components/contact_page.dart';
@@ -11,14 +11,14 @@ import 'package:prank_caller/models/ringtone_model_list.dart';
 import 'package:prank_caller/utils/enums.dart';
 import 'package:prank_caller/widget/app_text.dart';
 
-class HomepageUi extends StatefulWidget {
-  const HomepageUi({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomepageUi> createState() => _HomepageUiState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomepageUiState extends State<HomepageUi> {
+class _HomePageState extends State<HomePage> {
   List<Contact>? contacts;
   AppAudio? selectedAudio;
 
@@ -112,11 +112,7 @@ class _HomepageUiState extends State<HomepageUi> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      onTap();
-                                    });
-                                  },
+                                  onTap: selectTimer,
                                   child: AppText(
                                     'Timer',
                                     style: TextStyle(
@@ -174,6 +170,7 @@ class _HomepageUiState extends State<HomepageUi> {
                                       context, MaterialPageRoute(builder: (context) => const CallerVoice()));
                                   if (audio is AppAudio) {
                                     selectedAudio = audio;
+                                    setState(() {});
                                   }
                                 },
                                 child: AppText('CallerVoice',
@@ -347,60 +344,10 @@ class _HomepageUiState extends State<HomepageUi> {
         ));
   }
 
-  onTap() {
-    Picker(
-      adapter: NumberPickerAdapter(data: <NumberPickerColumn>[
-        const NumberPickerColumn(begin: 0, end: 60, suffix: Text(' minutes'), jump: 0),
-        const NumberPickerColumn(begin: 0, end: 60, suffix: Text('seconds'), jump: 5)
-      ]),
-      delimiter: <PickerDelimiter>[
-        PickerDelimiter(
-          child: Container(
-            //          decoration: const BoxDecoration(
-            //   color: Colors.white,
-            //   borderRadius: BorderRadius.all(Radius.circular(10)),
-            //   boxShadow: [
-            //     BoxShadow(
-            //       color: Colors.grey,
-            //       blurRadius: 20.0, // Soften the shaodw
-            //       spreadRadius: 2.0,
-            //       offset: Offset(0.0, 0.0),
-            //     )
-            //   ],
-            // ),
-            width: 30.0,
-            alignment: Alignment.center,
-            child: const Icon(Icons.more_vert),
-          ),
-        )
-      ],
-      confirmText: 'OK',
-      onSelect: (picker, index, selected) {
-        if (index == 0) {
-          return toast(context, 'Please select a time');
-        }
-        print(selected.toString());
-        // print a time in text box when selected
-      },
-      onCancel: () {
-        debugPrint('cancel');
-      },
-      confirmTextStyle: const TextStyle(inherit: false, color: Colors.red, fontSize: 22),
-      title: const Text('Select Time'),
-      hideHeader: true,
-      height: 200.0,
-      backgroundColor: Colors.white,
-      selectedTextStyle: TextStyle(color: Colors.blue),
-      onConfirm: (Picker picker, List<int> value) {
-        // You get your duration here
-
-        Duration resultingDuration = Duration(minutes: value[1], seconds: value[1]);
-        // Duration(minutes: 0, seconds: 0) is the default value
-        selectedDuration = resultingDuration;
-
-        setState(() {});
-      },
-    ).showDialog(context);
+  selectTimer() async {
+    selectedDuration =
+        await showDurationPicker(context: context, initialTime: const Duration(minutes: 0), baseUnit: BaseUnit.second);
+    setState(() {});
   }
 
   void toast(BuildContext context, String text) {

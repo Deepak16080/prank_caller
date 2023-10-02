@@ -62,7 +62,7 @@ class _RingtoneState extends State<Ringtone> {
               itemCount: networkFiles.length,
               itemBuilder: (context, index) {
                 final audio = networkFiles[index];
-                String audioUrl = networkFiles[index].path;
+
                 String name = networkFiles[index].name.toString();
 
                 String title = name;
@@ -75,9 +75,7 @@ class _RingtoneState extends State<Ringtone> {
                     if (isSelected && player.playing) {
                       player.pause();
                     } else {
-                      player
-                        ..setUrl(audioUrl)
-                        ..play();
+                      selectedringtone!.play();
                     }
                     setState(() {});
                   },
