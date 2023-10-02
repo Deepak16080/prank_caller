@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:prank_caller/components/homepage_ui.dart';
+import 'package:prank_caller/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

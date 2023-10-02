@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
-import 'package:prank_caller/components/homepage_ui.dart';
+import 'package:prank_caller/home.dart';
 
 class PickUpUi extends StatefulWidget {
   final Contact contact;

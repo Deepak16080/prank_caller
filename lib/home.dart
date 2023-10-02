@@ -326,12 +326,17 @@ class _HomePageState extends State<HomePage> {
                         if (selectedDuration == null) {
                           return toast(context, "Please select a duration");
                         }
-                        Timer(selectedDuration!, () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      CallerProfilePage(contact: selectedContact!, audio: selectedAudio!)));
+                        Timer.periodic(Duration(seconds: 1), (timer) {
+                          selectedDuration = selectedDuration! - Duration(seconds: 1);
+                          setState(() {});
+                          if (selectedDuration!.inSeconds == 0) {
+                            timer.cancel();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CallerProfilePage(contact: selectedContact!, audio: selectedAudio!)));
+                          }
                         });
                       },
                       color: Colors.white,
