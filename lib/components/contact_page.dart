@@ -1,4 +1,3 @@
-// ignore: file_names
 import "package:flutter/material.dart";
 import 'package:flutter_contacts/flutter_contacts.dart';
 
@@ -34,37 +33,39 @@ class _ContactScreenState extends State<ContactScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_permissionDenied) {
-      return Center(child: Text('Please give a permission to access your contacts'));
-    }
-    if (_contacts == null) return Center(child: CircularProgressIndicator());
-
     return Scaffold(
-      body: ListView.builder(
-          itemCount: _contacts!.length,
-          itemBuilder: (context, i) {
-            return InkWell(
-                onTap: () async {
-                  selectedContact = _contacts![i];
-                  setState(() {
-                    selectedindex = i;
-                  });
-                },
-                child: Card(
-                  color: selectedindex == i ? Colors.green : Colors.white,
-                  shadowColor: Colors.green,
-                  shape: ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  elevation: 2.0,
-                  child: ListTile(
-                      title: Text(_contacts![i].displayName),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: _contacts![i].phones.map((e) => Text(e.number)).toList(),
-                      )),
-                ));
-          }),
+      backgroundColor: Colors.white,
+      body: Builder(builder: (context) {
+        if (_permissionDenied) {
+          return Center(child: Text('Please give a permission to access your contacts'));
+        }
+        if (_contacts == null) return Center(child: CircularProgressIndicator());
+        return ListView.builder(
+            itemCount: _contacts!.length,
+            itemBuilder: (context, i) {
+              return InkWell(
+                  onTap: () async {
+                    selectedContact = _contacts![i];
+                    setState(() {
+                      selectedindex = i;
+                    });
+                  },
+                  child: Card(
+                    color: selectedindex == i ? Colors.green : Colors.white,
+                    shadowColor: Colors.green,
+                    shape: ContinuousRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    elevation: 2.0,
+                    child: ListTile(
+                        title: Text(_contacts![i].displayName),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: _contacts![i].phones.map((e) => Text(e.number)).toList(),
+                        )),
+                  ));
+            });
+      }),
       appBar: AppBar(
         backgroundColor: Colors.blue,
         centerTitle: true,
