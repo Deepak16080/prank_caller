@@ -104,6 +104,7 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
                       ontap: (
                         snack,
                       ) {},
+                      calleraudio: selectedAudio,
                       contact: widget.contact),
                 ),
               ),
