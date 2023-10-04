@@ -1,4 +1,4 @@
-package com.example.prank_caller
+package com.prankcaller.app
 
 import io.flutter.embedding.android.FlutterActivity
 
