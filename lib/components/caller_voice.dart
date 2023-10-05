@@ -42,7 +42,6 @@ class _CallerVoiceState extends State<CallerVoice> {
                   return;
                 }
                 Navigator.pop(context, selectedringtone);
-                print(selectedringtone);
               },
               child: const Text(
                 'Select',

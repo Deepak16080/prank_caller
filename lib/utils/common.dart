@@ -7,3 +7,14 @@ void toast(BuildContext context, String text) {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
   ));
 }
+
+void boxToast(BuildContext context, String text) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Text(text, textAlign: TextAlign.center),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        );
+      });
+}

@@ -10,6 +10,7 @@ import '../widget/waBottomButton.dart';
 class CallerProfilePage extends StatefulWidget {
   final Contact contact;
   final AppAudio audio;
+  // final AppAudio calleraudio;
 
   const CallerProfilePage({required this.contact, required this.audio, super.key});
 
@@ -18,6 +19,7 @@ class CallerProfilePage extends StatefulWidget {
 }
 
 class _CallerProfilePageState extends State<CallerProfilePage> {
+  // AppAudio? get selectedRingtone => widget.calleraudio;
   AppAudio get selectedAudio => widget.audio;
 
   @override
@@ -104,7 +106,7 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
                       ontap: (
                         snack,
                       ) {},
-                      calleraudio: selectedAudio,
+                      // calleraudio: widget.calleraudio,
                       contact: widget.contact),
                 ),
               ),

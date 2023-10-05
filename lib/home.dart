@@ -22,9 +22,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   AppAudio? selectedAudio;
+  AppAudio? selectedRingtone;
   Contact? selectedContact;
   Duration? selectedDuration;
   Timer? callTimer;
+  final controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +56,16 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       HBox(20),
-                      AppText('Prank call',
-                          style: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold,
-                          )),
+                      Row(
+                        children: const [
+                          AppText('Prank call',
+                              style: TextStyle(
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          WBox(20),
+                        ],
+                      ),
                       AppText(
                         'You can have a imaginary friend to save your intimity ',
                         style: TextStyle(fontSize: 15, color: Colors.grey),
@@ -108,10 +121,10 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: InkWell(
                                 onTap: () async {
-                                  final audio = await Navigator.push(
+                                  final voice = await Navigator.push(
                                       context, MaterialPageRoute(builder: (context) => const CallerVoice()));
-                                  if (audio is AppAudio) {
-                                    selectedAudio = audio;
+                                  if (voice is AppAudio) {
+                                    selectedRingtone = voice;
                                     setState(() {});
                                   }
                                 },
@@ -137,15 +150,15 @@ class _HomePageState extends State<HomePage> {
                                             fontSize: 20,
                                             color: Colors.white,
                                           )),
-                                      if (selectedAudio != null)
+                                      if (selectedRingtone != null)
                                         GestureDetector(
                                           onTap: () {
-                                            selectedAudio?.play();
+                                            selectedRingtone?.play();
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              '${selectedAudio?.name?.replaceAll("assets/callervoice/", "").replaceAll(".mp3", "")}',
+                                              '${selectedRingtone?.name?.replaceAll("assets/callervoice/", "").replaceAll(".mp3", "")}',
                                               style: TextStyle(color: Colors.white),
                                               textAlign: TextAlign.center,
                                             ),
@@ -219,7 +232,24 @@ class _HomePageState extends State<HomePage> {
                                 context, MaterialPageRoute(builder: (context) => const ContactScreen()));
                             if (contact is Contact) {
                               selectedContact = contact;
-                              setState(() {});
+                              setState(() {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                          title: Center(child: Text(' Request')),
+                                          content: Text(
+                                              'Do not select any empty contact , it may be crash your app and you will not able to call, it may fix as soon as possible, Donot close the app in the background'),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text('Ok'))
+                                          ],
+                                        ));
+                                // boxToast(context,
+                                //     'Do not select any empty contact , it may be crash your app and you will not able to call, it may fix as soon as possible');
+                              });
                             }
                           },
                           child: Container(
@@ -296,8 +326,11 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  CallerProfilePage(contact: selectedContact!, audio: selectedAudio!)));
+                              builder: (context) => CallerProfilePage(
+                                    contact: selectedContact!,
+                                    audio: selectedAudio!,
+                                    // calleraudio: selectedRingtone!,
+                                  )));
                     }
                   });
                   setState(() {});

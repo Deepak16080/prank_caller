@@ -1,5 +1,3 @@
-
-
 import '../main.dart';
 
 enum AudioType { url, asset, file }
@@ -8,7 +6,10 @@ class AppAudio {
   final String path;
   final String? name;
 
-  AppAudio({required this.path, this.name});
+  AppAudio({
+    required this.path,
+    this.name,
+  });
 
   AudioType get type {
     if (path.startsWith("http")) return AudioType.url;

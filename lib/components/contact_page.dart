@@ -35,15 +35,21 @@ class _ContactScreenState extends State<ContactScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_permissionDenied) {
-      return Center(child: Text('Please give a permission to access your contacts'));
-    }
-    if (_contacts == null) return Center(child: CircularProgressIndicator());
     return Scaffold(
       backgroundColor: Colors.white,
       body: FutureBuilder<String>(
           future: DefaultAssetBundle.of(context).loadString("AssetManifest.json"),
           builder: (context, item) {
+            if (_permissionDenied) {
+              return Center(child: Text('Please give a permission to access your contacts'));
+            }
+            if (_contacts == null) {
+              return Center(
+                  child: CircularProgressIndicator(
+                color: Colors.blue,
+              ));
+            }
+            if (_contacts!.isEmpty) return Center(child: Text('No contacts found'));
             return ListView.builder(
                 itemCount: _contacts!.length,
                 itemBuilder: (context, i) {

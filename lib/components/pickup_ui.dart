@@ -5,20 +5,19 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:prank_caller/home.dart';
 import 'package:prank_caller/main.dart';
-import 'package:prank_caller/utils/enums.dart';
 
 class PickUpUi extends StatefulWidget {
   final Contact contact;
   final OnTap ontap;
-  final AppAudio calleraudio;
-  const PickUpUi({required this.contact, required this.ontap, required this.calleraudio, super.key});
+  // final AppAudio calleraudio;
+  const PickUpUi({required this.contact, required this.ontap, super.key});
 
   @override
   State<PickUpUi> createState() => _PickUpUiState();
 }
 
 class _PickUpUiState extends State<PickUpUi> {
-  AppAudio get selectedAudio => widget.calleraudio;
+  // AppAudio get selectedRingtone => widget.calleraudio;
   Icon? icon = Icon(
     Icons.call,
     size: 10,
@@ -41,7 +40,7 @@ class _PickUpUiState extends State<PickUpUi> {
   @override
   void initState() {
     super.initState();
-    selectedAudio.play();
+    // selectedRingtone.play();
     _startTimer();
   }
 
@@ -56,6 +55,7 @@ class _PickUpUiState extends State<PickUpUi> {
   @override
   void dispose() {
     _stopTimer();
+    player.stop();
     super.dispose();
   }
 
