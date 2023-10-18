@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:prank_caller/home.dart';
-import 'package:prank_caller/main.dart';
-import 'package:prank_caller/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
+import 'package:prank_caller/home.dart';
+import 'package:prank_caller/main.dart';
+import 'package:prank_caller/utils/enums.dart';
 
 class PickUpUi extends StatefulWidget {
   final Contact contact;

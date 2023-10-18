@@ -36,9 +36,9 @@ class MyApp extends StatelessWidget {
               ),
               inputDecorationTheme: const InputDecorationTheme(
                 filled: true,
-                fillColor: Colors.black,
+                fillColor: Colors.transparent,
                 hintStyle: TextStyle(
-                  color: Colors.black,
+                  color: Colors.grey,
                 ),
               ),
             ),

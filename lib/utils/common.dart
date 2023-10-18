@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 void toast(BuildContext context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(text, textAlign: TextAlign.center),
+    duration: Duration(seconds: 2),
+    onVisible: () {
+      Future.delayed(Duration(seconds: 2), () {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      });
+    },
     behavior: SnackBarBehavior.fixed,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
   ));

@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_contacts/contact.dart';
 import 'package:prank_caller/components/pickup_ui.dart';
 import 'package:prank_caller/utils/enums.dart';
 import 'package:prank_caller/widget/app_text.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_contacts/contact.dart';
 
 import '../main.dart';
 import '../widget/waBottomButton.dart';
@@ -10,22 +10,19 @@ import '../widget/waBottomButton.dart';
 class CallerProfilePage extends StatefulWidget {
   final Contact contact;
   final AppAudio audio;
-  final AppAudio calleraudio;
 
-  const CallerProfilePage({required this.contact, required this.audio, required this.calleraudio, super.key});
+  const CallerProfilePage({required this.contact, required this.audio, super.key});
 
   @override
   State<CallerProfilePage> createState() => _CallerProfilePageState();
 }
 
 class _CallerProfilePageState extends State<CallerProfilePage> {
-  AppAudio get selectedRingtone => widget.calleraudio;
   AppAudio get selectedAudio => widget.audio;
 
   @override
   void initState() {
     super.initState();
-
     selectedAudio.play();
   }
 
@@ -107,7 +104,6 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
                       ontap: (
                         snack,
                       ) {},
-                      // calleraudio: widget.calleraudio,
                       contact: widget.contact),
                 ),
               ),
