@@ -1,0 +1,4 @@
+add a background services to the app
+add an ads to the app
+add a push notification to the app
+fix pickup page selectedcallvoice
