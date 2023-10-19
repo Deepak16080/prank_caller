@@ -1,0 +1,1 @@
+{"status":1,"app_id":"ca-app-pub-6322672470771994~2828483554","auto_collect_location":true,"exp_param":{"loeid":[44766145]},"admob_esp_processor_term_accepted":false}

@@ -2,11 +2,8 @@ import 'dart:async';
 
 import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_background/flutter_background.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:prank_caller/Provider/ads_provider.dart';
 import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/contact_page.dart';
 import 'package:prank_caller/components/reviewpage/contactus_page.dart';
@@ -15,7 +12,6 @@ import 'package:prank_caller/components/ringtone.dart';
 import 'package:prank_caller/utils/enums.dart';
 import 'package:prank_caller/widget/app_text.dart';
 import 'package:prank_caller/widget/box.dart';
-import 'package:provider/provider.dart';
 import 'package:rating_dialog/rating_dialog.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -35,23 +31,6 @@ class _HomePageState extends State<HomePage> {
   Contact? selectedContact;
   Duration? selectedDuration;
   Timer? callTimer;
-  Future<void> _initializeBackgroundTasks() async {
-    // Check if the device supports background execution
-    bool isSupported = FlutterBackground.isBackgroundExecutionEnabled;
-
-    if (isSupported) {
-      // Start a background task that runs every 15 minutes
-      await FlutterBackground.enableBackgroundExecution(); // 900 seconds = 15 minutes
-      FlutterBackground.initialize(
-        androidConfig: FlutterBackgroundAndroidConfig(
-          notificationTitle: 'Prank Caller',
-          notificationText: 'Background Notification',
-          notificationImportance: AndroidNotificationImportance.Default,
-          notificationIcon: AndroidResource(name: 'mipmap/ic_launcher', defType: 'mipmap'),
-        ),
-      );
-    }
-  }
 
   // final String updateUrl = 'https://play.google.com/store/apps/details?id=com.prankcaller.callapp';
 
@@ -97,15 +76,6 @@ class _HomePageState extends State<HomePage> {
   //     throw 'Could not launch $url';
   //   }
   // }
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeBackgroundTasks();
-    // _checkForUpdate();
-    AdsProvider adsprovider = Provider.of<AdsProvider>(context, listen: false);
-    adsprovider.initializehomepagebanner();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -401,20 +371,6 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(fontSize: 20))),
           ),
         ]),
-        bottomNavigationBar: Consumer<AdsProvider>(builder: (context, AdsProvider adProvider, child) {
-          if (adProvider.ishomepagebannerLoaded) {
-            return Container(
-              color: Colors.white,
-              height: adProvider.homepagebanner.size.height.toDouble(),
-              width: adProvider.homepagebanner.size.width.toDouble(),
-              child: AdWidget(ad: adProvider.homepagebanner),
-            );
-          } else {
-            return SizedBox(
-              height: 0,
-            );
-          }
-        }),
       ),
     );
   }

@@ -50,15 +50,15 @@ dependencies:
  
   keystore_generator: ^1.0.1
   
-  google_mobile_ads: ^3.0.0
+  
   provider: ^6.0.5
   share: ^2.0.4
   url_launcher: ^6.0.6
   flutter_rating_bar: ^4.0.1
   rating_dialog: ^2.0.4
-  flutter_background: ^1.2.0
-  # flutter_background_service: ^5.0.1
-  # flutter_local_notifications: ^16.1.0
+  
+  # awesome_notifications: ^0.8.2
+
  
 
 dev_dependencies:
