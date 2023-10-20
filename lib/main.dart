@@ -4,6 +4,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:prank_caller/components/splash_screen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   runApp(MyApp());
 }

@@ -2,6 +2,20 @@ import '../utils/enums.dart';
 
 List<AppAudio> networkFiles = [
   // phone ringtone
+  AppAudio(path: 'https://mobcup.net/ringtone/samsung-a12-0bkp9g43/download/mp3', name: 'Sumsung phone ringtone'),
+  AppAudio(path: 'https://mobcup.net/ringtone/samsung-s5-startup-6trzyt4q/download/mp3', name: 'Sumsung S13 ringtone'),
+  AppAudio(
+      path: 'https://mobcup.net/ringtone/samsung-galaxy-s5-over-the-horizon-sr0eg74i/download/mp3',
+      name: 'Sumsung Galaxy'),
+  AppAudio(
+      path: 'https://mobcup.net/ringtone/nada-dering-samsung-s23-ultra-vvpzgdlt/download/mp3',
+      name: 'Normal sumsung mobile tone'),
+  AppAudio(
+      path: 'https://nzt6ku-a.akamaihd.net/downloads/ringtones/files/mp3/phone-d-ringtone-musicfishaudio-28448.mp3',
+      name: 'Normal phone ringtone'),
+  AppAudio(
+      path: 'https://nzt6ku-a.akamaihd.net/downloads/ringtones/files/mp3/apple-iphone-6-plus-mix-16883.mp3',
+      name: 'I Phone 6s'),
   AppAudio(
       path:
           'https://www.allsamsungringtones.com/download/xiaomi-redmi-note-12r-pro-ringtone/?wpdmdl=38553&refresh=64cdfba0df6181691220896',

@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                       HBox(20),
                       Row(
                         children: const [
-                          AppText('Prank call',
+                          AppText('Prank Caller',
                               style: TextStyle(
                                 fontSize: 35,
                                 fontWeight: FontWeight.bold,
@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                                 CircleAvatar(
                                   radius: 30,
                                   backgroundColor: Colors.transparent,
-                                  backgroundImage: AssetImage("assets/images/timer1.png"),
+                                  backgroundImage: AssetImage("assets/images/timer.png"),
                                 ),
                                 WBox(20),
                                 Column(
@@ -342,7 +342,7 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   if (selectedDuration == null) {
-                    return toast(context, "Please select a duration");
+                    return toast(context, "Please select a Timer");
                   }
                   callTimer = Timer.periodic(Duration(seconds: 1), (timer) {
                     selectedDuration = selectedDuration! - Duration(seconds: 1);
@@ -383,6 +383,7 @@ class _HomePageState extends State<HomePage> {
 
   void _showBottomSheet(BuildContext context) {
     showModalBottomSheet(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
       showDragHandle: true,
       context: context,
       builder: (BuildContext context) {

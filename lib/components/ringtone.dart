@@ -1,8 +1,8 @@
-import 'package:prank_caller/models/ringtone_model_list.dart';
-import 'package:prank_caller/utils/enums.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
+import 'package:prank_caller/models/ringtone_model_list.dart';
+import 'package:prank_caller/utils/enums.dart';
 
 import '../main.dart';
 import '../utils/common.dart';
@@ -49,7 +49,6 @@ class _RingtoneState extends State<Ringtone> {
                   return;
                 }
                 Navigator.pop(context, selectedringtone);
-                print(selectedringtone);
               },
               child: const Text(
                 'Select',
