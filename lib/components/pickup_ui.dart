@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
-import 'package:prank_caller/home.dart';
 import 'package:prank_caller/main.dart';
 import 'package:prank_caller/utils/enums.dart';
 
@@ -56,6 +56,7 @@ class _PickUpUiState extends State<PickUpUi> {
   @override
   void dispose() {
     _stopTimer();
+    PickUpUi(contact: widget.contact, ontap: (snack) {}, calleraudio: widget.calleraudio);
     player.stop();
     super.dispose();
   }
@@ -209,12 +210,9 @@ class _PickUpUiState extends State<PickUpUi> {
                           radius: 35,
                           child: IconButton(
                             onPressed: () {
-                              player.stop();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomePage(),
-                                  ));
+                              _stopTimer();
+
+                              Navigator.pop(context);
                             },
                             icon: Icon(Icons.call_end_outlined),
                             iconSize: 40,

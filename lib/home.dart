@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   Contact? selectedContact;
   Duration? selectedDuration;
   Timer? callTimer;
+  int secnds = 0;
 
   // final String updateUrl = 'https://play.google.com/store/apps/details?id=com.prankcaller.callapp';
 
@@ -257,27 +258,25 @@ class _HomePageState extends State<HomePage> {
                         child: InkWell(
                           onTap: () async {
                             final contact = await Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => const ContactScreen()));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ContactScreen(
+                                            dialog: AlertDialog(
+                                          title: Center(child: Text(' Request')),
+                                          content: Text(
+                                              'Do not select any empty contact , it may be crash your app and you will not able to call, it may fix as soon as possible, Donot close the app in the background'),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text('Ok'))
+                                          ],
+                                        ))));
+
                             if (contact is Contact) {
                               selectedContact = contact;
-                              setState(() {
-                                // showDialog(
-                                //     context: context,
-                                //     builder: (context) => AlertDialog(
-                                //           title: Center(child: Text(' Request')),
-                                //           content: Text(
-                                //               'Do not select any empty contact , it may be crash your app and you will not able to call, it may fix as soon as possible, Donot close the app in the background'),
-                                //           actions: [
-                                //             TextButton(
-                                //                 onPressed: () {
-                                //                   Navigator.pop(context);
-                                //                 },
-                                //                 child: Text('Ok'))
-                                //           ],
-                                //         ));
-                                // boxToast(context,
-                                //     'Do not select any empty contact , it may be crash your app and you will not able to call, it may fix as soon as possible');
-                              });
+                              setState(() {});
                             }
                           },
                           child: Container(
@@ -360,7 +359,9 @@ class _HomePageState extends State<HomePage> {
                                   )));
                     }
                   });
-                  setState(() {});
+                  setState(() {
+                    selectedDuration = selectedDuration;
+                  });
                 },
                 color: Colors.white,
                 textColor: Colors.green,

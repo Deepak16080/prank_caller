@@ -4,9 +4,8 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import '../utils/common.dart';
 
 class ContactScreen extends StatefulWidget {
-  const ContactScreen({
-    super.key,
-  });
+  final AlertDialog? dialog;
+  const ContactScreen({super.key, required this.dialog});
 
   @override
   State<ContactScreen> createState() => _ContactScreenState();
@@ -30,6 +29,16 @@ class _ContactScreenState extends State<ContactScreen> {
     } else {
       final contacts = await FlutterContacts.getContacts(withProperties: true);
       setState(() => _contacts = contacts);
+    }
+    if (_contacts!.isEmpty) {
+      setState(() {
+        _contacts = [];
+      });
+    }
+    if (_contacts!.isNotEmpty) {
+      setState(() {
+        _contacts = _contacts!.where((element) => element.phones.isNotEmpty).toList();
+      });
     }
   }
 
