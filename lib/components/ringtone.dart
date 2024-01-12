@@ -34,7 +34,8 @@ class _RingtoneState extends State<Ringtone> {
       appBar: AppBar(
         centerTitle: true,
         title: Text('Ringtones'),
-        backgroundColor: Colors.transparent,
+        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20.0),
+        backgroundColor: Colors.blue,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

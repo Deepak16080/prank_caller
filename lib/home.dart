@@ -13,7 +13,7 @@ import 'package:prank_caller/utils/enums.dart';
 import 'package:prank_caller/widget/app_text.dart';
 import 'package:prank_caller/widget/box.dart';
 import 'package:rating_dialog/rating_dialog.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'utils/common.dart';
@@ -147,7 +147,6 @@ class _HomePageState extends State<HomePage> {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    HBox(8),
                                     Text(
                                       " ${selectedDuration?.inMinutes ?? 0} min ${selectedDuration?.inSeconds ?? 0} sec",
                                       style: TextStyle(color: Colors.white),
@@ -348,6 +347,7 @@ class _HomePageState extends State<HomePage> {
                     setState(() {});
                     if (selectedDuration!.inSeconds == 0) {
                       callTimer?.cancel();
+                      resetcalling();
                       callTimer = null;
                       setState(() {});
                       Navigator.push(
@@ -376,7 +376,15 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void resetcalling() {
+    callTimer?.cancel();
+    setState(() {
+      secnds = 0;
+    });
+  }
+
   selectTimer() async {
+    // also change the shape of clock
     selectedDuration =
         await showDurationPicker(context: context, initialTime: const Duration(minutes: 0), baseUnit: BaseUnit.second);
     setState(() {});
@@ -488,8 +496,8 @@ class _HomePageState extends State<HomePage> {
 
   void shareLink() {
     String link = "https://play.google.com/store/apps/details?id=com.prankcaller.callapp";
-    String message = "Check out this awesome App: $link";
-    Share.share(message);
+    String message = "Check out this awesome App, Prank Caller";
+    Share.share(link, subject: message);
   }
 
   void launchPrivacyPolicyUrl() async {
