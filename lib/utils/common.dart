@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+bool showtoast = false;
+
 void toast(BuildContext context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(text, textAlign: TextAlign.center),
@@ -12,6 +14,7 @@ void toast(BuildContext context, String text) {
     behavior: SnackBarBehavior.fixed,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
   ));
+  showtoast = true;
 }
 
 void boxToast(BuildContext context, String text) {

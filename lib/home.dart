@@ -4,11 +4,13 @@ import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:prank_caller/components/caller_ui_page.dart';
 import 'package:prank_caller/components/contact_page.dart';
 import 'package:prank_caller/components/reviewpage/contactus_page.dart';
 import 'package:prank_caller/components/reviewpage/feedbackpage.dart';
 import 'package:prank_caller/components/ringtone.dart';
+import 'package:prank_caller/services/ads_services.dart';
 import 'package:prank_caller/utils/enums.dart';
 import 'package:prank_caller/widget/app_text.dart';
 import 'package:prank_caller/widget/box.dart';
@@ -32,57 +34,88 @@ class _HomePageState extends State<HomePage> {
   Duration? selectedDuration;
   Timer? callTimer;
   int secnds = 0;
+  bool isAdLoaded = false;
+  BannerAd? bannerAd;
+  RewardedAd? rewardedAd;
+  int rewaredscore = 0;
+  @override
+  void initState() {
+    super.initState();
+    initbannerad();
+    initrewardedad();
+  }
 
-  // final String updateUrl = 'https://play.google.com/store/apps/details?id=com.prankcaller.callapp';
+  void initbannerad() {
+    bannerAd = BannerAd(
+        size: AdSize.fullBanner,
+        adUnitId: AdMobService.bannerAdUnitId,
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+            isAdLoaded = true;
+          },
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+          },
+        ),
+        request: const AdRequest());
+    bannerAd!.load();
+  }
 
-  // void _checkForUpdate() {
-  //   bool updateAvailable = false; // Set to true if an update is available, otherwise false
+  void initrewardedad() {
+    RewardedAd.load(
+      adUnitId: AdMobService.rewardedAdUnitId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          rewardedAd = ad;
+        },
+        onAdFailedToLoad: (error) {
+          rewardedAd?.dispose();
+          print('RewardedAd failed to load: $error');
+        },
+      ),
+    );
+  }
 
-  //   if (updateAvailable) {
-  //     showUpdateDialog();
-  //   }
-  // }
+  void showrewardedad() {
+    if (rewardedAd != null) {
+      rewardedAd?.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          initrewardedad();
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          ad.dispose();
+          initrewardedad();
+        },
+      );
 
-  // Future<void> showUpdateDialog() {
-  //   return showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Update Available'),
-  //         content: Text("A new version of the app is available. Please update to the latest version."),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: Text('Update Now'),
-  //             onPressed: () {
-  //               _launchURL(updateUrl);
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //           TextButton(
-  //             child: Text('Later'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
-  // void _launchURL(String url) async {
-  //   if (await canLaunchUrl(Uri.parse(url))) {
-  //     await launchUrl(Uri.parse(url));
-  //   } else {
-  //     throw 'Could not launch $url';
-  //   }
-  // }
+      rewardedAd?.show(onUserEarnedReward: (ad, reward) {
+        setState(() {
+          rewaredscore++;
+        });
+        print('User earned reward of: ${reward.amount}');
+      });
+      rewardedAd = null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () => _onWillPop(context),
       child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: bannerAd != null
+            ? SizedBox(
+                height: bannerAd!.size.height.toDouble(),
+                width: bannerAd!.size.width.toDouble(),
+                child: AdWidget(
+                  ad: bannerAd!,
+                ),
+              )
+            : const SizedBox(),
         backgroundColor: Colors.deepPurple,
         body: Column(children: [
           Expanded(
@@ -101,7 +134,6 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      HBox(20),
                       Row(
                         children: const [
                           AppText('Prank Caller',
@@ -117,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(fontSize: 15, color: Colors.grey),
                         textAlign: TextAlign.start,
                       ),
-                      HBox(20),
+                      HBox(40),
                       Expanded(
                         child: InkWell(
                           onTap: selectTimer,
@@ -328,9 +360,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(vertical: 50),
             child: MaterialButton(
                 padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40),
-                    side: BorderSide(color: Colors.black, width: 1, style: BorderStyle.solid)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40), side: BorderSide.none),
                 onPressed: () async {
                   if (selectedContact == null) {
                     return toast(context, "Please select a contact first");
@@ -347,16 +377,19 @@ class _HomePageState extends State<HomePage> {
                     setState(() {});
                     if (selectedDuration!.inSeconds == 0) {
                       callTimer?.cancel();
-                      resetcalling();
+                      selectedDuration = null;
+
                       callTimer = null;
-                      setState(() {});
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CallerProfilePage(
-                                    contact: selectedContact!,
-                                    audio: selectedAudio!,
-                                  )));
+                      setState(() {
+                        showrewardedad();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CallerProfilePage(
+                                      contact: selectedContact!,
+                                      audio: selectedAudio!,
+                                    )));
+                      });
                     }
                   });
                   setState(() {
@@ -474,6 +507,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: InkWell(
                 onTap: () {
+                  showrewardedad();
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactUsPage()));
                 },
                 child: Container(

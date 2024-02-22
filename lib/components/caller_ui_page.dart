@@ -42,9 +42,6 @@ class _CallerProfilePageState extends State<CallerProfilePage> {
               '${selectedAudio.name?.replaceAll("", "").replaceAll(".mp3", "")}',
               style: TextStyle(color: Colors.transparent, fontSize: 2),
             ),
-            SizedBox(
-              height: 35,
-            ),
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text.rich(

@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:prank_caller/services/ads_services.dart';
 
 import '../utils/common.dart';
 
@@ -16,10 +18,72 @@ class _ContactScreenState extends State<ContactScreen> {
   Contact? selectedContact;
   var selectedindex = -1;
   bool _permissionDenied = false;
+  late BannerAd? bannerAd;
+  bool isAdLoaded = false;
+  int rewaredscore = 0;
+  RewardedAd? rewardedAd;
+  void initrewardedad() {
+    RewardedAd.load(
+      adUnitId: AdMobService.rewardedAdUnitId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          rewardedAd = ad;
+        },
+        onAdFailedToLoad: (error) {
+          rewardedAd?.dispose();
+          print('RewardedAd failed to load: $error');
+        },
+      ),
+    );
+  }
+
+  void showrewardedad() {
+    if (rewardedAd != null) {
+      rewardedAd?.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          initrewardedad();
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          ad.dispose();
+          initrewardedad();
+        },
+      );
+
+      rewardedAd?.show(onUserEarnedReward: (ad, reward) {
+        setState(() {
+          rewaredscore++;
+        });
+        print('User earned reward of: ${reward.amount}');
+      });
+      rewardedAd = null;
+    }
+  }
+
+  initBannerAd() {
+    bannerAd = BannerAd(
+        size: AdSize.fullBanner,
+        adUnitId: AdMobService.bannerAdUnitId,
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+            setState(() {
+              isAdLoaded = true;
+            });
+          },
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+          },
+        ),
+        request: const AdRequest());
+    bannerAd!.load();
+  }
 
   @override
   void initState() {
     super.initState();
+    initBannerAd();
+    initrewardedad();
     _fetchContacts();
   }
 
@@ -46,6 +110,15 @@ class _ContactScreenState extends State<ContactScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomNavigationBar: isAdLoaded
+          ? SizedBox(
+              height: bannerAd!.size.height.toDouble(),
+              width: bannerAd!.size.width.toDouble(),
+              child: AdWidget(
+                ad: bannerAd!,
+              ),
+            )
+          : const SizedBox(),
       body: FutureBuilder<String>(
           future: DefaultAssetBundle.of(context).loadString("AssetManifest.json"),
           builder: (context, item) {
@@ -88,10 +161,17 @@ class _ContactScreenState extends State<ContactScreen> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         centerTitle: true,
-        title: Text('Contacts'),
+        title: Text(
+          'Contacts',
+          style: TextStyle(color: Colors.white),
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            color: Colors.white,
+          ),
           onPressed: () {
+            showrewardedad();
             Navigator.pop(context);
           },
         ),
@@ -103,6 +183,9 @@ class _ContactScreenState extends State<ContactScreen> {
                 } else {
                   Navigator.pop(context, selectedContact!);
                 }
+                setState(() {
+                  showrewardedad();
+                });
               },
               child: const Text(
                 'Select',

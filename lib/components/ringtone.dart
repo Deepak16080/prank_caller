@@ -1,7 +1,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:path/path.dart' as path;
 import 'package:prank_caller/models/ringtone_model_list.dart';
+import 'package:prank_caller/services/ads_services.dart';
 import 'package:prank_caller/utils/enums.dart';
 
 import '../main.dart';
@@ -16,10 +18,31 @@ class Ringtone extends StatefulWidget {
 
 class _RingtoneState extends State<Ringtone> {
   AppAudio? selectedringtone;
+  late BannerAd? bannerAd;
+  bool isAdLoaded = false;
+
+  initBannerAd() {
+    bannerAd = BannerAd(
+        size: AdSize.fullBanner,
+        adUnitId: AdMobService.bannerAdUnitId,
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+            setState(() {
+              isAdLoaded = true;
+            });
+          },
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+          },
+        ),
+        request: const AdRequest());
+    bannerAd!.load();
+  }
 
   @override
   void initState() {
     super.initState();
+    initBannerAd();
   }
 
   @override
@@ -31,13 +54,23 @@ class _RingtoneState extends State<Ringtone> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: bannerAd != null
+          ? SizedBox(
+              height: bannerAd!.size.height.toDouble(),
+              width: bannerAd!.size.width.toDouble(),
+              child: AdWidget(ad: bannerAd!),
+            )
+          : const SizedBox(),
       appBar: AppBar(
         centerTitle: true,
         title: Text('Ringtones'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20.0),
         backgroundColor: Colors.blue,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            color: Colors.white,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -102,6 +135,7 @@ class _RingtoneState extends State<Ringtone> {
             );
           }),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
         onPressed: () {
           pickfile();
         },
