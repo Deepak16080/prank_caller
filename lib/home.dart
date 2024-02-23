@@ -36,13 +36,49 @@ class _HomePageState extends State<HomePage> {
   int secnds = 0;
   bool isAdLoaded = false;
   BannerAd? bannerAd;
-  RewardedAd? rewardedAd;
-  int rewaredscore = 0;
+  InterstitialAd? interstitialAd;
   @override
   void initState() {
     super.initState();
     initbannerad();
-    initrewardedad();
+    initInterstitialAd();
+  }
+
+  void initInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: AdMobService.interstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            interstitialAd = ad;
+            print('Interstitial Ad loaded');
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            print('Interstitial Ad failed to load: $error');
+            interstitialAd = null;
+          },
+        ));
+  }
+
+  void showInterstitialAd() {
+    if (interstitialAd != null) {
+      interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (InterstitialAd ad) {
+          print('$ad onAdDismissedFullScreenContent');
+          ad.dispose();
+        },
+        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+          ad.dispose();
+          print('$ad onAdFailedToShowFullScreenContent: $error');
+        },
+        onAdShowedFullScreenContent: (ad) {
+          print('$ad onAdShowedFullScreenContent');
+          interstitialAd = null;
+        },
+      );
+      interstitialAd!.show();
+      interstitialAd = null;
+    }
   }
 
   void initbannerad() {
@@ -59,45 +95,6 @@ class _HomePageState extends State<HomePage> {
         ),
         request: const AdRequest());
     bannerAd!.load();
-  }
-
-  void initrewardedad() {
-    RewardedAd.load(
-      adUnitId: AdMobService.rewardedAdUnitId,
-      request: AdRequest(),
-      rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) {
-          rewardedAd = ad;
-        },
-        onAdFailedToLoad: (error) {
-          rewardedAd?.dispose();
-          print('RewardedAd failed to load: $error');
-        },
-      ),
-    );
-  }
-
-  void showrewardedad() {
-    if (rewardedAd != null) {
-      rewardedAd?.fullScreenContentCallback = FullScreenContentCallback(
-        onAdDismissedFullScreenContent: (ad) {
-          ad.dispose();
-          initrewardedad();
-        },
-        onAdFailedToShowFullScreenContent: (ad, error) {
-          ad.dispose();
-          initrewardedad();
-        },
-      );
-
-      rewardedAd?.show(onUserEarnedReward: (ad, reward) {
-        setState(() {
-          rewaredscore++;
-        });
-        print('User earned reward of: ${reward.amount}');
-      });
-      rewardedAd = null;
-    }
   }
 
   @override
@@ -288,26 +285,14 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: InkWell(
                           onTap: () async {
-                            final contact = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ContactScreen(
-                                            dialog: AlertDialog(
-                                          title: Center(child: Text(' Request')),
-                                          content: Text(
-                                              'Do not select any empty contact , it may be crash your app and you will not able to call, it may fix as soon as possible, Donot close the app in the background'),
-                                          actions: [
-                                            TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Text('Ok'))
-                                          ],
-                                        ))));
+                            final contact =
+                                await Navigator.push(context, MaterialPageRoute(builder: (context) => ContactScreen()));
 
                             if (contact is Contact) {
                               selectedContact = contact;
-                              setState(() {});
+                              setState(() {
+                                showInterstitialAd();
+                              });
                             }
                           },
                           child: Container(
@@ -381,7 +366,7 @@ class _HomePageState extends State<HomePage> {
 
                       callTimer = null;
                       setState(() {
-                        showrewardedad();
+                        showInterstitialAd();
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -507,7 +492,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  showrewardedad();
+                  showInterstitialAd();
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactUsPage()));
                 },
                 child: Container(

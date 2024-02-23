@@ -6,8 +6,7 @@ import 'package:prank_caller/services/ads_services.dart';
 import '../utils/common.dart';
 
 class ContactScreen extends StatefulWidget {
-  final AlertDialog? dialog;
-  const ContactScreen({super.key, required this.dialog});
+  const ContactScreen({super.key});
 
   @override
   State<ContactScreen> createState() => _ContactScreenState();
@@ -20,44 +19,42 @@ class _ContactScreenState extends State<ContactScreen> {
   bool _permissionDenied = false;
   late BannerAd? bannerAd;
   bool isAdLoaded = false;
-  int rewaredscore = 0;
-  RewardedAd? rewardedAd;
-  void initrewardedad() {
-    RewardedAd.load(
-      adUnitId: AdMobService.rewardedAdUnitId,
-      request: AdRequest(),
-      rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) {
-          rewardedAd = ad;
-        },
-        onAdFailedToLoad: (error) {
-          rewardedAd?.dispose();
-          print('RewardedAd failed to load: $error');
-        },
-      ),
-    );
+  InterstitialAd? interstitialAd;
+
+  void initInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: AdMobService.interstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            interstitialAd = ad;
+            print('Interstitial Ad loaded');
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            print('Interstitial Ad failed to load: $error');
+            interstitialAd = null;
+          },
+        ));
   }
 
-  void showrewardedad() {
-    if (rewardedAd != null) {
-      rewardedAd?.fullScreenContentCallback = FullScreenContentCallback(
-        onAdDismissedFullScreenContent: (ad) {
+  void showInterstitialAd() {
+    if (interstitialAd != null) {
+      interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (InterstitialAd ad) {
+          print('$ad onAdDismissedFullScreenContent');
           ad.dispose();
-          initrewardedad();
         },
-        onAdFailedToShowFullScreenContent: (ad, error) {
+        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
           ad.dispose();
-          initrewardedad();
+          print('$ad onAdFailedToShowFullScreenContent: $error');
+        },
+        onAdShowedFullScreenContent: (ad) {
+          print('$ad onAdShowedFullScreenContent');
+          interstitialAd = null;
         },
       );
-
-      rewardedAd?.show(onUserEarnedReward: (ad, reward) {
-        setState(() {
-          rewaredscore++;
-        });
-        print('User earned reward of: ${reward.amount}');
-      });
-      rewardedAd = null;
+      interstitialAd!.show();
+      interstitialAd = null;
     }
   }
 
@@ -83,7 +80,7 @@ class _ContactScreenState extends State<ContactScreen> {
   void initState() {
     super.initState();
     initBannerAd();
-    initrewardedad();
+    initInterstitialAd();
     _fetchContacts();
   }
 
@@ -171,7 +168,7 @@ class _ContactScreenState extends State<ContactScreen> {
             color: Colors.white,
           ),
           onPressed: () {
-            showrewardedad();
+            showInterstitialAd();
             Navigator.pop(context);
           },
         ),
@@ -183,9 +180,7 @@ class _ContactScreenState extends State<ContactScreen> {
                 } else {
                   Navigator.pop(context, selectedContact!);
                 }
-                setState(() {
-                  showrewardedad();
-                });
+                setState(() {});
               },
               child: const Text(
                 'Select',

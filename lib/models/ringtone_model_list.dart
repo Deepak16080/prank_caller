@@ -83,4 +83,17 @@ List<AppAudio> networkFiles = [
   AppAudio(
       path: 'https://d6cp9b00-a.akamaihd.net/downloads/ringtones/files/mp3/chinese-baby-song-488-60248.mp3',
       name: 'Cute Baby Singing Ringtone'),
+  AppAudio(
+    path: 'https://mp3ringtonesdownload.net/wp-content/uploads/2023/08/iphone-15-ringtone.mp3',
+    name: 'apple-iphone-15-pro-max-2',
+  ),
+  AppAudio(
+      path: 'https://mp3ringtonesdownload.net/wp-content/uploads/2020/12/theringtonesite-com-14.mp3',
+      name: 'Xiaomi Redmi Note 7 Pro Ringtone'),
+  AppAudio(
+      path: 'https://mp3ringtonesdownload.net/wp-content/uploads/2020/12/redmi-note-9s.mp3',
+      name: 'Redmi Note 9s Ringtone'),
+  AppAudio(
+      path: 'https://mp3ringtonesdownload.net/wp-content/uploads/2023/07/X4-Ting-Ting-Tones.mp3',
+      name: 'X4 Ting Ting Tones'),
 ];

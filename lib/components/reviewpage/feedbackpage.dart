@@ -16,52 +16,48 @@ class _FeedbackPageState extends State<FeedbackPage> {
   final TextEditingController descriptionController = TextEditingController();
 
   bool isAdLoaded = false;
-  int rewaredscore = 0;
-  RewardedAd? rewardedAd;
-
+  InterstitialAd? interstitialAd;
   @override
   void initState() {
     super.initState();
     initBannerAd();
-    initrewardedad();
+    initInterstitialAd();
   }
 
-  void initrewardedad() {
-    RewardedAd.load(
-      adUnitId: AdMobService.rewardedAdUnitId,
-      request: AdRequest(),
-      rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) {
-          rewardedAd = ad;
-        },
-        onAdFailedToLoad: (error) {
-          rewardedAd?.dispose();
-          print('RewardedAd failed to load: $error');
-        },
-      ),
-    );
+  void initInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: AdMobService.interstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            interstitialAd = ad;
+            print('Interstitial Ad loaded');
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            print('Interstitial Ad failed to load: $error');
+            interstitialAd = null;
+          },
+        ));
   }
 
-  void showrewardedad() {
-    if (rewardedAd != null) {
-      rewardedAd?.fullScreenContentCallback = FullScreenContentCallback(
-        onAdDismissedFullScreenContent: (ad) {
+  void showInterstitialAd() {
+    if (interstitialAd != null) {
+      interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (InterstitialAd ad) {
+          print('$ad onAdDismissedFullScreenContent');
           ad.dispose();
-          initrewardedad();
         },
-        onAdFailedToShowFullScreenContent: (ad, error) {
+        onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
           ad.dispose();
-          initrewardedad();
+          print('$ad onAdFailedToShowFullScreenContent: $error');
+        },
+        onAdShowedFullScreenContent: (ad) {
+          print('$ad onAdShowedFullScreenContent');
+          interstitialAd = null;
         },
       );
-
-      rewardedAd?.show(onUserEarnedReward: (ad, reward) {
-        setState(() {
-          rewaredscore++;
-        });
-        print('User earned reward of: ${reward.amount}');
-      });
-      rewardedAd = null;
+      interstitialAd!.show();
+      interstitialAd = null;
     }
   }
 
@@ -104,7 +100,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
             color: Colors.white,
           ),
           onPressed: () {
-            showrewardedad();
             Navigator.pop(context);
           },
         ),
@@ -162,8 +157,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     toast(context, 'Please enter feedback');
                     return;
                   }
-                  showrewardedad();
                   submitFeedback();
+                  showInterstitialAd();
                 },
                 color: Colors.blue,
                 shape: RoundedRectangleBorder(
